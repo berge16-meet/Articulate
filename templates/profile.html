@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>My Profile</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}
+	My Profile
+{% endblock %}
+{% block navbar %}
+{% endblock %}
+{% block content %}
 	<h1>{{name}}'s profile!</h1>
 	<button type="button">Create a new ARTmosphere</button> <br>
 	<button type="button">Upload a new ARTmosphere</button> <br>
-</body>
-</html>
+{% endblock %}
