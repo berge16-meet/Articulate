@@ -1,13 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>ARTiculate</title>
-</head>
-<body>
-<h1>ARTiculate</h1>
-<h2>Creating a better Artmosphere!</h2>
-<p>Hello and welcome to our website! we...' so just sign up and help us create a better tommorow</p>
-<h2>Sign up</h2> <button type="button" onclick = "window.location.href = '/signup'"> Sign Up!</button> <br>
-<h2>Log in</h2><button type="button" onclick = "window.location.href = '/login'">Log In!</button>
-</body>
-</html>
+{% extends "base.html" %}
+	<title>Articulate</title>
+
+
+<center><img src="/logo.png" style="width:304px;height:228px;"></center>
+{% block content %}
+<body background ="/background.png">
+	<center><h2 class="text-xs-center">Creating a better Artmosphere!</h2></center>
+	<center><p class="text-xs-center">Hello and welcome to our website! we...' so just sign up and help us create a better tommorow</p></center>
+
+
+	
+	<center><button type="button" class="btn btn-primary" onclick = "window.location.href = '/signup'"> Sign Up!</button></center> <br>
+
+
+	
+	<center><button type="button" class="btn btn-primary" onclick = "window.location.href = '/login'">Log In!</button></center>
+Helllllllo
+{% endblock %}
+
