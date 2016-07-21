@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 from flask import Flask, render_template, request
 app = Flask(__name__, static_url_path="", static_folder="static")
-=======
 from flask import Flask, render_template, request, redirect,url_for
 from flask import session as web_session
 from flask.ext.wtf import Form
@@ -9,7 +7,6 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 
 app = Flask(__name__)
->>>>>>> 7f41e37480ab61bf7fac687237af76796f32ff74
 
 from database import Base,User
 from sqlalchemy import create_engine

@@ -16,10 +16,10 @@ class User(Base):
 	password=Column(String(64))
 	interests=Column(String(64))
 	nationality=Column(String(64))
-	gender=Column(String(64)#it's a radio, remember!
+	gender=Column(String(64))#it's a radio, remember!
 	dob=Column(String(64))
 	mob=Column(String(64))
-	yob=Column(String(64)#it's a radio, remember!
+	yob=Column(String(64))#it's a radio, remember!
 	bio=Column(String(250))
 	pic=Column(String(250))
 
