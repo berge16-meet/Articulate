@@ -13,13 +13,26 @@ from sqlalchemy import create_engine
 engine=create_engine('sqlite:///Webpage.db')
 Base.metadata.create_all(engine)
 DBSession=sessionmaker(bind=engine)
-session=DBSession
+session=DBSession()
+
 app.config['SECRET_KEY'] = 'guess who'
 
 db = SQLAlchemy(app)
+'''
+if session.query.all()=null:#no users exist:
+	users = [
+		{ 
+			firstname: 'asdfasd',
 
-user1=User(firstname='berge', lastname='benamram',email='berge@gmail.com',username='bergi',password='123',interests='art',nationality='palestinian',gender='male',dob='1',mob='2',yob='1999',bio='strong',pic='https://www.google.co.il/search?q=bear&client=ubuntu&hs=PdF&channel=fs&tbm=isch&imgil=jcrrgtQvtl8FOM%253A%253Bi2dpMZFmYqIQkM%253Bhttp%25253A%25252F%25252Fwww.urbandictionary.com%25252Fdefine.php%25253Fterm%2525253Dbear&source=iu&pf=m&fir=jcrrgtQvtl8FOM%253A%252Ci2dpMZFmYqIQkM%252C_&usg=__BVyho6vwaIY0oDDAfN_l-YGBvM0%3D&biw=1301&bih=671&ved=0ahUKEwidzM22yoTOAhUHuBQKHTtrBZQQyjcImQE&ei=OMOQV53QGIfwUrvWlaAJ#imgrc=jcrrgtQvtl8FOM%3A')
+		}
+	]
 
+	# for user in users
+	insertUser = User(fisrname = user.firstname, las)
+	#user1=User(
+	session.add(insertUser)
+	session.commit()
+'''
 @app.route('/')
 def entry():
 	return render_template('entry.html')
@@ -39,8 +52,11 @@ def signup():
 
 @app.route('/login')
 def login():
-	return render_template('login.html')
-
+	if request.method=='GET':
+		return render_template('login.html')
+	loger=session.query(User).filter_by(email='berge@gmail.com').first()
+	if request.form['email']==loger.email:	
+		return redirect(url_for('home',name=loger.firstname))
 @app.route('/user/<name>')
 def profile(name):
 	return render_template('profile.html', name = name)
