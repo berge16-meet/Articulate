@@ -9,8 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
   </head>
-  <body background="background.png">
-
+  <body background="{{ url_for('static', filename='background.jpg') }}">
     {% block title %}{% endblock %}
 
     {% block navbar %}
@@ -21,7 +20,7 @@
       <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Features</a>
+      <a class="nav-link" href="#">My Profile</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">Pricing</a>
@@ -38,7 +37,6 @@
     {% endblock %}
 
     {% block content %}
-      <h1>Hello, {{name}}!</h1>
     {% endblock %}
 
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
