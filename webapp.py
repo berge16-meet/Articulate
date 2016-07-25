@@ -21,7 +21,7 @@ db = SQLAlchemy(app)
 '''
 if session.query.all()=null:#no users exist:
 	users = [
-		{ 
+		{
 			firstname: 'asdfasd',
 
 		}
@@ -30,32 +30,41 @@ if session.query.all()=null:#no users exist:
 	# for user in users
 	insertUser = User(fisrname = user.firstname, las)
 	#user1=User(
-	session.add(insertUser)
+
 	session.commit()
 '''
 @app.route('/')
 def entry():
 	return render_template('entry.html')
 
+class SignUpForm(Form):
+	first_name = StringField("First name:")
+	last_name = StringField("Last name:")
+	email = StringField("Email:"[validators.Email()])
+	password = PasswordField("Password:" [validators.Required()])
+	gender = SelectField("Gender:", choices = [("male", "Male"), ("female", "Female", ("other", "Other"))])
+	date_of_birth = DateField("Date of birth:", [validators.Required()])
+
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
 
 	if request.method == 'GET':
 		return render_template('signup.html')
-	
-	
-	else: 
+
+
+	else:
 		firstname=request.form['firstname']
 		print(firstname)
 		return redirect(url_for('home',name=firstname))
-	
+
 
 @app.route('/login')
 def login():
 	if request.method=='GET':
 		return render_template('login.html')
 	loger=session.query(User).filter_by(email='berge@gmail.com').first()
-	if request.form['email']==loger.email:	
+	if request.form['email']==loger.email:
 		return redirect(url_for('home',name=loger.firstname))
 @app.route('/user/<name>')
 def profile(name):
