@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 app = Flask(__name__, static_url_path="", static_folder="static")
 from flask import Flask, render_template, request, redirect,url_for
 from flask import session as web_session
-from flask.ext.wtf import Form
+from flask.ext.wtf import Form, fields, validators
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 
@@ -59,9 +59,9 @@ def signup():
 		print(firstname)
 		return redirect(url_for('home',name=firstname))
 
-	
+
 class Loginform(Form):
-	email=StringField('email:')	
+	email=StringField('email:')
 	password=StringField('password:')
 	submit=SubmitField('Submit')
 @app.route('/login',methods=['GET','POST'])
@@ -77,7 +77,7 @@ def login():
 
 	if request.method=='GET':
 		return render_template('login.html', form=loginform)
-	
+
 @app.route('/user/<name>')
 def profile(name):
 	return render_template('profile.html', name = name)
