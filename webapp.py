@@ -81,7 +81,11 @@ def login():
 
 	if request.method=='GET':
 		return render_template('login.html', form=loginform)
-
+	email=str(request.form['email'])
+	password=str(request.form['password'])
+	is_valid=validate(email.password)
+	if is_valid==False:
+		
 @app.route('/user/<name>')
 def profile(name):
 	return render_template('profile.html', name = name)
