@@ -37,6 +37,11 @@ if session.query.all()=null:#no users exist:
 def entry():
 	return render_template('entry.html')
 
+
+
+
+
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
 
@@ -49,14 +54,23 @@ def signup():
 		print(firstname)
 		return redirect(url_for('home',name=firstname))
 	
-
-@app.route('/login')
+class Loginform(Form):
+	email=StringField('email:')	
+	password=StringField('password:')
+	submit=SubmitField('Submit')
+@app.route('/login',methods=['GET','POST'])
 def login():
+	loginform=Loginform()
+	def validate(email,password):
+		query= Session.query(User).filter(User.email.in_([email]),
+		User.password.in_([password])	)
+		return query.first() !=None
+
 	if request.method=='GET':
-		return render_template('login.html')
-	loger=session.query(User).filter_by(email='berge@gmail.com').first()
-	if request.form['email']==loger.email:	
-		return redirect(url_for('home',name=loger.firstname))
+		return render_template('login.html', form=loginform)
+	
+	  
+
 @app.route('/user/<name>')
 def profile(name):
 	return render_template('profile.html', name = name)
