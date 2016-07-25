@@ -1,11 +1,84 @@
 {% extends "base.html" %}
-{% block title %}
-	My Profile
+
+{% block css %}
+      <link rel="stylesheet" type="text/css" href="/static/profile.css">
 {% endblock %}
-{% block navbar %}
-{% endblock %}
+
 {% block content %}
-	<h1>{{name}}'s profile!</h1>
-	<button type="button">Create a new ARTmosphere</button> <br>
-	<button type="button">Upload a new ARTmosphere</button> <br>
+<div class="first">
+	<center>
+			<img src="{{ url_for('static', filename='pic.jpg')}}"
+			<h1>{{name}}!'s profile!</h1><br>
+			<p>The description/bio is going to be here</p>
+	</center>
+</div>
+
+<div class="btns"><br>
+	<div class="row">
+		<div class="col-md-5">
+			<div class="one" role="group" aria-label="Basic example">
+  			<button type="button" class="btn btn-danger-outline">Create a new ARTmosphere</button>
+  			<button type="button" class="btn btn-danger-outline">Upload a new ARTmosphere</button>
+			</div>
+		</div>
+			<div class="col-md-7 offset-md-7"><button type="button" class="btn btn-danger-outline dropdown-toggle">Add new friends<span class="caret"></span></button>
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
+		  		<li><a href="#">Search for friends</a></li>
+		  	<li><a href="#">Recomended users</a></li>
+				</ul></div>
+	</div><br>
+</div>
+
+<!--<div class="posts">//-->
+{% for post in posts %}
+				<div class="two"><br>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="card">
+            		<img class="card-img-top img img-fluid" src={{post.picture}} alt={{post.title}}>
+              		<div class="card-block">
+						    		<h4 class="card-title">{{post.user}}</h4>
+                		<font><a href="#" class="btn-primary">Like</a></font>
+										<font>{{post.num_of_likes}} liked this</font>
+              		</div>
+          		</div>
+						</div>
+						<div class="col-md-4">
+							<div class="card">
+								<img class="card-img-top img img-fluid" src={{post.picture}} alt={{post.title}}>
+									<div class="card-block">
+										<h4 class="card-title">{{post.user}}</h4>
+										<font><a href="#" class="btn-primary">Like</a></font>
+										<font>{{post.num_of_likes}} liked this</font>
+									</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="card">
+								<img class="card-img-top img img-fluid" src={{post.picture}} alt={{post.title}}>
+									<div class="card-block">
+										<h4 class="card-title">{{post.user}}</h4>
+										<font><a href="#" class="btn-primary">Like</a></font>
+										<font>{{post.num_of_likes}} liked this</font>
+									</div>
+							</div>
+						</div>
+					</div>
+				</
+{% endfor %}
+
+
+
+
+
+
+
+
+<!--
+		<ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
+	  	<li><a href="#">Search for friends</a></li>
+	  	<li><a href="#">Recomended users</a></li>
+		</ul>
+//-->
+
 {% endblock %}
