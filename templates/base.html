@@ -9,12 +9,11 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
   </head>
-  <body background="{{ url_for('static', filename='background.jpg') }}">
     {% block title %}{% endblock %}
 
     {% block navbar %}
     <nav class="navbar navbar-light bg-faded">
-  <a class="navbar-brand" href="#">Navbar</a>
+  <a class="navbar-brand"><img src="{{ url_for('static', filename= 'logo.png')}}"style="width:304px;height:100px;"</a>
   <ul class="nav navbar-nav">
     <li class="nav-item active">
       <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
