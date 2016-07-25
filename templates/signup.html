@@ -1,9 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Sign Up</title>
-</head>
-<body>
+{% extends "base.html" %}
+{%block title%}
+
+<title>Sign Up</title>
+{%endblock%}
+{%block navbar%}
+{%endblock%}
+{%block content%}
 
 <h1> Sign Up Here! </h1>
 <form method='POST' target='/signup'>
@@ -69,7 +71,4 @@
     <input type="file" name="fileToUpload" id="fileToUpload"><br>
     </form>
 <input type="submit" value="Submit"><br><br>
-
-
-</body>
-</html>
+{%endblock%}
