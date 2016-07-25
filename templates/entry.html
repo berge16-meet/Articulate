@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 	<title>Articulate</title>
+{% block navbar %}
+{%endblock%}
 
-
-<center><img src="/logo.png" style="width:304px;height:228px;"></center>
+ <head>
+<link rel="stylesheet" type="text/css" href=""{{ url_for('static', filename='static.css') }}"">
+</head>
 {% block content %}
-<body background ="/background.png">
-	<center><h2 class="text-xs-center">Creating a better Artmosphere!</h2></center>
+
+	<div class="text-xs-center">
+		<img src="{{ url_for('static', filename='logo.png') }}" class="text-xs-center">
+	</div>
+	<h2 class="text-xs-center">Creating a better Artmosphere!</h2>
 	<center><p class="text-xs-center">Hello and welcome to our website! we...' so just sign up and help us create a better tommorow</p></center>
 
 
@@ -15,6 +21,6 @@
 
 	
 	<center><button type="button" class="btn btn-primary" onclick = "window.location.href = '/login'">Log In!</button></center>
-Helllllllo
+
 {% endblock %}
 
