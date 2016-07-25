@@ -2,7 +2,8 @@ from flask import Flask, render_template, request
 app = Flask(__name__, static_url_path="", static_folder="static")
 from flask import Flask, render_template, request, redirect,url_for
 from flask import session as web_session
-from flask.ext.wtf import Form, fields, validators
+from wtforms import *
+from flask.ext.wtf import Form
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 
@@ -41,8 +42,8 @@ def entry():
 class SignUpForm(Form):
 	first_name = StringField("First name:")
 	last_name = StringField("Last name:")
-	email = StringField("Email:"[validators.Email()])
-	password = PasswordField("Password:" [validators.Required()])
+	email = StringField("Email:", [validators.Email()])
+	password = PasswordField("Password:", [validators.Required()])
 	gender = SelectField("Gender:", choices = [("male", "Male"), ("female", "Female", ("other", "Other"))])
 	date_of_birth = DateField("Date of birth:", [validators.Required()])
 
