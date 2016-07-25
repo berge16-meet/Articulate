@@ -63,9 +63,24 @@ def signup():
 
 
 	else:
-		firstname=request.form['firstname']
+		firstname=request.form['first_name']
+
+		lastname=request.form['last_name']
+		email=request.form['email']
+		password=request.form['password']
+		gender=request.form['gender']
+
+		dob=request.form['date_of_birth']
+		biography=request.form['biography']
+
+		#profilepic=request.form['profile_pic']
 		print(firstname)
+		user=User(firstname=firstname, lastname=lastname,email=email, password=password, gender=gender, date=dob,bio=biography)
+		session.add(user)
+		session.commit
+		print (user.lastname)
 		return redirect(url_for('home',name=firstname))
+		
 
 
 class Loginform(Form):
@@ -85,7 +100,11 @@ def login():
 
 	if request.method=='GET':
 		return render_template('login.html', form=loginform)
-
+	email=str(request.form['email'])
+	password=str(request.form['password'])
+	is_valid=validate(email.password)
+	#if is_valid==False:
+		
 @app.route('/user/<name>')
 def profile(name):
 	return render_template('profile.html', name = name)
