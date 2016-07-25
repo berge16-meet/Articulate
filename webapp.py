@@ -6,6 +6,7 @@ from wtforms import *
 from flask.ext.wtf import Form
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
+from flask.ext.bootstrap import Bootstrap
 
 app = Flask(__name__)
 
@@ -19,6 +20,7 @@ session=DBSession()
 app.config['SECRET_KEY'] = 'guess who'
 
 db = SQLAlchemy(app)
+bootstrap = Bootstrap(app)
 '''
 if session.query.all()=null:#no users exist:
 	users = [
@@ -44,15 +46,16 @@ class SignUpForm(Form):
 	last_name = StringField("Last name:")
 	email = StringField("Email:", [validators.Email()])
 	password = PasswordField("Password:", [validators.Required()])
-	gender = SelectField("Gender:", choices = [("male", "Male"), ("female", "Female", ("other", "Other"))])
+	gender = SelectField("Gender:", choices = [("male", "Male"), ("female", "Female"), ("other", "Other")])
 	date_of_birth = DateField("Date of birth:", [validators.Required()])
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
 
+	signup_form = SignUpForm()
 	if request.method == 'GET':
-		return render_template('signup.html')
+		return render_template('signup.html', form = signup_form)
 
 
 	else:
