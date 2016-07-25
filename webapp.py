@@ -48,6 +48,10 @@ class SignUpForm(Form):
 	password = PasswordField("Password:", [validators.Required()])
 	gender = SelectField("Gender:", choices = [("male", "Male"), ("female", "Female"), ("other", "Other")])
 	date_of_birth = DateField("Date of birth:", [validators.Required()])
+	biography = TextAreaField("Tell us about yourself")
+	profile_pic = FileField("You can upload a profile picture.")
+
+	submit = SubmitField("Submit:")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
