@@ -21,7 +21,7 @@ db = SQLAlchemy(app)
 '''
 if session.query.all()=null:#no users exist:
 	users = [
-		{ 
+		{
 			firstname: 'asdfasd',
 
 		}
@@ -30,7 +30,7 @@ if session.query.all()=null:#no users exist:
 	# for user in users
 	insertUser = User(fisrname = user.firstname, las)
 	#user1=User(
-	session.add(insertUser)
+
 	session.commit()
 '''
 @app.route('/')
@@ -38,8 +38,13 @@ def entry():
 	return render_template('entry.html')
 
 
-
-
+class SignUpForm(Form):
+	first_name = StringField("First name:")
+	last_name = StringField("Last name:")
+	email = StringField("Email:"[validators.Email()])
+	password = PasswordField("Password:" [validators.Required()])
+	gender = SelectField("Gender:", choices = [("male", "Male"), ("female", "Female", ("other", "Other"))])
+	date_of_birth = DateField("Date of birth:", [validators.Required()])
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -47,30 +52,32 @@ def signup():
 
 	if request.method == 'GET':
 		return render_template('signup.html')
-	
-	
-	else: 
+
+
+	else:
 		firstname=request.form['firstname']
 		print(firstname)
 		return redirect(url_for('home',name=firstname))
+
 	
 class Loginform(Form):
 	email=StringField('email:')	
 	password=StringField('password:')
 	submit=SubmitField('Submit')
 @app.route('/login',methods=['GET','POST'])
+
+
+@app.route('/login')
 def login():
 	loginform=Loginform()
 	def validate(email,password):
 		query= Session.query(User).filter(User.email.in_([email]),
 		User.password.in_([password])	)
-		return query.first() !=None
+		return query.first() != None
 
 	if request.method=='GET':
 		return render_template('login.html', form=loginform)
 	
-	  
-
 @app.route('/user/<name>')
 def profile(name):
 	return render_template('profile.html', name = name)
