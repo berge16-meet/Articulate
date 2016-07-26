@@ -82,23 +82,24 @@ def signup():
 		print (user.lastname)
 		email=DBsession.query(User).filter_by(email=user.email).first().email
 		print (email)
-		return redirect(url_for('home',name=firstname))
-		
+		return redirect(url_for('/',name=firstname))
+
 
 
 class Loginform(Form):
-	email=StringField('email:')
-	password=StringField('password:')
+	email=StringField('Email:')
+	password=PasswordField('Password:')
 	submit=SubmitField('Submit')
 
 
 
 @app.route('/login',methods=['GET','POST'])
 def login():
+
 	loginform=Loginform()
-	
+
 	def validate(email,password):
-		
+
 		return user_query.first() != None
 
 	if request.method=='GET':
@@ -125,7 +126,7 @@ def login():
 		if loger.password==DBsession.query(User).filter_by(email=loger.email).password:
 			return redirect (url_for('home',name=DBsession.query(User).filter_by(email=loger.email).firstname))
 '''
-		
+
 @app.route('/user/<name>')
 def profile(name):
 	return render_template('profile.html', name = name)
