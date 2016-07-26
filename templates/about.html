@@ -1,16 +1,135 @@
 {% extends "base.html" %}
+{% block title %}
 
-<title> About us </title>
+
+<div class="text">
+<h5> ARTiculate is a plaform where people can share their perspectives through Art bla bla bla </h5>
+
+<h1>our vision</h1>
+<h5> we envision a world where all voices are heard, in order to build a society that is self-aware, exposed and understands all persectives.</h5>
+
+<h1>our mission </h1>
+<h5> our mission is to create a circle of communication, established on the common ground of art, fulfilling tolerance and understanding towards all of it's members. </h5>
+</div>
+
+ 
+
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block css %} 
+<style>
+
+div.text  {
+    position: absolute;
+    top: 300px;
+    right: 0px;
+    width: 1250px;
+    height: 400px;  
+}
+
+div.berge {
+    position: absolute;
+    top: 700px;
+    right: 200px;
+    width: 200px;
+    height: 100px;  
+}
+
+div.nofar {
+    position: absolute;
+    top: 700px;
+    right: 600px;
+    width: 200px;
+    height: 100px;
+}
+
+div.roni {
+    position: absolute;
+    top: 700px;
+    right: 1000px;
+    width: 200px;
+    height: 100px;
+}
+
+div.neta {
+    position: absolute;
+    top: 1050px;
+    right: 200px;
+    width: 200px;
+    height: 100px;
+}
+
+div.ori {
+    position: absolute;
+    top: 1050px;
+    right: 600px;
+    width: 200px;
+    height: 100px;
+}
+
+div.hila {
+    position: absolute;
+    top: 1050px;
+    right: 1000px;
+    width: 200px;
+    height: 100px; 
+}
+
+div.nethanel {
+    position: absolute;
+    top: 1400px;
+    right: 600px;
+    width: 200px;
+    height: 100px; 
+}
+
+div.about_us {
+    position: absolute;
+    top: 50px;
+    right: 150px;
+    width: 800px;
+    height: 100px;
+
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="about_us">
+ <img src="{{ url_for('static', filename= 'aboutuslogo.jpg')}}"" class="img-rounded" alt="Cinque Terre" width="500" height="70">
+</div>
+
+<div class="berge">
+<img src="{{ url_for('static', filename= 'berge.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">
+</div>
+
+<div class="nofar">
+<img src="{{ url_for('static', filename= 'nofar.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">
+</div>
+
+<div class="roni">
+<img src="{{ url_for('static', filename= 'roni.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">
+</div>
+
+<div class="neta">
+<img src="{{ url_for('static', filename= 'neta.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">
+</div>
+
+<div class="ori">
+<img src="{{ url_for('static', filename= 'ori.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">
+</div>
+
+<div class="hila">
+<img src="{{ url_for('static', filename= 'hila.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">
+</div>
 
 
-<h3> ARTiculate is a plaform where people can share their perspectives through Art bla bla bka </h3>
+<div class="nethanel">
+<img src="{{ url_for('static', filename= 'nethanel.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">	
+</div>
 
- <title> the team </title>
 
-<img src="images.jpeg" class="img-circle" alt="Cinque Terre" width="304" height="236">
-<img src="images.jpeg" class="img-circle" alt="Cinque Terre" width="304" height="236">
-<img src="images.jpeg" class="img-circle" alt="Cinque Terre" width="304" height="236">
-<img src="images.jpeg" class="img-circle" alt="Cinque Terre" width="304" height="236">
-<img src="images.jpeg" class="img-circle" alt="Cinque Terre" width="304" height="236">
 
  {% endblock %}
