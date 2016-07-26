@@ -75,10 +75,13 @@ def signup():
 
 		#profilepic=request.form['profile_pic']
 		print(firstname)
+		#user=User(id= 1,firstname='roni',lastname='var',password='jj', email='hello', gender='male',date='1',bio='hi',username='ron',nationality='polish',profilepic='k')
 		user=User(firstname=firstname, lastname=lastname,email=email, password=password, gender=gender, date=dob,bio=biography)
 		session.add(user)
-		session.commit
+		session.commit()
 		print (user.lastname)
+		email=session.query(User).filter_by(email=user.email).first().email
+		print (email)
 		return redirect(url_for('home',name=firstname))
 		
 
