@@ -12,7 +12,7 @@ class User(Base):
 	firstname = Column(String(64))
 	lastname = Column(String(64))
 	email = Column(String(64),primary_key=True)
-	username = Column(String(64))
+	#username = Column(String(64))
 	password = Column(String(64))
 	nationality = Column(String(64))
 	gender = Column(String(20))

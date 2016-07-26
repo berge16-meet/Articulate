@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 app = Flask(__name__, static_url_path="", static_folder="static")
 from flask import Flask, render_template, request, redirect,url_for
 from flask import session as web_session
@@ -48,6 +48,7 @@ class SignUpForm(Form):
 	password = PasswordField("Password:", [validators.Required()])
 	gender = SelectField("Gender:", choices = [("male", "Male"), ("female", "Female"), ("other", "Other")])
 	date_of_birth = DateField("Date of birth:", [validators.Required()])
+	nationality=StringField("Nationality:")
 	biography = TextAreaField("Tell us about yourself")
 	profile_pic = FileField("You can upload a profile picture.")
 
@@ -69,26 +70,27 @@ def signup():
 		email=request.form['email']
 		password=request.form['password']
 		gender=request.form['gender']
-
+		nationality=request.form['nationality']
 		dob=request.form['date_of_birth']
 		biography=request.form['biography']
 
 		#profilepic=request.form['profile_pic']
 		print(firstname)
 		#user=User(id= 1,firstname='roni',lastname='var',password='jj', email='hello', gender='male',date='1',bio='hi',username='ron',nationality='polish',profilepic='k')
-		user=User(firstname=firstname, lastname=lastname,email=email, password=password, gender=gender, date=dob,bio=biography)
+		user=User(firstname=firstname, lastname=lastname,email=email, password=password, gender=gender, nationality=nationality,date=dob,bio=biography)
 		DBsession.add(user)
 		DBsession.commit()
 		print (user.lastname)
 		email=DBsession.query(User).filter_by(email=user.email).first().email
 		print (email)
-		return redirect(url_for('/',name=firstname))
+		session['email']=email
+		return redirect(url_for('home',name=firstname))
 
 
 
 class Loginform(Form):
-	email=StringField('Email:')
-	password=PasswordField('Password:')
+	email=StringField('Email:',[validators.Required()])
+	password=PasswordField('Password:',[validators.required()])
 	submit=SubmitField('Submit')
 
 
@@ -112,9 +114,9 @@ def login():
 		User.password.in_([password]))
 		user = user_query.first()
 		if user != None:
-			#DBsession['email']=email
+			session['email']=email
 			return redirect(url_for('home',name=user.firstname))
-
+			
 		return render_template('login.html',form=loginform)
 
 
