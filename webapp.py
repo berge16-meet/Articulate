@@ -14,15 +14,15 @@ from database import Base,User
 from sqlalchemy import create_engine
 engine=create_engine('sqlite:///Webpage.db')
 Base.metadata.create_all(engine)
-DBSession=sessionmaker(bind=engine)
-session=DBSession()
+DBSessionMaker=sessionmaker(bind=engine)
+DBsession=DBSessionMaker()
 
 app.config['SECRET_KEY'] = 'guess who'
 
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
 '''
-if session.query.all()=null:#no users exist:
+if DBsession.query.all()=null:#no users exist:
 	users = [
 		{
 			firstname: 'asdfasd',
@@ -34,7 +34,7 @@ if session.query.all()=null:#no users exist:
 	insertUser = User(fisrname = user.firstname, las)
 	#user1=User(
 
-	session.commit()
+	DBsession.commit()
 '''
 @app.route('/')
 def entry():
@@ -77,10 +77,10 @@ def signup():
 		print(firstname)
 		#user=User(id= 1,firstname='roni',lastname='var',password='jj', email='hello', gender='male',date='1',bio='hi',username='ron',nationality='polish',profilepic='k')
 		user=User(firstname=firstname, lastname=lastname,email=email, password=password, gender=gender, date=dob,bio=biography)
-		session.add(user)
-		session.commit()
+		DBsession.add(user)
+		DBsession.commit()
 		print (user.lastname)
-		email=session.query(User).filter_by(email=user.email).first().email
+		email=DBsession.query(User).filter_by(email=user.email).first().email
 		print (email)
 		return redirect(url_for('home',name=firstname))
 		
@@ -90,23 +90,41 @@ class Loginform(Form):
 	email=StringField('email:')
 	password=StringField('password:')
 	submit=SubmitField('Submit')
+
+
+
 @app.route('/login',methods=['GET','POST'])
-
-
-@app.route('/login')
 def login():
 	loginform=Loginform()
+	
 	def validate(email,password):
-		query= Session.query(User).filter(User.email.in_([email]),
-		User.password.in_([password])	)
-		return query.first() != None
+		
+		return user_query.first() != None
 
 	if request.method=='GET':
 		return render_template('login.html', form=loginform)
-	email=str(request.form['email'])
-	password=str(request.form['password'])
-	is_valid=validate(email.password)
-	#if is_valid==False:
+	else:
+		email=request.form['email']
+		password=request.form['password']
+
+		user_query = DBsession.query(User).filter(User.email.in_([email]),
+		User.password.in_([password]))
+		user = user_query.first()
+		if user != None:
+			#DBsession['email']=email
+			return redirect(url_for('home',name=user.firstname))
+
+		return render_template('login.html',form=loginform)
+
+
+
+
+'''
+	loger=DBsession.query(User).filter_by(email=email)
+	if DBsession.query(User).filter_by(email=loger.email)!=None:
+		if loger.password==DBsession.query(User).filter_by(email=loger.email).password:
+			return redirect (url_for('home',name=DBsession.query(User).filter_by(email=loger.email).firstname))
+'''
 		
 @app.route('/user/<name>')
 def profile(name):
