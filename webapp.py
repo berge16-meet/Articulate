@@ -144,7 +144,9 @@ def canvas(name):
 @app.route ('/chat/user/<name>')
 def chat(name):
 	return render_template('chat.html')
-
+@app.route ('/about')
+def about():
+	return render_template('about.html')
 
 
 
