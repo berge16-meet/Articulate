@@ -15,11 +15,8 @@
 
     {% block navbar %}
     <nav class="navbar navbar-light bg-faded">
-<<<<<<< HEAD
   <a class="navbar-brand" href="home.html"><img src="{{ url_for('static', filename='logo.png')}}"></a>
-=======
   <a class="navbar-brand"><img src="{{ url_for('static', filename= 'logo.png')}}"style="width:304px;height:100px;"</a>
->>>>>>> 7413b54c466156c38e15cf6e8a105729e43ab9a8
   <ul class="nav navbar-nav">
     <li class="nav-item active">
       <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -40,6 +37,10 @@
   </form>
 </nav>
     {% endblock %}
+
+    <style>
+      {background-image: "bg-wp.jpg"}
+    </style>
 
     {% block content %}
     {% endblock %}
