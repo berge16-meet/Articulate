@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 app = Flask(__name__, static_url_path="", static_folder="static")
 from flask import Flask, render_template, request, redirect,url_for
 from flask import session as web_session
@@ -14,15 +14,15 @@ from database import Base,User
 from sqlalchemy import create_engine
 engine=create_engine('sqlite:///Webpage.db')
 Base.metadata.create_all(engine)
-DBSession=sessionmaker(bind=engine)
-session=DBSession()
+DBSessionMaker=sessionmaker(bind=engine)
+DBsession=DBSessionMaker()
 
 app.config['SECRET_KEY'] = 'guess who'
 
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
 '''
-if session.query.all()=null:#no users exist:
+if DBsession.query.all()=null:#no users exist:
 	users = [
 		{
 			firstname: 'asdfasd',
@@ -34,7 +34,7 @@ if session.query.all()=null:#no users exist:
 	insertUser = User(fisrname = user.firstname, las)
 	#user1=User(
 
-	session.commit()
+	DBsession.commit()
 '''
 @app.route('/')
 def entry():
@@ -48,6 +48,7 @@ class SignUpForm(Form):
 	password = PasswordField("Password:", [validators.Required()])
 	gender = SelectField("Gender:", choices = [("male", "Male"), ("female", "Female"), ("other", "Other")])
 	date_of_birth = DateField("Date of birth:", [validators.Required()])
+	nationality=StringField("Nationality:")
 	biography = TextAreaField("Tell us about yourself")
 	profile_pic = FileField("You can upload a profile picture.")
 
@@ -69,45 +70,65 @@ def signup():
 		email=request.form['email']
 		password=request.form['password']
 		gender=request.form['gender']
-
+		nationality=request.form['nationality']
 		dob=request.form['date_of_birth']
 		biography=request.form['biography']
 
 		#profilepic=request.form['profile_pic']
 		print(firstname)
 		#user=User(id= 1,firstname='roni',lastname='var',password='jj', email='hello', gender='male',date='1',bio='hi',username='ron',nationality='polish',profilepic='k')
-		user=User(firstname=firstname, lastname=lastname,email=email, password=password, gender=gender, date=dob,bio=biography)
-		session.add(user)
-		session.commit()
+		user=User(firstname=firstname, lastname=lastname,email=email, password=password, gender=gender, nationality=nationality,date=dob,bio=biography)
+		DBsession.add(user)
+		DBsession.commit()
 		print (user.lastname)
-		email=session.query(User).filter_by(email=user.email).first().email
+		email=DBsession.query(User).filter_by(email=user.email).first().email
 		print (email)
+		session['email']=email
 		return redirect(url_for('home',name=firstname))
-		
+
 
 
 class Loginform(Form):
-	email=StringField('email:')
-	password=StringField('password:')
+	email=StringField('Email:',[validators.Required()])
+	password=PasswordField('Password:',[validators.required()])
 	submit=SubmitField('Submit')
+
+
+
 @app.route('/login',methods=['GET','POST'])
-
-
-@app.route('/login')
 def login():
+
 	loginform=Loginform()
+
 	def validate(email,password):
-		query= Session.query(User).filter(User.email.in_([email]),
-		User.password.in_([password])	)
-		return query.first() != None
+
+		return user_query.first() != None
 
 	if request.method=='GET':
 		return render_template('login.html', form=loginform)
-	email=str(request.form['email'])
-	password=str(request.form['password'])
-	is_valid=validate(email.password)
-	#if is_valid==False:
-		
+	else:
+		email=request.form['email']
+		password=request.form['password']
+
+		user_query = DBsession.query(User).filter(User.email.in_([email]),
+		User.password.in_([password]))
+		user = user_query.first()
+		if user != None:
+			session['email']=email
+			return redirect(url_for('home',name=user.firstname))
+			
+		return render_template('login.html',form=loginform)
+
+
+
+
+'''
+	loger=DBsession.query(User).filter_by(email=email)
+	if DBsession.query(User).filter_by(email=loger.email)!=None:
+		if loger.password==DBsession.query(User).filter_by(email=loger.email).password:
+			return redirect (url_for('home',name=DBsession.query(User).filter_by(email=loger.email).firstname))
+'''
+
 @app.route('/user/<name>')
 def profile(name):
 	return render_template('profile.html', name = name)
