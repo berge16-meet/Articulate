@@ -7,9 +7,9 @@
 {% block content %}
 <div class="first">
 	<center>
-			<img src="{{ url_for('static', filename='pic.jpg')}}"
+			<img src="{{ url_for('static', filename='roni.jpg')}}" width="90px" height="110px">
 			<h1>{{name}}!'s profile!</h1><br>
-			<p>The description/bio is going to be here</p>
+			<p>The description/bio goes here</p>
 	</center>
 </div>
 
@@ -21,64 +21,122 @@
   			<button type="button" class="btn btn-danger-outline">Upload a new ARTmosphere</button>
 			</div>
 		</div>
-			<div class="col-md-7 offset-md-7"><button type="button" class="btn btn-danger-outline dropdown-toggle">Add new friends<span class="caret"></span></button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
-		  		<li><a href="#">Search for friends</a></li>
-		  	<li><a href="#">Recomended users</a></li>
-				</ul></div>
-	</div><br>
+			<div class="col-md-7">
+        <div class="btn-group pull-xs-right">
+          <button type="button" class="btn btn-danger-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add new friends
+            <span class="caret"></span>
+          </button>
+  				<ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
+  		  		<li><a href="#">Search for friends</a></li>
+  		  	  <li><a href="#">Recomended users</a></li>
+  				</ul>
+        </div>
+  	</div>
+  </div>
+<br>
 </div>
 
-<!--<div class="posts">//-->
 {% for post in posts %}
 				<div class="two"><br>
 					<div class="row">
 						<div class="col-md-4">
 							<div class="card">
-            		<img class="card-img-top img img-fluid" src={{post.picture}} alt={{post.title}}>
+            		<center><br><img class="card-img-top img img-fluid" style="box-shadow: 0 0 18px lightcoral" src={{post.picture}} alt={{post.title}} width="210px" height="180">
               		<div class="card-block">
 						    		<h4 class="card-title">{{post.user}}</h4>
                 		<font><a href="#" class="btn-primary">Like</a></font>
-										<font>{{post.num_of_likes}} liked this</font>
-              		</div>
+										<font>{{post.num_of_likes}} liked this</font><br><br>
+                    <!-- Trigger the modal with a button -->
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="background-color: #f7f7f7; color: lightcoral;  border: 2px solid lightcoral;">Open comments</button>
+
+                    <!-- Modal -->
+                    <div id="myModal" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">View comments</h4>
+                          </div>
+                          <div class="modal-body">
+                            <p>the comments are going to be here</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+              		</div></center>
           		</div>
 						</div>
 						<div class="col-md-4">
 							<div class="card">
-								<img class="card-img-top img img-fluid" src={{post.picture}} alt={{post.title}}>
+								<center><br><img class="card-img-top img img-fluid" style="box-shadow: 0 0 18px lightcoral" src={{post.picture}} alt={{post.title}} width="210px" height="180">
 									<div class="card-block">
 										<h4 class="card-title">{{post.user}}</h4>
 										<font><a href="#" class="btn-primary">Like</a></font>
-										<font>{{post.num_of_likes}} liked this</font>
+										<font>{{post.num_of_likes}} liked this</font><br><br>
+                    <!-- Trigger the modal with a button -->
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="background-color: #f7f7f7; color: lightcoral;  border: 2px solid lightcoral;">Open comments</button>
+
+                    <!-- Modal -->
+                    <div id="myModal" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">View comments</h4>
+                          </div>
+                          <div class="modal-body">
+                            <p>the comments are going to be here</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 									</div>
-							</div>
+							</center></div>
 						</div>
 						<div class="col-md-4">
 							<div class="card">
-								<img class="card-img-top img img-fluid" src={{post.picture}} alt={{post.title}}>
+								<center><br><img class="card-img-top img img-fluid" style="box-shadow: 0 0 18px lightcoral" src={{post.picture}} alt={{post.title}} width="210px" height="180">
 									<div class="card-block">
 										<h4 class="card-title">{{post.user}}</h4>
 										<font><a href="#" class="btn-primary">Like</a></font>
-										<font>{{post.num_of_likes}} liked this</font>
+										<font>{{post.num_of_likes}} liked this</font><br><br>
+                    <!-- Trigger the modal with a button -->
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="background-color: #f7f7f7; color: lightcoral;  border: 2px solid lightcoral;">Open comments</button>
+
+                    <!-- Modal -->
+                    <div id="myModal" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">View comments</h4>
+                          </div>
+                          <div class="modal-body">
+                            <p>the comments are going to be here</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 									</div>
 							</div>
 						</div>
 					</div>
 				</
 {% endfor %}
-
-
-
-
-
-
-
-
-<!--
-		<ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
-	  	<li><a href="#">Search for friends</a></li>
-	  	<li><a href="#">Recomended users</a></li>
-		</ul>
-//-->
 
 {% endblock %}

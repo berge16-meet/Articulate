@@ -5,7 +5,7 @@ app = Flask(__name__)
 def uploads():
     posts = [
         {
-            'picture': "static/pic.jpg",
+            'picture': "static/images.jpeg",
             'user': "Hila Tal",
             'titile': "me n staff",
             'num_of_likes': "15"
