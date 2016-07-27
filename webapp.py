@@ -22,7 +22,7 @@ DBsession=DBSessionMaker()
 app.config['SECRET_KEY'] = 'guess who'
 
 db = SQLAlchemy(app)
-bootstrap = Bootstrap(app)
+
 '''
 if DBsession.query.all()=null:#no users exist:
 	users = [
