@@ -36,16 +36,17 @@
 <br>
 </div>
 
-{% for post in posts %}
 				<div class="two"><br>
+          {% set count = 0 %}
+          {% for i in length %}
 					<div class="row">
 						<div class="col-md-4">
 							<div class="card">
             		<center><br><img class="card-img-top img img-fluid" style="box-shadow: 0 0 18px lightcoral" src={{post.picture}} alt={{post.title}} width="210px" height="180">
               		<div class="card-block">
-						    		<h4 class="card-title">{{post.user}}</h4>
+						    		<h4 class="card-title">{{posts[count].user}}</h4>
                 		<font><a href="#" class="btn-primary">Like</a></font>
-										<font>{{post.num_of_likes}} liked this</font><br><br>
+										<font>{{posts[count].num_of_likes}} liked this</font><br><br>
                     <!-- Trigger the modal with a button -->
                     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="background-color: #f7f7f7; color: lightcoral;  border: 2px solid lightcoral;">Open comments</button>
 
@@ -71,13 +72,14 @@
               		</div></center>
           		</div>
 						</div>
+            {% set count = count + 1 %}
 						<div class="col-md-4">
 							<div class="card">
 								<center><br><img class="card-img-top img img-fluid" style="box-shadow: 0 0 18px lightcoral" src={{post.picture}} alt={{post.title}} width="210px" height="180">
 									<div class="card-block">
-										<h4 class="card-title">{{post.user}}</h4>
+										<h4 class="card-title">{{posts[count].user}}</h4>
 										<font><a href="#" class="btn-primary">Like</a></font>
-										<font>{{post.num_of_likes}} liked this</font><br><br>
+										<font>{{posts[count].post.num_of_likes}} liked this</font><br><br>
                     <!-- Trigger the modal with a button -->
                     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="background-color: #f7f7f7; color: lightcoral;  border: 2px solid lightcoral;">Open comments</button>
 
@@ -103,6 +105,7 @@
 									</div>
 							</center></div>
 						</div>
+            {% set count = count + 1 %}
 						<div class="col-md-4">
 							<div class="card">
 								<center><br><img class="card-img-top img img-fluid" style="box-shadow: 0 0 18px lightcoral" src={{post.picture}} alt={{post.title}} width="210px" height="180">

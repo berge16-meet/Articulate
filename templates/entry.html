@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 	<title>Articulate</title>
-
-
  <head>
+}
+}
 <link rel="stylesheet" type="text/css" href=""{{ url_for('static', filename='static.css') }}"">
 </head>
 {% block content %}
@@ -10,21 +10,20 @@
 	<div class="text-xs-center">
 		<img src="{{ url_for('static', filename='logo.png') }}" class="text-xs-center" style="position: absolute; top:px; left: 200px;"/>
 	</div>
-	<body background="{{ url_for('static', filename='background2.jpg') }}">
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 	<div>
-	<h2 class="text-xs-center">Creating a better Artmosphere!</h2>
-	<center><p class="text-xs-center">Hello and welcome to our website! we.<br>
-	 my name is ori and Im just writing things in order to bla bla bls so <br> just sign up and help us create a better tommorow</p></center>
+	<h2 style = "color: red" class="text-xs-center">Creating a better Artmosphere!</h2>
 	 </div>
+	 <br>
+
+	<center><button type="button" class="btn btn-danger" onclick = "window.location.href ='/signup'">Sign up!</button><br></center><br>
 
 
-	
-	<center><button type="button" class="btn btn-primary" onclick = "window.location.href = '/signup'"> Sign Up!</button></center> <br>
+	<center><button type="button" class="btn btn-danger" onclick = "window.location.href ='/login'">Log In!</button><br></center>
 
 
-	
-	<center><button type="button" class="btn btn-primary" onclick = "window.location.href = '/login'">Log In!</button></center>
+
+
 
 {% endblock %}
 
