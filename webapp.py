@@ -7,6 +7,7 @@ from flask.ext.wtf import Form
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 from flask.ext.bootstrap import Bootstrap
+import uuid
 
 app = Flask(__name__)
 
@@ -83,7 +84,7 @@ def signup():
 		print (user.lastname)
 		email=DBsession.query(User).filter_by(email=user.email).first().email
 		print (email)
-		session['email']=email
+		session['id']=uuid.uuid4()
 		return redirect(url_for('home',name=firstname))
 
 
@@ -114,7 +115,7 @@ def login():
 		User.password.in_([password]))
 		user = user_query.first()
 		if user != None:
-			session['email']=email
+			session['id']=uuid.uuid4()
 			return redirect(url_for('home',name=user.firstname))
 			
 		return render_template('login.html',form=loginform)
@@ -147,11 +148,6 @@ def chat(name):
 @app.route ('/about')
 def about():
 	return render_template('about.html')
-
-@app.route('/about')
-def about():
-	return render_template('about.html')
-
 
 
 if __name__ == '__main__':
