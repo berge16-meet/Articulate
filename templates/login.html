@@ -5,6 +5,8 @@
 {block title%}
 <title>Log In</title>
 {%block navbar%}
+ 
+	
 {%endblock%}
 
 {% block content %}
@@ -18,5 +20,9 @@
   <br>
   <center><input type="submit" value="Submit"></center> 
 -->
- <div class="container"> {{wtf.quick_form(form)}}</div>
+ <div class="col-xs-4 offset-xs-4"  align='center'>
+ <div class='container' align="center">
+ {{wtf.quick_form(form)}}
+ </div>
+ </div>
 {% endblock %}
