@@ -140,6 +140,9 @@ def login():
 def profile(name):
 	return render_template('profile.html', name = name)
 
+class Commentform(Form):
+	comment=StringField('Comment:')
+
 @app.route('/home/user/<name>')
 def home(name):
 	return render_template('home.html', name=name)
