@@ -37,5 +37,13 @@ class Comment(Base):
 	user_id = Column(Integer)
 	text = Column(String(100))
 	time=Column(Time)
+	sub_comments = relationship('Comment', backref='Gallery', lazy='dynamic')
 
 
+#def foo(comments):
+#	output = []
+#	for comment in comments:
+#		output.append(comment)
+#		for sub_comment in comment.sub_comments:
+#			output += foo(sub_comment)
+#		return output
