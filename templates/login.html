@@ -7,7 +7,10 @@
 
 
 {% block content %}
- <center><h1> Log In Here! </h1></center> <br><br>
+  <div class="text-xs-center">
+  <h1> Log In Here! </h1>
+  </div>
+
 <!--
  <form method='POST' target='/login'>
   <center> Email:</center><br>
@@ -17,9 +20,15 @@
   <br>
   <center><input type="submit" value="Submit"></center>
 -->
- <div class="col-xs-4 offset-xs-4"  align='center'>
- <div class='container' align="center">
- {{wtf.quick_form(form)}}
- </div>
- </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-4">
+
+  {{wtf.quick_form(form)}}
+
+      </div>
+    </div>
+  </div>
+
 {% endblock %}
