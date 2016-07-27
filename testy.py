@@ -2,10 +2,14 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 @app.route('/')
+def entry():
+	return render_template('entry.html')
+
+@app.route('/profile')
 def uploads():
     posts = [
         {
-            'picture': "static/pic.jpg",
+            'picture': "static/images.jpeg",
             'user': "Hila Tal",
             'titile': "me n staff",
             'num_of_likes': "15"
@@ -33,10 +37,18 @@ def uploads():
             'user': "Hila Tal",
             'title': "the 5th post",
             'num_of_likes': "11"
+        },
+        {
+            'picture': "static/papir_iroszer.jpg",
+            'user': "Hila Tal",
+            'title': "the previouse background image",
+            'num_of_likes': "17"
         }
     ]
 
-    return render_template('profile.html', posts=posts)
+    return render_template('profile.html', posts=posts, lenght=[i for i in range(0,int(len(posts)/3))])
+
+
 
 if __name__ == '__main__':
 	app.run(debug=True)
