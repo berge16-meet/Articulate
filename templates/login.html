@@ -19,11 +19,14 @@
   <center>Password:</center><br>
   <center><input type="password" name="user_password"></center>
   <br>
-  <center><input type="submit" value="Submit"></center> 
+  <center><input type="submit" value="Submit"></center>
 -->
- <div class="col-xs-4 offset-xs-4"  align='center'>
+
   <div class='container' align="center">
-  {{wtf.quick_form(form)}}
-  </div>
+    <div class="row">
+      <div class="col-xs-4 offset-xs-4"  align='center'>
+      {{wtf.quick_form(form)}}
+      </div>
+    </div>
  </div>
 {% endblock %}
