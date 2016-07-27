@@ -143,11 +143,11 @@ def profile(name):
 
 @app.route('/home/user/<name>')
 def home(name):
-	return render_template('home.html', name=name)
+	return render_template('home.html', name = name)
 
 @app.route ('/canvas/user/<name>')
 def canvas(name):
-	return render_template('canvas.html', name=name)
+	return render_template('canvas.html', name = name)
 
 @app.route ('/chat/user/<name>')
 def chat(name):
