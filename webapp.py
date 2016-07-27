@@ -7,6 +7,8 @@ from flask.ext.wtf import Form
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 from flask.ext.bootstrap import Bootstrap
+import hashlib
+import uuid
 
 app = Flask(__name__)
 
@@ -54,6 +56,8 @@ class SignUpForm(Form):
 
 	submit = SubmitField("Submit:")
 
+def hash_password(password):
+	return hashlib.md5(password.encode()).hexdigest()
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -69,13 +73,13 @@ def signup():
 		lastname=request.form['last_name']
 		email=request.form['email']
 		password=request.form['password']
+		password = hash_password(password)
 		gender=request.form['gender']
 		nationality=request.form['nationality']
 		dob=request.form['date_of_birth']
 		biography=request.form['biography']
 
 		#profilepic=request.form['profile_pic']
-		print(firstname)
 		#user=User(id= 1,firstname='roni',lastname='var',password='jj', email='hello', gender='male',date='1',bio='hi',username='ron',nationality='polish',profilepic='k')
 		user=User(firstname=firstname, lastname=lastname,email=email, password=password, gender=gender, nationality=nationality,date=dob,bio=biography)
 		DBsession.add(user)
@@ -83,7 +87,7 @@ def signup():
 		print (user.lastname)
 		email=DBsession.query(User).filter_by(email=user.email).first().email
 		print (email)
-		session['email']=email
+		session['id']=uuid.uuid4()
 		return redirect(url_for('home',name=firstname))
 
 
@@ -102,7 +106,10 @@ def login():
 
 	def validate(email,password):
 
-		return user_query.first() != None
+
+
+		return query.first() != None
+
 
 	if request.method=='GET':
 		return render_template('login.html', form=loginform)
@@ -110,13 +117,13 @@ def login():
 		email=request.form['email']
 		password=request.form['password']
 
-		user_query = DBsession.query(User).filter(User.email.in_([email]),
-		User.password.in_([password]))
+		user_query = DBsession.query(User).filter(User.email.in_([email]), User.password.in_([hash_password(password)]))
+
 		user = user_query.first()
 		if user != None:
-			session['email']=email
+			session['id']=uuid.uuid4()
 			return redirect(url_for('home',name=user.firstname))
-			
+
 		return render_template('login.html',form=loginform)
 
 
@@ -147,9 +154,6 @@ def chat(name):
 @app.route ('/about')
 def about():
 	return render_template('about.html')
-
-
-
 
 
 if __name__ == '__main__':

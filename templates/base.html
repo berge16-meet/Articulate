@@ -9,12 +9,16 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
   </head>
+
+
+  <body>
     {% block title %}{% endblock %}
 
     {% block css %} {% endblock %}
 
     {% block navbar %}
     <nav class="navbar navbar-light bg-faded">
+<<<<<<< HEAD
 <!-- <<<<<<< HEAD -->
       <a class="navbar-brand" href="home.html"><img src="{{ url_for('static', filename= 'logo.png')}}"style="width:220px;height:70px;"</a>
       <ul class="nav navbar-nav">
@@ -35,6 +39,10 @@
       {% endblock %}
 {% block navbarentry %}
     <a class ="navbar-brand" href="&"><img src="../static/logo.png" alt="Articulate logo" height="24"><span class="sr-only">(current)</span></a>
+=======
+
+    <a class ="navbar-brand" href="{{url_for('entry')}}"><img src="../static/logo.png" alt="Articulate logo" height="24"><span class="sr-only">(current)</span></a>
+>>>>>>> c5d009d0d054cddb1036f311f98014466880e25c
 
   <ul class="nav navbar-nav">
     <li class="nav-item">
@@ -51,9 +59,12 @@
 </nav>
     {% endblock %}
 
+<<<<<<< HEAD
     <style>
       {background-image: "bg-wp.jpg";}
     </style>
+=======
+>>>>>>> c5d009d0d054cddb1036f311f98014466880e25c
 
     {% block content %}
     {% endblock %}
