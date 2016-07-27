@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {%import "bootstrap/wtf.html" as wtf%}
+
 </head>
 <body>
 {block title%}
@@ -21,14 +22,11 @@
   <center><input type="submit" value="Submit"></center>
 -->
 
-  <div class="container">
+  <div class='container' align="center">
     <div class="row">
-      <div class="col-xs-4 col-xs-offset-4">
-
-  {{wtf.quick_form(form)}}
-
+      <div class="col-xs-4 col-xs-offset-4"  align='center'>
+      {{wtf.quick_form(form)}}
       </div>
     </div>
-  </div>
-
+ </div>
 {% endblock %}
