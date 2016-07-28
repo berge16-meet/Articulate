@@ -49,7 +49,6 @@ def hash_password(password):
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-
 	signup_form = SignUpForm()
 	if request.method == 'GET':
 		return render_template('signup.html', form = signup_form)
@@ -91,14 +90,8 @@ class Loginform(Form):
 def login():
 
 	loginform=Loginform()
-
 	def validate(email,password):
-
-
-
 		return query.first() != None
-
-
 	if request.method=='GET':
 		return render_template('login.html', form=loginform)
 	else:
@@ -106,12 +99,10 @@ def login():
 		password=request.form['password']
 
 		user_query = DBsession.query(User).filter(User.email.in_([email]), User.password.in_([hash_password(password)]))
-
 		user = user_query.first()
 		if user != None:
 			session['id']=uuid.uuid4()
 			return redirect(url_for('home',name=user.firstname))
-
 		return render_template('login.html',form=loginform)
 
 
@@ -128,16 +119,10 @@ def login():
 def profile(name):
 	return render_template('profile.html', name = name)
 
-class CommentForm(Form):
-	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
-
-@app.route('/home/<name>')
-def home(name):
-
+#@app.route('/home/<name>')
+#def home(name):
 	
 @app.route ('/canvas/user/<name>')
-
-
 def canvas(name):
 	return render_template('canvas.html', name=name)
 
@@ -191,6 +176,9 @@ def uploads():
     ]
 
     return render_template('profile.html', posts=posts)
+
+class CommentForm(Form):
+	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
 
 if __name__ == '__main__':
 	app.run(debug=True)

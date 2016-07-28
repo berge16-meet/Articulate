@@ -1,3 +1,9 @@
 body{
-	background-image: url("background.jpg")
+	background-image: url("background.jpg");
+    -webkit-background-size: cover; /* For WebKit*/
+    -moz-background-size: cover;    /* Mozilla*/
+    -o-background-size: cover;      /* Opera*/
+    background-size: cover;         /* Generic*/	
+    background-position: center center;
+    background-repeat: no-repeat;
 }
