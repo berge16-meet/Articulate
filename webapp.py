@@ -25,7 +25,7 @@ DBSessionMaker=sessionmaker(bind=engine)
 DBsession=DBSessionMaker()
 
 app.config['SECRET_KEY'] = 'guess who'
-app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
+#app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
@@ -205,7 +205,7 @@ def uploads():
     return render_template('profile.html', posts=posts)
 
    '''
-@app.route('home/uploads/<name>')
+@app.route('/home/uploads/<name>')
 def upload():
 	if request.method == 'POST':
 		if 'file' not in request.files:

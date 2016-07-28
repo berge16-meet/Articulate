@@ -48,12 +48,8 @@ class Comment(Base):
 	user_id = Column(Integer)
 	text = Column(String(400))
 	time=Column(Time)
-<<<<<<< HEAD
 	sub_comments = relationship('Comment', backref='Comment')
-=======
-	#sub_comments = relationship('Comment', backref='Gallery', lazy='dynamic')
 
->>>>>>> 3297f4363de13a38d628654958b821a01a8e22be
 
 #def foo(comments):
 #	output = []
