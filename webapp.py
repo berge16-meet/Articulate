@@ -133,6 +133,8 @@ def login():
 
 @app.route('/user/<name>')
 def profile(name):
+	user = DBsession.query(User).filter_by(username = name).first()
+	photos = DBsession.query(Gallery).filter_by(user_id = user.id).all()
 	return render_template('profile.html', name = name)
 
 class CommentForm(Form):
@@ -140,11 +142,17 @@ class CommentForm(Form):
 
 @app.route('/home/<name>')
 def home(name):
+
 	return
 	
 @app.route('/canvas/user/<name>')
 
 
+
+
+	return render_template('home.html', name = name)
+	
+@app.route('/canvas/user/<name>')
 
 def canvas(name):
 	return render_template('canvas.html', name=name)
@@ -152,17 +160,17 @@ def canvas(name):
 @app.route ('/chat/user/<name>')
 def chat(name):
 	return render_template('chat.html')
+
 @app.route ('/about')
 def about():
 	return render_template('about.html')
-
 
 
 @app.route ('/contact')
 def contact():
 	return render_template('contact.html')
 
-
+'''
 @app.route('/profile')
 def uploads():
     posts = [
@@ -205,6 +213,9 @@ def uploads():
     ]
 
     return render_template('profile.html', posts=posts)
+
+   '''
+
 @app.route('/home/uploads/<name>')
 def upload():
 	if request.method == 'POST':
@@ -218,10 +229,16 @@ def upload():
 			flash('No selected file')
 			return redirect(url_for('upload'))
 		if file(file.filename):
+
 			path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
 			file.save(path)
 			gallery = Gallery(user_id=session.query(User).filter_by(username=name).first().id,photo=path,description=request.form['description'])
 			return redirect(url_for('home'),filename=filename)
+
+			file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+			file=Gallery
+		return redirect(url_for('home'),filename=filename)
+
 
 	return render_template('upload.html')		
 	
