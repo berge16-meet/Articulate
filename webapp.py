@@ -1,27 +1,26 @@
+from flask import Flask, render_template, request, session
+app = Flask(__name__, static_url_path="", static_folder="static")
 from flask import Flask, render_template, request, redirect,url_for
 from flask import session as web_session
 from wtforms import *
-#SubmitField, StringField,PasswordField,TextAreaField, DateField, SelectField,SubmitField, validators
-from flask.ext.wtf import Form as WtfForm
-from wtforms.validators import Required
+from flask.ext.wtf import Form
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 from flask.ext.bootstrap import Bootstrap
 import hashlib
 import uuid
+
+app = Flask(__name__)
+
 from database import Base,User
 from sqlalchemy import create_engine
-
-app = Flask(__name__, static_url_path="", static_folder="static")
-
 engine=create_engine('sqlite:///Webpage.db')
 Base.metadata.create_all(engine)
 DBSessionMaker=sessionmaker(bind=engine)
 DBsession=DBSessionMaker()
 
 app.config['SECRET_KEY'] = 'guess who'
-app.config['CSRF_ENABLED']=True
-WTF_CSRF_ENABLED = True
+app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
@@ -33,7 +32,7 @@ def entry():
 	return render_template('entry.html')
 
 
-class SignUpForm(WtfForm):
+class SignUpForm(Form):
 	first_name = StringField("First name:")
 	last_name = StringField("Last name:")
 	email = StringField("Email:", [validators.Email()])
@@ -51,6 +50,7 @@ def hash_password(password):
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+
 	signup_form = SignUpForm()
 	if request.method == 'GET':
 		return render_template('signup.html', form = signup_form)
@@ -81,7 +81,7 @@ def signup():
 
 
 
-class Loginform(WtfForm):
+class Loginform(Form):
 	email=StringField('Email:',[validators.Required()])
 	password=PasswordField('Password:',[validators.required()])
 	submit=SubmitField('Submit')
@@ -91,9 +91,15 @@ class Loginform(WtfForm):
 @app.route('/login',methods=['GET','POST'])
 def login():
 
-	loginform=Loginform(csrf_enabled=True)
-	def validate(email,password):
+	loginform=Loginform()
+
+	#def validate(email,password):
+
+
+
 		return query.first() != None
+
+
 	if request.method=='GET':
 		return render_template('login.html', form=loginform)
 	else:
@@ -101,10 +107,12 @@ def login():
 		password=request.form['password']
 
 		user_query = DBsession.query(User).filter(User.email.in_([email]), User.password.in_([hash_password(password)]))
+
 		user = user_query.first()
 		if user != None:
 			session['id']=uuid.uuid4()
 			return redirect(url_for('home',name=user.firstname))
+
 		return render_template('login.html',form=loginform)
 
 
@@ -119,22 +127,20 @@ def login():
 
 @app.route('/user/<name>')
 def profile(name):
-	user = DBsession.query(User).filter_by(firstname = name).first()
-	myPhotos = DBsession.query(Gallery).filter_by(user_id = user.id).all()
-	return render_template('profile.html', name = name, posts = myPhotos)
+	return render_template('profile.html', name = name)
 
-
-class CommentForm(WtfForm):
+class CommentForm(Form):
 	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
 
 @app.route('/home/<name>')
 def home(name):
-	return render_template('home.html', name = name)
+
+	
+@app.route('/canvas/user/<name>')
 
 
-@app.route ('/canvas/user/<name>')
 def canvas(name):
-	return render_template('canvas.html', name = name)
+	return render_template('canvas.html', name=name)
 
 @app.route ('/chat/user/<name>')
 def chat(name):
@@ -142,6 +148,7 @@ def chat(name):
 @app.route ('/about')
 def about():
 	return render_template('about.html')
+
 
 @app.route('/profile')
 def uploads():
@@ -185,9 +192,25 @@ def uploads():
     ]
 
     return render_template('profile.html', posts=posts)
+@app.route('/uploads')
+def upload:
+	if request.method == 'POST':
+		if 'file' not in request.files:
+			flash('No file part')
+			return redirect(url_for('upload'))
+		
 
-class CommentForm(WtfForm):
-	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
+		file=request.files['file']	
+		if file.filename=='':
+			flash('No selected file')
+			return redirect(url_for('upload'))
+		if file(file.filename):
+		file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+		return redirect(url_for('home'),filename=filename)
+
+	return render_template('upload.html')		
+	
+
 
 if __name__ == '__main__':
 	app.run(debug=True)
