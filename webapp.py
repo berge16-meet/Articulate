@@ -51,13 +51,14 @@ def hash_password(password):
 def signup():
 
 	signup_form = SignUpForm()
+
 	if request.method == 'GET':
 		return render_template('signup.html', form = signup_form)
 
 
 	else:
-		firstname=request.form['first_name']
 
+		firstname=request.form['first_name']
 		lastname=request.form['last_name']
 		email=request.form['email']
 		password=request.form['password']
@@ -70,11 +71,10 @@ def signup():
 		#profilepic=request.form['profile_pic']
 		#user=User(id= 1,firstname='roni',lastname='var',password='jj', email='hello', gender='male',date='1',bio='hi',username='ron',nationality='polish',profilepic='k')
 		user=User(firstname=firstname, lastname=lastname,email=email, password=password, gender=gender, nationality=nationality,date=dob,bio=biography)
+
 		DBsession.add(user)
 		DBsession.commit()
-		print (user.lastname)
 		email=DBsession.query(User).filter_by(email=user.email).first().email
-		print (email)
 		session['id']=uuid.uuid4()
 		return redirect(url_for('home',name=firstname))
 
@@ -91,7 +91,6 @@ class Loginform(Form):
 def login():
 
 	loginform=Loginform()
-
 	def validate(email,password):
 
 
@@ -131,20 +130,29 @@ def profile(name):
 class CommentForm(Form):
 	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
 
+
+# @app.route('/post/<int:post_id>', methods=['GET','POST'])
+# def post(post_id):
+
+# 	if request.method == 'GET':
+# 		post = DBsession.query(Gallery).filter_by(id = post_id).first()
+# 		comments = DBsession.query(Comment).filter_by(parent_id = post.id)
+
+
 @app.route('/home/<name>')
 def home(name):
 	return render_template('home.html', name = name)
 
 
 @app.route ('/canvas/user/<name>')
-
-
 def canvas(name):
 	return render_template('canvas.html', name = name)
+
 
 @app.route ('/chat/user/<name>')
 def chat(name):
 	return render_template('chat.html')
+
 @app.route ('/about')
 def about():
 	return render_template('about.html')
