@@ -100,12 +100,19 @@ def login():
 	loginform=Loginform()
 
 
+
+
+
 	#def validate(email,password):
-
-
 
 	#return query.first() != None
 
+
+
+ 
+	
+	#return query.first() != None
+	
 
 	if request.method=='GET':
 
@@ -145,23 +152,20 @@ class CommentForm(Form):
 	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
 
 
-
-
-
-
 @app.route('/topic/')
 def home():
 		return render_template('home.html')
-
 
 
 @app.route('/home/<topic>')
 def home_topic(topic):
 	return render_template('home.html', topic = topic)
 
+
+@app.route('/canvas/')
+
 @app.route('/canvas/user/<name>')
 def canvas():
-
 	return render_template('canvas.html', name=name)
 
 @app.route ('/chat/user/<name>')
