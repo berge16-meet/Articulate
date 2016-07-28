@@ -8,6 +8,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 from flask.ext.bootstrap import Bootstrap
 import hashlib
+#from sqlalchemy_imageattach.context import store_context
 import uuid
 
 
@@ -139,11 +140,22 @@ def profile(name):
 class CommentForm(Form):
 	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
 
-@app.route('/home/<name>')
-def home(name):
-	return render_template('home.html', name = name)
-	
+
 @app.route('/canvas/user/<name>')
+
+
+
+@app.route('/home/<topic>')
+def home(topic):
+	return render_template('home.html', topic = topic)
+
+
+@app.route('/canvas/user/<name>')
+
+
+@app.route('/canvas/user/<name>')
+
+
 def canvas(name):
 	return render_template('canvas.html', name=name)
 
@@ -205,25 +217,40 @@ def uploads():
     return render_template('profile.html', posts=posts)
 
    '''
+
 @app.route('/home/uploads/<name>')
 def upload():
 	if request.method == 'POST':
 		if 'file' not in request.files:
 			flash('No file part')
 			return redirect(url_for('upload'))
-		
 
-		file=request.files['file']	
+
+
+		file=request.files['file']
+
+
+		file=request.files['file']
 		if file.filename=='':
 			flash('No selected file')
 			return redirect(url_for('upload'))
 		if file(file.filename):
+
+			path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
+			file.save(path)
+			gallery = Gallery(user_id=session.query(User).filter_by(username=name).first().id,photo=path,description=request.form['description'])
+			return redirect(url_for('home'),filename=filename)
+
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
 			file=Gallery
 		return redirect(url_for('home'),filename=filename)
 
-	return render_template('upload.html')		
-	
+
+	return render_template('upload.html')
+
+
+
+	return render_template('upload.html')
 
 
 if __name__ == '__main__':

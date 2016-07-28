@@ -34,7 +34,10 @@ class Gallery(Base):
 	__tablename__ = 'gallery'
 	id = Column(Integer, primary_key = True)
 	user_id = Column(Integer, ForeignKey('user.id'))
+
 	photo = Column(String(250))
+	photo = Column(String(255))
+
 	description = Column(String(140))
 	likes = Column(Integer)
 	topics = relationship("Topics", secondary = topic_gallery_association_table,  back_populates="galleries")
