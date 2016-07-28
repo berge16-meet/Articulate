@@ -42,6 +42,7 @@ class SignUpForm(Form):
 	first_name = StringField("First name:")
 	last_name = StringField("Last name:")
 	email = StringField("Email:", [validators.Email()])
+	username=StringField("Username:",[validators.Required()])
 	password = PasswordField("Password:", [validators.Required()])
 	gender = SelectField("Gender:", choices = [("male", "Male"), ("female", "Female"), ("other", "Other")])
 	date_of_birth = DateField("Date of birth:", [validators.Required()])
@@ -73,10 +74,11 @@ def signup():
 		nationality=request.form['nationality']
 		dob=request.form['date_of_birth']
 		biography=request.form['biography']
+		username=request.form['username']
 
 		#profilepic=request.form['profile_pic']
 		#user=User(id= 1,firstname='roni',lastname='var',password='jj', email='hello', gender='male',date='1',bio='hi',username='ron',nationality='polish',profilepic='k')
-		user=User(firstname=firstname, lastname=lastname,email=email, password=password, gender=gender, nationality=nationality,date=dob,bio=biography)
+		user=User(firstname=firstname, lastname=lastname,email=email, password=password, username= username,gender=gender, nationality=nationality,date=dob,bio=biography)
 		DBsession.add(user)
 		DBsession.commit()
 		print (user.lastname)
@@ -128,6 +130,7 @@ def login():
 		user = user_query.first()
 		if user != None:
 			session['id']=uuid.uuid4()
+			session['name']=user.username
 			return redirect(url_for('home'))
 
 		return render_template('login.html',form=loginform)
@@ -144,8 +147,8 @@ def login():
 
 @app.route('/user/<name>')
 def profile(name):
-	user = DBsession.query(User).filter_by(username = name).first()
-	photos = DBsession.query(Gallery).filter_by(user_id = user.id).all()
+	#user = DBsession.query(User).filter_by(username = name).first()
+	#photos = DBsession.query(Gallery).filter_by(user_id = user.id).all()
 	return render_template('profile.html', name = name)
 
 class CommentForm(Form):
