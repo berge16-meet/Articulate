@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {% block title %}
-    {% block css %}
     <!-- Required meta tags always come first -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,12 +12,11 @@
 
 
     {% endblock %}
-    {% endblock %}
   </head>
 
 
   <body id = "base_body">
-    
+    {% block title %}{% endblock %}
 
     {% block navbar %}
       <nav class="navbar navbar-light bg-faded">
