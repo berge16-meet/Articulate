@@ -9,7 +9,7 @@
 <div class="first">
 	<center>
 			<img src="{{ url_for('static', filename='roni.jpg')}}" width="90px" height="110px">
-			<h1>{{name}}!'s profile!</h1><br>
+			<h1>{{name}}'s profile!</h1><br>
 			<p>The description/bio goes here</p>
 	</center>
 </div>
@@ -67,7 +67,7 @@
                 <img class="card-img-top img-fluid" height="470px" src="static/bibi.jpg" alt="Card image cap">
                 <div class="card-block">
                   <center>
-                    <h5 class="card-title">{{post.user}}</h5>
+                    <h5 class="card-title">{{post.user_id.user.username}}</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p></center><br>
                     <!-- Trigger the modal with a button -->
                     <button type="button" class="btn btn-danger-outline" data-toggle="modal" data-target="#myModal" style="background-color: white; box-shadow: 0 0 18px lightcoral">View comments</button>
@@ -92,7 +92,7 @@
                       </div>
                     </div>
                     <a href="#" class="btn btn-danger-outline" style="box-shadow: 0 0 18px lightcoral">Like</a>
-                    <font>{{post.num_of_likes}} users likes this</font>
+                    <font>{{post.likes}} users like this</font>
                 </div>
               </div>
             </div>
