@@ -96,21 +96,8 @@ class Loginform(Form):
 @app.route('/login',methods=['GET','POST'])
 def login():
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	loginform=Loginform()
-=======
 	loginform=Loginform(csrf_enabled=True)
->>>>>>> d3609df6d35b59a13014985b80c675226ca0648c
-	def validate(email,password):
-=======
-	loginform=Loginform()
 
-	#def validate(email,password):
-
-
-
->>>>>>> 3297f4363de13a38d628654958b821a01a8e22be
 		return query.first() != None
 
 
@@ -158,7 +145,7 @@ class CommentForm(Form):
 @app.route('/home/<name>')
 def home(name):
 
-	
+
 @app.route('/canvas/user/<name>')
 
 
@@ -229,9 +216,9 @@ def upload:
 		if 'file' not in request.files:
 			flash('No file part')
 			return redirect(url_for('upload'))
-		
 
-		file=request.files['file']	
+
+		file=request.files['file']
 		if file.filename=='':
 			flash('No selected file')
 			return redirect(url_for('upload'))
@@ -240,8 +227,8 @@ def upload:
 		file=Gallery
 		return redirect(url_for('home'),filename=filename)
 
-	return render_template('upload.html')		
-	
+	return render_template('upload.html')
+
 
 
 if __name__ == '__main__':
