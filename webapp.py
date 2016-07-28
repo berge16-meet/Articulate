@@ -142,8 +142,8 @@ class CommentForm(Form):
 # 		comments = DBsession.query(Comment).filter_by(parent_id = post.id)
 
 
-@app.route('/home/<name>')
-def home(name):
+@app.route('/home/<str:topic>')
+def home(topic):
 
 
 @app.route('/canvas/user/<name>')
