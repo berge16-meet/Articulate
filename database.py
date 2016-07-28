@@ -21,13 +21,22 @@ class User(Base):
 	bio = Column(String(250))
 	profilepic = Column(String(250))
 
+topic_gallery_association_table = Table('association', Base.metadata, Column('topic_id', Integer, ForeignKey('topic.id')), Column('gallery_id', Integer, ForeignKey('gallery.id')))
+
+class Topic(Base):
+	__tablename__ = 'topic'
+	id = Column(Integer, primary_key=True)
+	topic = Column(String(64), unique=True)
+	posts = relationship("Gallery", secondary = topic_gallery_association_table, back_populates="topics")
+
 class Gallery(Base):
 	__tablename__ = 'gallery'
 	id = Column(Integer, primary_key = True)
-	user_id = Column(Integer, Foreign_key = user.id)
+	user_id = Column(Integer, ForeignKey ('user.id'))
 	photo = Column(String(250))
 	description = Column(String(140))
 	likes = Column(Integer)
+	topics = relationship("Topics", secondary = topic_gallery_association_table,  back_populates="galleries")
 	comments = relationship('Comment', backref='Gallery')
 
 class Comment(Base):
