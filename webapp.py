@@ -2,8 +2,8 @@ from flask import Flask, render_template, request, session
 app = Flask(__name__, static_url_path="", static_folder="static")
 from flask import Flask, render_template, request, redirect,url_for
 from flask import session as web_session
-from wtforms import *
 from flask.ext.wtf import Form
+from wtforms import *
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 from flask.ext.bootstrap import Bootstrap
@@ -134,7 +134,6 @@ class CommentForm(Form):
 @app.route('/home/<name>')
 def home(name):
 	return render_template('home.html', name = name)
-
 
 @app.route ('/canvas/user/<name>')
 
