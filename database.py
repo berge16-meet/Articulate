@@ -29,10 +29,9 @@ class Topic(Base):
 	__tablename__ = 'topic'
 	id = Column(Integer, primary_key=True)
 	topic = Column(String(64), unique=True)
-<<<<<<< HEAD
 	posts = relationship("Gallery", secondary = topic_gallery_association_table, back_populates="topics")
 '''
-	posts = relationship("Gallery", secondary = topic_gallery_association_table, backref="topics")
+	#posts = relationship("Gallery", secondary = topic_gallery_association_table, backref="topics")
 
 class Gallery(Base):
 	__tablename__ = 'gallery'
@@ -64,7 +63,6 @@ class Comment(Base):
 # 	text = Column(String(400))
 # 	time=Column(Time)
 # 	sub_comments = relationship('Comment', backref='Comment')
->>>>>>> fd2f67828bcc5ccdb3f9c00505f0f980415a0ef1
 
 
 #def foo(comments):

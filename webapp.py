@@ -99,15 +99,21 @@ def login():
 
 	loginform=Loginform()
 
-	#def validate(email,password)
+
+
+
+
+	#def validate(email,password):
 
 	#return query.first() != None
+
 
 
  
-	return DBsession.query.first() != None
+	
 	#return query.first() != None
 	
+
 	if request.method=='GET':
 
 		return render_template('login.html', form=loginform)
@@ -158,22 +164,9 @@ def home():
 
 @app.route('/home/<topic>')
 def home_topic(topic):
-	return render_template('home.html', topic = t
-@app.route('/canvas/user/<name>')
-def canvas(name):
-
-@app.route('/canvas/')
-def canvas():
-
-
-@app.route('/home/<topic>')
-def home_topic(topic):
 	return render_template('home.html', topic = topic)
 
-
 @app.route('/canvas/user/<name>')
-def canvas(name):
-@app.route('/canvas/')
 def canvas():
 
 	return render_template('canvas.html', name=name)
