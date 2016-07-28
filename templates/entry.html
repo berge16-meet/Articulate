@@ -1,12 +1,12 @@
 {% extends "base.html" %}
-<title>Articulate</title>
+<title>Entry Page</title>
  <head>
 <link rel="stylesheet" type="text/css" href=""{{ url_for('static', filename='static.css') }}"">
 </head>
 
 {% block navbar %}
 <nav class="navbar navbar-light bg-faded">
-    <a class ="navbar-brand" href="{{url_for('entry')}}"><img src="static/navlogo.png" alt="Articulate logo" height="24"><span class="sr-only">(current)</span></a>
+    <a class ="navbar-brand" href="{{url_for('entry')}}"><img src='{{url_for("static",filename="navlogo.png")}}' height="24"><span class="sr-only">(current)</span></a>
 
     <ul class="nav navbar-nav">
       <li class="nav-item">
@@ -16,10 +16,6 @@
       	<a class="nav-link" href="contact">Contact</a>
       </li>
     </ul>
-    <form class="form-inline pull-xs-right">
-      <input class="form-control" type="text" placeholder="Search">
-      <button class="btn btn-danger-outline" type="submit">Search</button>
-    </form>
   </nav>
 {% endblock %}
 
@@ -36,12 +32,13 @@
                         function(){s=document.createElement("script");s.setAttribute("type","text/javascript");s.se Attribute("src", "http://www.htmlcommentbox.com/jread?page="+escape((window.hcb_user && hcb_user.PAGE)||(""+window.location)).replace("+","%2B")+"&opts=470&num=10");if (typeof s!="undefined") document.getElementsByTagName("head")[0].appendChild(s);})(); /*-->*/ </script>
 <!-- end htmlcommentbox.com -->
 
+
 	<div class="container">
 		<div class="row">
 				<img  class="img-fluid col-xs-8 col-xs-offset-3" src="{{ url_for('static', filename='logo1.png') }}"/>
 		</div>
 	<div class=row>
-	<h2  class="text-xs-center" style = "color: red">Creating a better Artmosphere!</h2>
+	<h2  class="text-xs-center" style = "color: #a50000">Creating a better Artmosphere!</h2>
 	 </div>
 	 <br>
 
