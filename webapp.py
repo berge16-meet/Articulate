@@ -159,7 +159,12 @@ def home():
 def home_topic(topic):
 	return render_template('home.html', topic = topic)
 
+<<<<<<< HEAD
+
+@app.route('/canvas/')
+=======
 @app.route('/canvas/user/<name>')
+>>>>>>> be1f1737062af8240a5422ecc3387c6e2d4ec91c
 def canvas():
 
 	return render_template('canvas.html', name=name)
