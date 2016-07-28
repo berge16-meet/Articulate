@@ -149,7 +149,7 @@ def home(name):
 
 
 
-@app.route('/home/<str:topic>')
+@app.route('/home/<topic>')
 def home(topic):
 
 
