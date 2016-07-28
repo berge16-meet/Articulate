@@ -1,25 +1,27 @@
-from flask import Flask, render_template, request, session
-app = Flask(__name__, static_url_path="", static_folder="static")
 from flask import Flask, render_template, request, redirect,url_for
 from flask import session as web_session
 from wtforms import *
-from flask.ext.wtf import Form
+#SubmitField, StringField,PasswordField,TextAreaField, DateField, SelectField,SubmitField, validators
+from flask.ext.wtf import Form as WtfForm
+from wtforms.validators import Required
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 from flask.ext.bootstrap import Bootstrap
 import hashlib
 import uuid
-
-app = Flask(__name__)
-
 from database import Base,User
 from sqlalchemy import create_engine
+
+app = Flask(__name__, static_url_path="", static_folder="static")
+
 engine=create_engine('sqlite:///Webpage.db')
 Base.metadata.create_all(engine)
 DBSessionMaker=sessionmaker(bind=engine)
 DBsession=DBSessionMaker()
 
 app.config['SECRET_KEY'] = 'guess who'
+app.config['CSRF_ENABLED']=True
+WTF_CSRF_ENABLED = True
 
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
@@ -31,7 +33,7 @@ def entry():
 	return render_template('entry.html')
 
 
-class SignUpForm(Form):
+class SignUpForm(WtfForm):
 	first_name = StringField("First name:")
 	last_name = StringField("Last name:")
 	email = StringField("Email:", [validators.Email()])
@@ -79,7 +81,7 @@ def signup():
 
 
 
-class Loginform(Form):
+class Loginform(WtfForm):
 	email=StringField('Email:',[validators.Required()])
 	password=PasswordField('Password:',[validators.required()])
 	submit=SubmitField('Submit')
@@ -89,7 +91,7 @@ class Loginform(Form):
 @app.route('/login',methods=['GET','POST'])
 def login():
 
-	loginform=Loginform()
+	loginform=Loginform(csrf_enabled=True)
 	def validate(email,password):
 		return query.first() != None
 	if request.method=='GET':
@@ -119,12 +121,18 @@ def login():
 def profile(name):
 	return render_template('profile.html', name = name)
 
-#@app.route('/home/<name>')
-#def home(name):
-	
+
+class CommentForm(WtfForm):
+	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
+
+@app.route('/home/<name>')
+def home(name):
+	return render_template('home.html', name = name)
+
+
 @app.route ('/canvas/user/<name>')
 def canvas(name):
-	return render_template('canvas.html', name=name)
+	return render_template('canvas.html', name = name)
 
 @app.route ('/chat/user/<name>')
 def chat(name):
@@ -177,7 +185,7 @@ def uploads():
 
     return render_template('profile.html', posts=posts)
 
-class CommentForm(Form):
+class CommentForm(WtfForm):
 	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
 
 if __name__ == '__main__':
