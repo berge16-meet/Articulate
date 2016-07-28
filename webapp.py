@@ -8,6 +8,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 from flask.ext.bootstrap import Bootstrap
 import hashlib
+from sqlalchemy_imageattach.context import store_context
 import uuid
 
 
@@ -25,7 +26,7 @@ DBSessionMaker=sessionmaker(bind=engine)
 DBsession=DBSessionMaker()
 
 app.config['SECRET_KEY'] = 'guess who'
-app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
+#app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
@@ -57,14 +58,13 @@ def hash_password(password):
 def signup():
 
 	signup_form = SignUpForm()
-
 	if request.method == 'GET':
 		return render_template('signup.html', form = signup_form)
 
 
 	else:
-
 		firstname=request.form['first_name']
+
 		lastname=request.form['last_name']
 		email=request.form['email']
 		password=request.form['password']
@@ -77,10 +77,11 @@ def signup():
 		#profilepic=request.form['profile_pic']
 		#user=User(id= 1,firstname='roni',lastname='var',password='jj', email='hello', gender='male',date='1',bio='hi',username='ron',nationality='polish',profilepic='k')
 		user=User(firstname=firstname, lastname=lastname,email=email, password=password, gender=gender, nationality=nationality,date=dob,bio=biography)
-
 		DBsession.add(user)
 		DBsession.commit()
+		print (user.lastname)
 		email=DBsession.query(User).filter_by(email=user.email).first().email
+		print (email)
 		session['id']=uuid.uuid4()
 		return redirect(url_for('home',name=firstname))
 
@@ -96,9 +97,13 @@ class Loginform(Form):
 @app.route('/login',methods=['GET','POST'])
 def login():
 
-	loginform=Loginform(csrf_enabled=True)
+	loginform=Loginform()
 
-		return query.first() != None
+	#def validate(email,password):
+
+
+
+	return query.first() != None
 
 
 	if request.method=='GET':
@@ -128,30 +133,33 @@ def login():
 
 @app.route('/user/<name>')
 def profile(name):
+	user = DBsession.query(User).filter_by(username = name).first()
+	photos = DBsession.query(Gallery).filter_by(user_id = user.id).all()
 	return render_template('profile.html', name = name)
 
 class CommentForm(Form):
 	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
 
+@app.route('/home/<name>')
+def home(name):
 
-# @app.route('/post/<int:post_id>', methods=['GET','POST'])
-# def post(post_id):
+	return
 
-# 	if request.method == 'GET':
-# 		post = DBsession.query(Gallery).filter_by(id = post_id).first()
-# 		comments = DBsession.query(Comment).filter_by(parent_id = post.id)
+@app.route('/canvas/user/<name>')
+
 
 
 @app.route('/home/<str:topic>')
 def home(topic):
 
 
-@app.route('/canvas/user/<name>')
 
+	return render_template('home.html', name = name)
+
+@app.route('/canvas/user/<name>')
 
 def canvas(name):
 	return render_template('canvas.html', name=name)
-
 
 @app.route ('/chat/user/<name>')
 def chat(name):
@@ -162,12 +170,11 @@ def about():
 	return render_template('about.html')
 
 
-
 @app.route ('/contact')
 def contact():
 	return render_template('contact.html')
 
-
+'''
 @app.route('/profile')
 def uploads():
     posts = [
@@ -210,8 +217,11 @@ def uploads():
     ]
 
     return render_template('profile.html', posts=posts)
-@app.route('home/uploads/<name>')
-def upload:
+
+   '''
+
+@app.route('/home/uploads/<name>')
+def upload():
 	if request.method == 'POST':
 		if 'file' not in request.files:
 			flash('No file part')
@@ -223,9 +233,16 @@ def upload:
 			flash('No selected file')
 			return redirect(url_for('upload'))
 		if file(file.filename):
-		file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
-		file=Gallery
+
+			path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
+			file.save(path)
+			gallery = Gallery(user_id=session.query(User).filter_by(username=name).first().id,photo=path,description=request.form['description'])
+			return redirect(url_for('home'),filename=filename)
+
+			file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+			file=Gallery
 		return redirect(url_for('home'),filename=filename)
+
 
 	return render_template('upload.html')
 

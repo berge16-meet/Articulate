@@ -34,7 +34,7 @@ class Gallery(Base):
 	__tablename__ = 'gallery'
 	id = Column(Integer, primary_key = True)
 	user_id = Column(Integer, ForeignKey('user.id'))
-	photo = Column(String(250))
+	photo = Column(String(255))
 	description = Column(String(140))
 	likes = Column(Integer)
 	topics = relationship("Topics", secondary = topic_gallery_association_table,  back_populates="galleries")
@@ -48,12 +48,8 @@ class Comment(Base):
 	user_id = Column(Integer)
 	text = Column(String(400))
 	time=Column(Time)
-<<<<<<< HEAD
 	sub_comments = relationship('Comment', backref='Comment')
-=======
-	#sub_comments = relationship('Comment', backref='Gallery', lazy='dynamic')
 
->>>>>>> 3297f4363de13a38d628654958b821a01a8e22be
 
 #def foo(comments):
 #	output = []

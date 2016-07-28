@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    {% block title %}
+    {% block css %}
     <!-- Required meta tags always come first -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,12 +13,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
 
 
-    {% block css %} {% endblock %}
+    {% endblock %}
+    {% endblock %}
   </head>
 
 
   <body id = "base_body">
-    {% block title %}{% endblock %}
+    
 
     {% block navbar %}
       <nav class="navbar navbar-light bg-faded">
@@ -44,6 +47,7 @@
 
 
 
+<body style="background-color:powderblue;">
 
 
     {% block content %}
