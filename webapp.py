@@ -103,7 +103,7 @@ def login():
 
 
 
-	return query.first() != None
+	return DBsession.query.first() != None
 
 
 	if request.method=='GET':
