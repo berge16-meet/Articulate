@@ -19,7 +19,7 @@ class User(Base):
 	nationality = Column(String(64))
 	gender = Column(String(20))
 	date = Column(String(64))
-	bio  == Column(String(250))
+	bio  = Column(String(250))
 	profilepic = Column(String(250))
 	photos = relationship('Gallery', backref = 'User', lazy = 'dynamic')
 
