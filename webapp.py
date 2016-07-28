@@ -154,9 +154,12 @@ class CommentForm(Form):
 
 
 
+
+
 @app.route('/topic/')
 def home():
 		return render_template('home.html')
+
 
 
 @app.route('/home/<topic>')
@@ -165,6 +168,17 @@ def home_topic(topic):
 @app.route('/canvas/user/<name>')
 def canvas(name):
 
+@app.route('/canvas/')
+def canvas():
+
+
+@app.route('/home/<topic>')
+def home_topic(topic):
+	return render_template('home.html', topic = topic)
+
+
+@app.route('/canvas/user/<name>')
+def canvas(name):
 @app.route('/canvas/')
 def canvas():
 
