@@ -116,7 +116,7 @@ def login():
 		user = user_query.first()
 		if user != None:
 			session['id']=uuid.uuid4()
-			return redirect(url_for('home',name=user.firstname))
+			return redirect(url_for('home',name=user.username))
 
 		return render_template('login.html',form=loginform)
 
@@ -203,7 +203,7 @@ def uploads():
     ]
 
     return render_template('profile.html', posts=posts)
-@app.route('/uploads')
+@app.route('home/uploads/<name>')
 def upload:
 	if request.method == 'POST':
 		if 'file' not in request.files:
@@ -217,6 +217,7 @@ def upload:
 			return redirect(url_for('upload'))
 		if file(file.filename):
 		file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+		file=Gallery
 		return redirect(url_for('home'),filename=filename)
 
 	return render_template('upload.html')		
