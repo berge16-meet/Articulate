@@ -24,21 +24,8 @@ app.config['SECRET_KEY'] = 'guess who'
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
 
-'''
-if DBsession.query.all()=null:#no users exist:
-	users = [
-		{
-			firstname: 'asdfasd',
 
-		}
-	]
 
-	# for user in users
-	insertUser = User(fisrname = user.firstname, las)
-	#user1=User(
-
-	DBsession.commit()
-'''
 @app.route('/')
 def entry():
 	return render_template('entry.html')
@@ -141,11 +128,17 @@ def login():
 def profile(name):
 	return render_template('profile.html', name = name)
 
-@app.route('/home/user/<name>')
+class CommentForm(Form):
+	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
+
+@app.route('/home/<name>')
 def home(name):
 	return render_template('home.html', name = name)
 
+
 @app.route ('/canvas/user/<name>')
+
+
 def canvas(name):
 	return render_template('canvas.html', name = name)
 
