@@ -138,9 +138,14 @@ def login():
 @app.route('/user/<name>')
 def profile(name):
 	user = DBsession.query(User).filter_by(username = name).first()
-	photos = DBsession.query(Gallery).filter_by(user_id = user.id).all()
-	return render_template('profile.html', name = name)
 
+	if user != None:
+		photos = DBsession.query(Gallery).filter_by(user_id = user.id).all()
+		return render_template('profile.html', name = name)
+
+	else:
+		return render_template('profile.html', name = None)
+		
 class CommentForm(Form):
 	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
 
