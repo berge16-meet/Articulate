@@ -147,9 +147,14 @@ class CommentForm(Form):
 
 @app.route('/home/<topic>')
 def home(topic):
-	return render_template('home.html', name = name)
+	return render_template('home.html', topic = topic)
+
 
 @app.route('/canvas/user/<name>')
+
+
+@app.route('/canvas/user/<name>')
+
 
 def canvas(name):
 	return render_template('canvas.html', name=name)
@@ -221,6 +226,10 @@ def upload():
 			return redirect(url_for('upload'))
 
 
+
+		file=request.files['file']
+
+
 		file=request.files['file']
 		if file.filename=='':
 			flash('No selected file')
@@ -239,6 +248,9 @@ def upload():
 
 	return render_template('upload.html')
 
+
+
+	return render_template('upload.html')
 
 
 if __name__ == '__main__':

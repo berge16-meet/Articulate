@@ -7,12 +7,12 @@
 <h4 > ARTiculate is a plaform where people can share their perspectives through Art bla bla bla </h4>
 </div>
 
-<div class= "vision">
+<div class="vision p-x-2 p-y-2" style="background-color: #f7f7f7;">
 <h1 style="color:#800000;"><b>Our Vision</b></h1>
 <h4> we envision a world where all voices are heard, in order to build a society that is self-aware, exposed and understands all persectives.</h4>
 </div>
 
-<div class= "mission">
+<div class= "mission p-x-2 p-y-2" style="background-color: #f7f7f7;">
 <h1 style="color:#800000;"><b>Our Mission </b></h1>
 <h4> our mission is to create a circle of communication, established on the common ground of art, fulfilling tolerance and understanding towards all of it's members. </h4>
 </div>
@@ -23,11 +23,6 @@
 
 {% endblock %}
 
-
-
-
-
-{% block css %} 
 <style>
 
 div.team {
@@ -59,7 +54,7 @@ div.text  {
     top: 175px;
     right: 0px;
     width: 1250px;
-    height: 400px;  
+    height: 400px;
 }
 
 div.berge {
@@ -67,7 +62,7 @@ div.berge {
     top: 700px;
     right: 200px;
     width: 200px;
-    height: 100px;  
+    height: 100px;
 }
 
 div.nofar {
@@ -107,7 +102,7 @@ div.hila {
     top: 1150px;
     right: 1000px;
     width: 200px;
-    height: 100px; 
+    height: 100px;
 }
 
 div.nethanel {
@@ -115,7 +110,7 @@ div.nethanel {
     top: 1600px;
     right: 600px;
     width: 200px;
-    height: 100px; 
+    height: 100px;
 }
 
 div.about_us {
@@ -126,7 +121,7 @@ div.about_us {
     height: 100px;
 
 </style>
-{% endblock %}
+
 {% block content %}
 
 <div class="about_us">
@@ -143,7 +138,7 @@ div.about_us {
 <div class="nofar">
 <img src="{{ url_for('static', filename= 'nofar.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">
 <h4 align="right"> Nofar Dvir </h4>
-<h4 align="right"> Israeli from Jerusalem </h4> 
+<h4 align="right"> Israeli from Jerusalem </h4>
 <h4 align="right"> Founder </h4>
 </div>
 
@@ -177,13 +172,19 @@ div.about_us {
 
 
 <div class="nethanel">
-<img src="{{ url_for('static', filename= 'nethanel.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">	
+<img src="{{ url_for('static', filename= 'nethanel.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">
 <h4 align="right"> Nathaniel Navarro</h4>
 <h4 align="right"> Israeli from Mevaseret Tzion </h4>
 <h4 align="right"> Cofounder </h4>
 
 </div>
 {% endblock %}
+
+
+
+
+
+
 
 {% block navbar %}
 
@@ -203,7 +204,6 @@ div.about_us {
       <button class="btn btn-danger-outline" type="submit">Search</button>
     </form>
   </nav>
-  
+
 
   {% endblock %}
-

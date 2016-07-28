@@ -2,8 +2,11 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
+@app.route ('/')
+def about():
+	return render_template('about.html')
 
-@app.route('/profile')
+@app.route('/home')
 def uploads():
     posts = [
         {
@@ -44,7 +47,7 @@ def uploads():
         }
     ]
 
-    return render_template('profile.html', posts=posts, lenght=[i for i in range(0,int(len(posts)/3))])
+    return render_template('home.html', posts=posts, lenght=[i for i in range(0,int(len(posts)/3))])
 
 
 
