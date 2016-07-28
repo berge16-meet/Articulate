@@ -19,7 +19,7 @@ class User(Base):
 	nationality = Column(String(64))
 	gender = Column(String(20))
 	date = Column(String(64))
-	bio  == Column(String(250))
+	bio  = Column(String(250))
 	profilepic = Column(String(250))
 	photos = relationship('Gallery', backref = 'User', lazy = 'dynamic')
 '''
@@ -31,7 +31,7 @@ class Topic(Base):
 	topic = Column(String(64), unique=True)
 	posts = relationship("Gallery", secondary = topic_gallery_association_table, back_populates="topics")
 '''
-	posts = relationship("Gallery", secondary = topic_gallery_association_table, backref="topics")
+	#posts = relationship("Gallery", secondary = topic_gallery_association_table, backref="topics")
 
 class Gallery(Base):
 	__tablename__ = 'gallery'

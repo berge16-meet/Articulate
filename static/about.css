@@ -1,0 +1,96 @@
+
+div.team {
+    position: absolute;
+    top: 600px;
+    right: 250px;
+    width: 500px;
+    height: 500px;
+    font-family: Geneva;
+}
+
+div.vision {
+    position: absolute;
+    top: 300px;
+    right: 80px;
+    width: 500px;
+    height: 500px;
+}
+
+div.mission {
+    position: absolute;
+    top: 300px;
+    right: 700px;
+    width: 500px;
+    height: 500px;
+}
+
+div.text  {
+    position: absolute;
+    top: 175px;
+    right: 0px;
+    width: 1250px;
+    height: 400px;
+}
+
+div.berge {
+    position: absolute;
+    top: 700px;
+    right: 200px;
+    width: 200px;
+    height: 100px;
+}
+
+div.nofar {
+    position: absolute;
+    top: 700px;
+    right: 600px;
+    width: 200px;
+    height: 100px;
+}
+
+div.roni {
+    position: absolute;
+    top: 700px;
+    right: 1000px;
+    width: 200px;
+    height: 100px;
+}
+
+div.neta {
+    position: absolute;
+    top: 1150px;
+    right: 200px;
+    width: 200px;
+    height: 100px;
+}
+
+div.ori {
+    position: absolute;
+    top: 1150px;
+    right: 600px;
+    width: 200px;
+    height: 100px;
+}
+
+div.hila {
+    position: absolute;
+    top: 1150px;
+    right: 1000px;
+    width: 200px;
+    height: 100px;
+}
+
+div.nethanel {
+    position: absolute;
+    top: 1600px;
+    right: 600px;
+    width: 200px;
+    height: 100px;
+}
+
+div.about_us {
+    position: absolute;
+    top: 100px;
+    right: 0px;
+    width: 800px;
+    height: 100px;
