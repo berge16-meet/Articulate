@@ -99,24 +99,6 @@ def login():
 
 	loginform=Loginform()
 
-	#def validate(email,password):
-
-<<<<<<< HEAD
-
-
-
-
-
-	#return query.first() != None
-
-
- 
-	return DBsession.query.first() != None
-	#return query.first() != None
-	
-
-=======
->>>>>>> 3b4a1f5c855b30059d03d00fd83a204c414db8da
 	if request.method=='GET':
 
 		return render_template('login.html', form=loginform)
