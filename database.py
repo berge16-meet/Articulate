@@ -26,7 +26,7 @@ class Gallery(Base):
 	__tablename__ = 'gallery'
 	id = Column(Integer, primary_key = True)
 	user_id = Column(Integer, ForeignKey('user.id'))
-	photo = Column(String(250))
+	photo = Column(String(255))
 	description = Column(String(140))
 	likes = Column(Integer)
 	comments = relationship('Comment', backref='Gallery', lazy='dynamic')

@@ -8,6 +8,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 from flask.ext.bootstrap import Bootstrap
 import hashlib
+from sqlalchemy_imageattach.context import store_context
 import uuid
 
 
@@ -25,7 +26,7 @@ DBSessionMaker=sessionmaker(bind=engine)
 DBsession=DBSessionMaker()
 
 app.config['SECRET_KEY'] = 'guess who'
-app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
+#app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
@@ -102,7 +103,7 @@ def login():
 
 
 
-		return query.first() != None
+	return query.first() != None
 
 
 	if request.method=='GET':
@@ -139,9 +140,10 @@ class CommentForm(Form):
 
 @app.route('/home/<name>')
 def home(name):
-
+	return
 	
 @app.route('/canvas/user/<name>')
+
 
 
 def canvas(name):
@@ -203,8 +205,8 @@ def uploads():
     ]
 
     return render_template('profile.html', posts=posts)
-@app.route('home/uploads/<name>')
-def upload:
+@app.route('/home/uploads/<name>')
+def upload():
 	if request.method == 'POST':
 		if 'file' not in request.files:
 			flash('No file part')
@@ -216,9 +218,10 @@ def upload:
 			flash('No selected file')
 			return redirect(url_for('upload'))
 		if file(file.filename):
-		file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
-		file=Gallery
-		return redirect(url_for('home'),filename=filename)
+			path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
+			file.save(path)
+			gallery = Gallery(user_id=session.query(User).filter_by(username=name).first().id,photo=path,description=request.form['description'])
+			return redirect(url_for('home'),filename=filename)
 
 	return render_template('upload.html')		
 	
