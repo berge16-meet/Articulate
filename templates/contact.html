@@ -1,8 +1,6 @@
 {% extends "base.html" %}
-<title>Articulate</title>
- <head>
-<link rel="stylesheet" type="text/css" href=""{{ url_for('static', filename='static.css') }}"">
-</head>
+
+<input type="text" name="inputBox" placeholder="enter your text here">
 
 {% block navbar %}
 <nav class="navbar navbar-light bg-faded">
@@ -23,24 +21,11 @@
   </nav>
 {% endblock %}
 
-{% block content %}
-
-	<div class="container">
-		<div class="row">
-				<img  class="img-fluid col-xs-8 col-xs-offset-3" src="{{ url_for('static', filename='logo1.png') }}"/>
-		</div>
-	<div class=row>
-	<h2  class="text-xs-center" style = "color: red">Creating a better Artmosphere!</h2>
-	 </div>
-	 <br>
-
-	<center><a class="btn btn-danger" href ="{{url_for('signup')}}">Sign up!</a><br></center><br>
+<form action="demo_form.asp">
+<input type="text" name="fname" placeholder="First name"><br>
+<input type="text" name="lname" placeholder="Last name"><br>
+<input type="submit" value="Submit">
+</form>
 
 
-	<center><button type="button" class="btn btn-danger" onclick = "window.location.href ='login'">Log In!</button><br></center>
-
-
-
-
-
-{% endblock %}
+ 
