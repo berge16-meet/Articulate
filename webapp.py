@@ -152,28 +152,18 @@ class CommentForm(Form):
 	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
 
 
-
-
-
-
 @app.route('/topic/')
 def home():
 		return render_template('home.html')
-
 
 
 @app.route('/home/<topic>')
 def home_topic(topic):
 	return render_template('home.html', topic = topic)
 
-<<<<<<< HEAD
 
-@app.route('/canvas/')
-=======
 @app.route('/canvas/user/<name>')
->>>>>>> be1f1737062af8240a5422ecc3387c6e2d4ec91c
 def canvas():
-
 	return render_template('canvas.html', name=name)
 
 @app.route ('/chat/user/<name>')
