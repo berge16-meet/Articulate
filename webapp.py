@@ -170,13 +170,9 @@ class CommentForm(Form):
 def home():
 		return render_template('home.html')
 
-
-@app.route('/home/<topic>')
-def home_topic(topic):
-	return render_template('home.html', topic = topic)
-
-
-@app.route('/canvas/')
+@app.route('/home/<name>/<topic>')
+def home_topic(topic, name):
+	return render_template('home.html', topic = topic, name = name)
 
 @app.route('/canvas/user/<name>')
 def canvas():
@@ -194,7 +190,6 @@ def about():
 @app.route ('/contact')
 def contact():
 	return render_template('contact.html')
-
 '''
 @app.route('/profile')
 def uploads():
@@ -238,8 +233,7 @@ def uploads():
     ]
 
     return render_template('profile.html', posts=posts)
-
-   '''
+'''
 
 @app.route('/home/uploads/<name>')
 def upload():
