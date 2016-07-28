@@ -83,7 +83,7 @@ def signup():
 		email=DBsession.query(User).filter_by(email=user.email).first().email
 		print (email)
 		session['id']=uuid.uuid4()
-		return redirect(url_for('home',name=firstname))
+		return redirect(url_for('home'))
 
 
 
@@ -103,7 +103,7 @@ def login():
 
 
 
-	return query.first() != None
+	#return query.first() != None
 
 
 	if request.method=='GET':
@@ -117,7 +117,7 @@ def login():
 		user = user_query.first()
 		if user != None:
 			session['id']=uuid.uuid4()
-			return redirect(url_for('home',name=user.username))
+			return redirect(url_for('home'))
 
 		return render_template('login.html',form=loginform)
 
@@ -244,10 +244,6 @@ def upload():
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
 			file=Gallery
 		return redirect(url_for('home'),filename=filename)
-
-
-	return render_template('upload.html')
-
 
 
 	return render_template('upload.html')
