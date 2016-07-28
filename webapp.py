@@ -101,14 +101,6 @@ def login():
 
 	#def validate(email,password):
 
-<<<<<<< HEAD
-=======
-
-
-	#return query.first() != None
-
-
->>>>>>> 6cd9ad4415d3a346b1a64f8837d9511e20c9dcf9
 	if request.method=='GET':
 
 		return render_template('login.html', form=loginform)
