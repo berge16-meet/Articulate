@@ -10,6 +10,11 @@ from flask.ext.bootstrap import Bootstrap
 import hashlib
 import uuid
 
+
+from database import Base,User,Gallery,Comment
+from sqlalchemy import create_engine
+
+
 app = Flask(__name__)
 
 from database import Base,User
@@ -148,6 +153,12 @@ def chat(name):
 @app.route ('/about')
 def about():
 	return render_template('about.html')
+
+
+
+@app.route ('/contact')
+def contact():
+	return render_template('contact.html')
 
 
 @app.route('/profile')
