@@ -8,7 +8,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 from flask.ext.bootstrap import Bootstrap
 import hashlib
-from sqlalchemy_imageattach.context import store_context
+#from sqlalchemy_imageattach.context import store_context
 import uuid
 
 
@@ -145,12 +145,7 @@ def home(name):
 
 	return
 	
-@app.route('/canvas/user/<name>')
 
-
-
-
-	return render_template('home.html', name = name)
 	
 @app.route('/canvas/user/<name>')
 
