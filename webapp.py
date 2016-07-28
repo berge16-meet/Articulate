@@ -126,7 +126,9 @@ def login():
 
 @app.route('/user/<name>')
 def profile(name):
-	return render_template('profile.html', name = name)
+	user = DBsession.query(User).filter_by(firstname = name).first()
+	myPhotos = DBsession.query(Gallery).filter_by(user_id = user.id).all()
+	return render_template('profile.html', name = name, posts = myPhotos)
 
 class CommentForm(Form):
 	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
@@ -137,8 +139,6 @@ def home(name):
 
 
 @app.route ('/canvas/user/<name>')
-
-
 def canvas(name):
 	return render_template('canvas.html', name = name)
 
@@ -148,7 +148,6 @@ def chat(name):
 @app.route ('/about')
 def about():
 	return render_template('about.html')
-
 
 @app.route('/profile')
 def uploads():
