@@ -105,10 +105,15 @@ def login():
 
 
 
+
 	#return query.first() != None
 
 
  
+	return DBsession.query.first() != None
+	#return query.first() != None
+	
+
 	if request.method=='GET':
 
 		return render_template('login.html', form=loginform)
@@ -148,17 +153,21 @@ class CommentForm(Form):
 
 
 
+
 @app.route('/topic/')
 def home():
 		return render_template('home.html')
 
+
 @app.route('/home/<topic>')
 def home_topic(topic):
-	return render_template('home.html', topic = topic)
-
+	return render_template('home.html', topic = t
+@app.route('/canvas/user/<name>')
+def canvas(name):
 
 @app.route('/canvas/')
 def canvas():
+
 	return render_template('canvas.html', name=name)
 
 @app.route ('/chat/user/<name>')
