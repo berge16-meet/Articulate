@@ -9,6 +9,7 @@ Base = declarative_base()
 
 class User(Base):
 	__tablename__ = 'user'
+
 	id = Column(Integer, primary_key = True)
 	firstname = Column(String(64))
 	lastname = Column(String(64))
@@ -21,26 +22,27 @@ class User(Base):
 	bio  == Column(String(250))
 	profilepic = Column(String(250))
 	photos = relationship('Gallery', backref = 'User', lazy = 'dynamic')
-
+'''
 topic_gallery_association_table = Table('association', Base.metadata, Column('topic_id', Integer, ForeignKey('topic.id')), Column('gallery_id', Integer, ForeignKey('gallery.id')))
 
 class Topic(Base):
 	__tablename__ = 'topic'
 	id = Column(Integer, primary_key=True)
 	topic = Column(String(64), unique=True)
+<<<<<<< HEAD
 	posts = relationship("Gallery", secondary = topic_gallery_association_table, back_populates="topics")
+'''
+	#posts = relationship("Gallery", secondary = topic_gallery_association_table, backref="topics")
 
 class Gallery(Base):
 	__tablename__ = 'gallery'
 	id = Column(Integer, primary_key = True)
 	user_id = Column(Integer, ForeignKey('user.id'))
-
-	photo = Column(String(250))
 	photo = Column(String(255))
-
 	description = Column(String(140))
 	likes = Column(Integer)
-	topics = relationship("Topics", secondary = topic_gallery_association_table,  back_populates="galleries")
+	#time = Column(Time)
+	#topics = relationship("Topics", secondary = topic_gallery_association_table,  back_populates="galleries")
 	comments = relationship('Comment', backref='Gallery')
 
 class Comment(Base):
@@ -51,7 +53,17 @@ class Comment(Base):
 	user_id = Column(Integer)
 	text = Column(String(400))
 	time=Column(Time)
-	sub_comments = relationship('Comment', backref='Comment')
+	#sub_comments = relationship('Comment', backref='Comment')
+
+# class Comment(Base):
+# 	__tablename__='comments'
+# 	id = Column(Integer,primary_key=True)
+# 	gallery_id = Column(Integer, ForeignKey('gallery.id'))
+# 	parent_id = Column(Integer, ForeignKey('comment.id'))
+# 	user_id = Column(Integer)
+# 	text = Column(String(400))
+# 	time=Column(Time)
+# 	sub_comments = relationship('Comment', backref='Comment')
 
 
 #def foo(comments):

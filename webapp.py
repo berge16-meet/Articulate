@@ -3,16 +3,16 @@ app = Flask(__name__, static_url_path="", static_folder="static")
 from flask import Flask, render_template, request, redirect,url_for
 from flask import session as web_session
 from wtforms import *
-from flask.ext.wtf import Form
+from flask_wtf import Form
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
-from flask.ext.bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap
 import hashlib
 #from sqlalchemy_imageattach.context import store_context
 import uuid
 
 
-from database import Base,User,Gallery,Comment
+from database import Base,User,Gallery
 from sqlalchemy import create_engine
 
 
@@ -63,8 +63,8 @@ def signup():
 
 
 	else:
-		firstname=request.form['first_name']
 
+		firstname=request.form['first_name']
 		lastname=request.form['last_name']
 		email=request.form['email']
 		password=request.form['password']
@@ -99,6 +99,7 @@ def login():
 
 	loginform=Loginform()
 
+
 	#def validate(email,password):
 
 
@@ -107,8 +108,11 @@ def login():
 
 
 	if request.method=='GET':
+
 		return render_template('login.html', form=loginform)
+
 	else:
+
 		email=request.form['email']
 		password=request.form['password']
 
@@ -141,26 +145,40 @@ class CommentForm(Form):
 	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
 
 
-@app.route('/canvas/user/<name>')
+
+
+
+
+@app.route('/topic/')
+def home():
+		return render_template('home.html')
 
 
 
 @app.route('/home/<topic>')
-def home(topic):
+def home_topic(topic):
+	return render_template('home.html', topic = t
+@app.route('/canvas/user/<name>')
+def canvas(name):
+
+@app.route('/canvas/')
+def canvas():
+
+
+@app.route('/home/<topic>')
+def home_topic(topic):
 	return render_template('home.html', topic = topic)
 
 
 @app.route('/canvas/user/<name>')
-
-
-@app.route('/canvas/user/<name>')
-
-
 def canvas(name):
+@app.route('/canvas/')
+def canvas():
+
 	return render_template('canvas.html', name=name)
 
 @app.route ('/chat/user/<name>')
-def chat(name):
+def chat():
 	return render_template('chat.html')
 
 @app.route ('/about')
