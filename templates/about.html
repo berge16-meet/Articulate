@@ -1,43 +1,25 @@
 {% extends "base.html" %}
-{% block navbar %}
-    <nav class="navbar navbar-light bg-faded">
 
-  <a class="navbar-brand"><img src="{{ url_for('static', filename= 'logo.png')}}"style="width:304px;height:100px;"</a>
-
-  <ul class="nav navbar-nav">
-    <li class="nav-item active">
-      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">My Profile</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Pricing</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">About</a>
-    </li>
-  </ul>
-  <form class="form-inline pull-xs-right">
-    <input class="form-control" type="text" placeholder="Search">
-    <button class="btn btn-danger-outline" type="submit">Search</button>
-  </form>
-</nav>
-{% endblock %}
 {% block title %}
 
 
 <div class="text">
-<h5> ARTiculate is a plaform where people can share their perspectives through Art bla bla bla </h5>
-
-<h1>our vision</h1>
-<h5> we envision a world where all voices are heard, in order to build a society that is self-aware, exposed and understands all persectives.</h5>
-
-<h1>our mission </h1>
-<h5> our mission is to create a circle of communication, established on the common ground of art, fulfilling tolerance and understanding towards all of it's members. </h5>
+<h4 > ARTiculate is a plaform where people can share their perspectives through Art bla bla bla </h4>
 </div>
 
- 
+<div class= "vision">
+<h1 style="color:#800000;"><b>Our Vision</b></h1>
+<h4> we envision a world where all voices are heard, in order to build a society that is self-aware, exposed and understands all persectives.</h4>
+</div>
+
+<div class= "mission">
+<h1 style="color:#800000;"><b>Our Mission </b></h1>
+<h4> our mission is to create a circle of communication, established on the common ground of art, fulfilling tolerance and understanding towards all of it's members. </h4>
+</div>
+
+<div class="team">
+<h1 style="color:#800000;"><b> The Team</b> </h1>
+</div>
 
 {% endblock %}
 
@@ -46,9 +28,33 @@
 {% block css %} 
 <style>
 
+div.team {
+    position: absolute;
+    top: 600px;
+    right: 250px;
+    width: 500px;
+    height: 500px;
+}
+
+div.vision {
+    position: absolute;
+    top: 300px;
+    right: 80px;
+    width: 500px;
+    height: 500px;
+}
+
+div.mission {
+    position: absolute;
+    top: 300px;
+    right: 700px;
+    width: 500px;
+    height: 500px;
+}
+
 div.text  {
     position: absolute;
-    top: 150px;
+    top: 175px;
     right: 0px;
     width: 1250px;
     height: 400px;  
@@ -80,7 +86,7 @@ div.roni {
 
 div.neta {
     position: absolute;
-    top: 1050px;
+    top: 1150px;
     right: 200px;
     width: 200px;
     height: 100px;
@@ -88,7 +94,7 @@ div.neta {
 
 div.ori {
     position: absolute;
-    top: 1050px;
+    top: 1150px;
     right: 600px;
     width: 200px;
     height: 100px;
@@ -96,7 +102,7 @@ div.ori {
 
 div.hila {
     position: absolute;
-    top: 1050px;
+    top: 1150px;
     right: 1000px;
     width: 200px;
     height: 100px; 
@@ -104,7 +110,7 @@ div.hila {
 
 div.nethanel {
     position: absolute;
-    top: 1400px;
+    top: 1600px;
     right: 600px;
     width: 200px;
     height: 100px; 
@@ -112,8 +118,8 @@ div.nethanel {
 
 div.about_us {
     position: absolute;
-    top: 50px;
-    right: 150px;
+    top: 100px;
+    right: 0px;
     width: 800px;
     height: 100px;
 
@@ -122,53 +128,62 @@ div.about_us {
 {% block content %}
 
 <div class="about_us">
- <img src="{{ url_for('static', filename= 'aboutuslogo.jpg')}}"" class="img-rounded" alt="Cinque Terre" width="500" height="70">
+ <img src="{{ url_for('static', filename= 'aboutuslogo.jpg')}}"" class="img-rounded" alt="Cinque Terre" width="300" height="50">
 </div>
 
 <div class="berge">
 <img src="{{ url_for('static', filename= 'berge.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">
-<h4> Berge Hagopian </h4>
+<h4 align="right"> Berge Hagopian </h4>
+<h4 align="right"> Palestinion from Jerusalem </h4>
+<h4 align="right"> Founder </h4>
 </div>
 
 <div class="nofar">
 <img src="{{ url_for('static', filename= 'nofar.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">
-<h4> Nofar Dvir </h4> 
+<h4 align="right"> Nofar Dvir </h4>
+<h4 align="right"> Israeli from Jerusalem </h4> 
+<h4 align="right"> Founder </h4>
 </div>
 
 <div class="roni">
 <img src="{{ url_for('static', filename= 'roni.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">
-<h4> Roni Varshavsky </h4>
+<h4 align="right"> Roni Varshavsky </h4>
+<h4 align="right"> Israeli from Jerusalem </h4>
+<h4 align="right"> Founder </h4>
 </div>
 
 <div class="neta">
 <img src="{{ url_for('static', filename= 'neta.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">
-<h4> Neta Ravid </h4>
+<h4 align="right"> Neta Ravid </h4>
+<h4 align="right"> Israeli from Jerusalem </h4>
+<h4 align="right"> Founder </h4>
 </div>
 
 <div class="ori">
 <img src="{{ url_for('static', filename= 'ori.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">
-<h4> Ori Ben-Amram </h4>
+<h4 align="right"> Ori Ben-Amram </h4>
+<h4 align="right"> Israeli from Jerusalem </h4>
+<h4 align="right"> Founder </h4>
 </div>
 
 <div class="hila">
 <img src="{{ url_for('static', filename= 'hila.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">
-<h4> Hila Tal </h4>
+<h4 align="right"> Hila Tal </h4>
+<h4 align="right"> Israeli from Jerusalem</h4>
+<h4 align="right"> Cofounder </h4>
 </div>
 
 
 <div class="nethanel">
 <img src="{{ url_for('static', filename= 'nethanel.jpg')}}" class="img-circle" alt="Cinque Terre" width="304" height="280">	
-<h4> Nathaniel Navarro 
+<h4 align="right"> Nathaniel Navarro</h4>
+<h4 align="right"> Israeli from Mevaseret Tzion </h4>
+<h4 align="right"> Cofounder </h4>
+
 </div>
 
 
-<<<<<<< HEAD
+
 
  {% endblock %}
-=======
-<img src="images.jpeg" class="img-circle" alt="Cinque Terre" width="304" height="236">
-<img src="images.jpeg" class="img-circle" alt="Cinque Terre" width="304" height="236">
-<img src="images.jpeg" class="img-circle" alt="Cinque Terre" width="304" height="236">
-<img src="images.jpeg" class="img-circle" alt="Cinque Terre" width="304" height="236">
-<img src="images.jpeg" class="img-circle" alt="Cinque Terre" width="304" height="236">
->>>>>>> 4ba9d34520fb01d193132b1606a0088d660e7116
+
