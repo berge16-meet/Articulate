@@ -9,7 +9,7 @@ from sqlalchemy.orm import sessionmaker
 from flask.ext.bootstrap import Bootstrap
 import hashlib
 import uuid
-from database import Base,User
+from database import Base,User,Gallery,Comment
 from sqlalchemy import create_engine
 
 app = Flask(__name__, static_url_path="", static_folder="static")

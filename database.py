@@ -20,11 +20,12 @@ class User(Base):
 	date = Column(String(64))
 	bio = Column(String(250))
 	profilepic = Column(String(250))
+	photos = relationship('Gallery', backref = 'User', lazy = 'dynamic')
 
 class Gallery(Base):
 	__tablename__ = 'gallery'
 	id = Column(Integer, primary_key = True)
-	user_id = Column(Integer)
+	user_id = Column(Integer, ForeignKey('user.id'))
 	photo = Column(String(250))
 	description = Column(String(140))
 	likes = Column(Integer)
@@ -37,7 +38,7 @@ class Comment(Base):
 	user_id = Column(Integer)
 	text = Column(String(100))
 	time=Column(Time)
-	sub_comments = relationship('Comment', backref='Gallery', lazy='dynamic')
+	#sub_comments = relationship('Comment', backref='Gallery', lazy='dynamic')
 
 
 #def foo(comments):
