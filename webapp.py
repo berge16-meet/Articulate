@@ -15,8 +15,9 @@ import uuid
 from database import Base,User,Gallery
 from sqlalchemy import create_engine
 
-
-app = Flask(__name__)
+from werkzeug import SharedDataMiddleware
+app.add_url_rule('/uploads/<filename>', 'uploaded_file', build_only=True)
+app.wsgi_app = SharedDataMiddleware(app.wsgi_app, {'/uploads':  app.config['UPLOAD_FOLDER']})
 
 from database import Base,User
 from sqlalchemy import create_engine
@@ -25,7 +26,10 @@ Base.metadata.create_all(engine)
 DBSessionMaker=sessionmaker(bind=engine)
 DBsession=DBSessionMaker()
 
-app.config['SECRET_KEY'] = 'guess who'
+UPLOAD_FOLDER = '/Articulate/static/uploads'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'UPLOAD_FOLDER'
 #app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
@@ -42,6 +46,7 @@ class SignUpForm(Form):
 	first_name = StringField("First name:")
 	last_name = StringField("Last name:")
 	email = StringField("Email:", [validators.Email()])
+	username=StringField("Username:",[validators.Required()])
 	password = PasswordField("Password:", [validators.Required()])
 	gender = SelectField("Gender:", choices = [("male", "Male"), ("female", "Female"), ("other", "Other")])
 	date_of_birth = DateField("Date of birth:", [validators.Required()])
@@ -73,10 +78,11 @@ def signup():
 		nationality=request.form['nationality']
 		dob=request.form['date_of_birth']
 		biography=request.form['biography']
+		username=request.form['username']
 
 		#profilepic=request.form['profile_pic']
 		#user=User(id= 1,firstname='roni',lastname='var',password='jj', email='hello', gender='male',date='1',bio='hi',username='ron',nationality='polish',profilepic='k')
-		user=User(firstname=firstname, lastname=lastname,email=email, password=password, gender=gender, nationality=nationality,date=dob,bio=biography)
+		user=User(firstname=firstname, lastname=lastname,email=email, password=password, username= username,gender=gender, nationality=nationality,date=dob,bio=biography)
 		DBsession.add(user)
 		DBsession.commit()
 		print (user.lastname)
@@ -100,9 +106,6 @@ def login():
 	loginform=Loginform()
 
 
-
-
-
 	#def validate(email,password):
 
 	#return query.first() != None
@@ -112,7 +115,6 @@ def login():
 
 
 	#return query.first() != None
-
 
 	if request.method=='GET':
 
@@ -128,6 +130,9 @@ def login():
 		user = user_query.first()
 		if user != None:
 			session['id']=uuid.uuid4()
+			session['name']=user.username
+			#for logout:
+			#del flask.session['uid']
 			return redirect(url_for('home'))
 
 		return render_template('login.html',form=loginform)
@@ -145,6 +150,11 @@ def login():
 @app.route('/user/<name>')
 def profile(name):
 	user = DBsession.query(User).filter_by(username = name).first()
+	photos = DBsession.query(Gallery).filter_by(user_id = user.id).all()
+	return render_template('profile.html', name = name)
+
+	user = DBsession.query(User).filter_by(username = name).first()
+
 
 	if user != None:
 		photos = DBsession.query(Gallery).filter_by(user_id = user.id).all()
@@ -157,17 +167,19 @@ class CommentForm(Form):
 	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
 
 
-@app.route('/topic/')
-def home():
-		return render_template('home.html')
+@app.route('/home/<name>')
+def home(name):
+	#creates an array of photos on the wall organized chronologically (by time)
+	#photos = DBsession.query(Gallery).filter_by()
 
+	#for now- every photo in the database
+	photos = DBsession.query(Gallery).all()
+	return render_template('home.html', name = name)
 
-@app.route('/home/<topic>')
-def home_topic(topic):
-	return render_template('home.html', topic = topic)
-
-
-@app.route('/canvas/')
+@app.route('/home/<name>/<topic>')
+def home_topic(topic, name):
+	photos = DBsession.query(Gallery).filter_by(topic = topic)
+	return render_template('home.html', name = name)
 
 @app.route('/canvas/user/<name>')
 def canvas():
@@ -185,7 +197,6 @@ def about():
 @app.route ('/contact')
 def contact():
 	return render_template('contact.html')
-
 '''
 @app.route('/profile')
 def uploads():
@@ -229,20 +240,27 @@ def uploads():
     ]
 
     return render_template('profile.html', posts=posts)
+'''
 
-   '''
+def allowed_file(filename):
+	return '.' in filename
+	filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-@app.route('/home/uploads/<name>')
+@app.route('/profile/uploads/<name>', methods=['GET', 'POST'])
 def upload():
 	if request.method == 'POST':
 		if 'file' not in request.files:
 			flash('No file part')
-			return redirect(url_for('upload'))
-
-
-
-		file=request.files['file']
-
+			return redirect(request.url)
+		'''file = request.files['file']
+		if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+		if file and allowed_file(file.filename):
+			filename = secure_filename(file.filename)
+			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+			return redirect(url_for('upload_file', filename=filename))
+		'''
 
 		file=request.files['file']
 		if file.filename=='':
@@ -257,10 +275,14 @@ def upload():
 
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
 			file=Gallery
-		return redirect(url_for('home'),filename=filename)
+			return redirect(url_for('home'),filename=filename)
+		return render_template('upload.html')
+
+@app.route('/Articulate/static/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
-	return render_template('upload.html')
 
 
 if __name__ == '__main__':
