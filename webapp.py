@@ -101,20 +101,9 @@ def login():
 
 	loginform=Loginform()
 
-
-
-
-
-	#def validate(email,password):
-
-	#return query.first() != None
-
-
-
- 
-	
-	#return query.first() != None
-	
+	(flask.session['uid'] = uuid.uuid4()
+	#for logout:
+	#del flask.session['uid']
 
 	if request.method=='GET':
 
@@ -147,9 +136,8 @@ def login():
 
 @app.route('/user/<name>')
 def profile(name):
-
-	#user = DBsession.query(User).filter_by(username = name).first()
-	#photos = DBsession.query(Gallery).filter_by(user_id = user.id).all()
+	user = DBsession.query(User).filter_by(username = name).first()
+	photos = DBsession.query(Gallery).filter_by(user_id = user.id).all()
 	return render_template('profile.html', name = name)
 
 	user = DBsession.query(User).filter_by(username = name).first()
@@ -166,13 +154,19 @@ class CommentForm(Form):
 	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
 
 
-@app.route('/topic/')
-def home():
-		return render_template('home.html')
+@app.route('/home/<name>')
+def home(name):
+	#creates an array of photos on the wall organized chronologically (by time)
+	#photos = DBsession.query(Gallery).filter_by()
+	
+	#for now- every photo in the database
+	photos = DBsession.query(Gallery).all()
+	return render_template('home.html', name = name)
 
 @app.route('/home/<name>/<topic>')
 def home_topic(topic, name):
-	return render_template('home.html', topic = topic, name = name)
+	photos = DBsession.query(Gallery).filter_by(topic = topic)
+	return render_template('home.html', name = name)
 
 @app.route('/canvas/user/<name>')
 def canvas():

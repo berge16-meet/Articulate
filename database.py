@@ -9,7 +9,6 @@ Base = declarative_base()
 
 class User(Base):
 	__tablename__ = 'user'
-
 	id = Column(Integer, primary_key = True)
 	firstname = Column(String(64))
 	lastname = Column(String(64))
