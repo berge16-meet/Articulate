@@ -61,12 +61,9 @@ def hash_password(password):
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
 
-	signup_form = SignUpForm()
-	if request.method == 'GET':
-		return render_template('signup.html', form = signup_form)
+	signup_form = SignUpForm(request.form)
 
-
-	else:
+	if request.method == 'POST':
 
 		firstname=request.form['first_name']
 		lastname=request.form['last_name']
@@ -79,16 +76,15 @@ def signup():
 		biography=request.form['biography']
 		username=request.form['username']
 
-		#profilepic=request.form['profile_pic']
-		#user=User(id= 1,firstname='roni',lastname='var',password='jj', email='hello', gender='male',date='1',bio='hi',username='ron',nationality='polish',profilepic='k')
+
 		user=User(firstname=firstname, lastname=lastname,email=email, password=password, username= username,gender=gender, nationality=nationality,date=dob,bio=biography)
 		DBsession.add(user)
 		DBsession.commit()
-		print (user.lastname)
-		email=DBsession.query(User).filter_by(email=user.email).first().email
-		print (email)
-		session['id']=uuid.uuid4()
-		return redirect(url_for('home'))
+		return redirect(url_for('profile', name = username))
+
+	else:
+		return render_template('signup.html', form = signup_form)
+
 
 
 
@@ -150,18 +146,14 @@ def login():
 
 @app.route('/user/<name>')
 def profile(name):
-	user = DBsession.query(User).filter_by(username = name).first()
-	photos = DBsession.query(Gallery).filter_by(user_id = user.id).all()
-	return render_template('profile.html', name = name)
 
 	user = DBsession.query(User).filter_by(username = name).first()
 
-
-	if user != None:
-		photos = DBsession.query(Gallery).filter_by(user_id = user.id).all()
-		return render_template('profile.html', name = name)
+	if user == None:
+		return render_template('404.html')
 
 	else:
+<<<<<<< HEAD
 		return render_template('profile.html', name = None)
 
 class CommentForm(Form):
@@ -176,15 +168,16 @@ def home(name):
 	#for now- every photo in the database
 	photos = DBsession.query(Gallery).all()
 	return render_template('home.html', name = name)
+=======
+		posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
+		return render_template('profile.html', name = name, posts = posts)
 
-@app.route('/home/<name>/<topic>')
-def home_topic(topic, name):
-	photos = DBsession.query(Gallery).filter_by(topic = topic)
-	return render_template('home.html', name = name)
 
-@app.route('/canvas/user/<name>')
-def canvas():
-	return render_template('canvas.html', name=name)
+>>>>>>> b2a83068cf8f51b5e6919de34c691f7fb8fd91ca
+
+class CommentForm(Form):
+	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
+
 
 
 @app.route ('/about')
@@ -251,22 +244,6 @@ def upload():
 
 			flash('No file part')
 			return redirect(request.url)
-		'''file = request.files['file']
-		if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-		if file and allowed_file(file.filename):
-			filename = secure_filename(file.filename)
-			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-			return redirect(url_for('upload_file', filename=filename))
-		'''
-
-		file=request.files['file']
-
-			flash('No file uploaded')
-			return redirect(url_for('upload'))
-
-
 
 		file=request.files['file']
 
@@ -281,18 +258,26 @@ def upload():
 			path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
 			file.save(path)
 			gallery = Gallery(user_id=session.query(User).filter_by(username=name).first().id,photo=path,description=request.form['description'])
-			return redirect(url_for('home'),filename=filename)
+			return redirect(url_for('user/' + 'TO_CHANGE'),filename=filename)
 
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
 			file=Gallery
+
 			return redirect(url_for('home'),filename=filename)
 		return render_template('upload.html')
 
-@app.route('/Articulate/static/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
+		return redirect(url_for('user/' + 'TO_CHANGE'),filename=filename)
+
+
+
+
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+  return render_template('404.html'), 404
 
 
 if __name__ == '__main__':

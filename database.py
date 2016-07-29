@@ -49,7 +49,7 @@ class Comment(Base):
 	__tablename__='comments'
 	id = Column(Integer,primary_key=True)
 	gallery_id = Column(Integer, ForeignKey('gallery.id'))
-	parent_id = Column(Integer, ForeignKey('comment.id'))
+	#parent_id = Column(Integer, ForeignKey('comment.id'))
 	user_id = Column(Integer)
 	text = Column(String(400))
 	time=Column(Time)
