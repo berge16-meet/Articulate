@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, session
 app = Flask(__name__, static_url_path="", static_folder="static")
 from flask import Flask, render_template, request, redirect,url_for
-from flask import session as web_session
 from wtforms import *
 from flask_wtf import Form
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -101,21 +100,6 @@ def login():
 
 	loginform=Loginform()
 
-
-
-
-
-	#def validate(email,password):
-
-	#return query.first() != None
-
-
-
- 
-	
-	#return query.first() != None
-	
-
 	if request.method=='GET':
 
 		return render_template('login.html', form=loginform)
@@ -128,9 +112,13 @@ def login():
 		user_query = DBsession.query(User).filter(User.email.in_([email]), User.password.in_([hash_password(password)]))
 
 		user = user_query.first()
+		
 		if user != None:
-			session['id']=uuid.uuid4()
-			session['name']=user.username
+
+			session['id'] = user.id
+			session['name'] = user.username
+			#for logout:
+			#del flask.session['uid']
 			return redirect(url_for('home'))
 
 		return render_template('login.html',form=loginform)
@@ -147,9 +135,8 @@ def login():
 
 @app.route('/user/<name>')
 def profile(name):
-
-	#user = DBsession.query(User).filter_by(username = name).first()
-	#photos = DBsession.query(Gallery).filter_by(user_id = user.id).all()
+	user = DBsession.query(User).filter_by(username = name).first()
+	photos = DBsession.query(Gallery).filter_by(user_id = user.id).all()
 	return render_template('profile.html', name = name)
 
 	user = DBsession.query(User).filter_by(username = name).first()
@@ -166,21 +153,24 @@ class CommentForm(Form):
 	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
 
 
-@app.route('/topic/')
-def home():
-		return render_template('home.html')
+@app.route('/profile/<name>')
+def home(name):
+	#creates an array of photos on the wall organized chronologically (by time)
+	#photos = DBsession.query(Gallery).filter_by()
+	
+	#for now- every photo in the database
+	photos = DBsession.query(Gallery).all()
+	return render_template('home.html', name = name)
 
 @app.route('/home/<name>/<topic>')
 def home_topic(topic, name):
-	return render_template('home.html', topic = topic, name = name)
+	photos = DBsession.query(Gallery).filter_by(topic = topic)
+	return render_template('home.html', name = name)
 
 @app.route('/canvas/user/<name>')
 def canvas():
 	return render_template('canvas.html', name=name)
 
-@app.route ('/chat/user/<name>')
-def chat():
-	return render_template('chat.html')
 
 @app.route ('/about')
 def about():
@@ -239,18 +229,18 @@ def uploads():
 def upload():
 	if request.method == 'POST':
 		if 'file' not in request.files:
-			flash('No file part')
+			flash('No file uploaded')
 			return redirect(url_for('upload'))
 
 
 
 		file=request.files['file']
 
-
-		file=request.files['file']
 		if file.filename=='':
 			flash('No selected file')
 			return redirect(url_for('upload'))
+		
+
 		if file(file.filename):
 
 			path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
