@@ -23,8 +23,12 @@
         <a class="navbar-brand" href="home.html"><img src="{{ url_for('static', filename= 'navlogo.png')}}"style="width:70px;height:40px;"</a>
 =======
       <nav class="navbar navbar-light bg-faded">
+<<<<<<< HEAD
         <a class="navbar-brand" href="{{url_for('home')}}"><img src="{{ url_for('static', filename= 'navlogo.png')}}"style="width:70px;height:40px;"</a>
 >>>>>>> 03640e2460c0564c9e59eb4fe3633577af847260
+=======
+        <a class="navbar-brand" href="/home/{{session.get(name)}}"><img src="{{ url_for('static', filename= 'navlogo.png')}}"style="width:70px;height:40px;"</a>
+>>>>>>> 7f3dd78a9fd1037d020a53175ff323ee29bfd5ed
         <ul class="nav navbar-nav">
           <li class="nav-item active">
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
