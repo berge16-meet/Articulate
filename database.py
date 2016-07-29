@@ -21,6 +21,7 @@ class User(Base):
 	bio  = Column(String(250))
 	profilepic = Column(String(250))
 	photos = relationship('Gallery', backref = 'User', lazy = 'dynamic')
+
 '''
 topic_gallery_association_table = Table('association', Base.metadata, Column('topic_id', Integer, ForeignKey('topic.id')), Column('gallery_id', Integer, ForeignKey('gallery.id')))
 
@@ -30,6 +31,7 @@ class Topic(Base):
 	topic = Column(String(64), unique=True)
 	posts = relationship("Gallery", secondary = topic_gallery_association_table, back_populates="topics")
 '''
+
 	#posts = relationship("Gallery", secondary = topic_gallery_association_table, backref="topics")
 
 class Gallery(Base):
