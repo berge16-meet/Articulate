@@ -101,10 +101,6 @@ def login():
 
 	loginform=Loginform()
 
-	(flask.session['uid'] = uuid.uuid4()
-	#for logout:
-	#del flask.session['uid']
-
 	if request.method=='GET':
 
 		return render_template('login.html', form=loginform)
@@ -120,6 +116,8 @@ def login():
 		if user != None:
 			session['id']=uuid.uuid4()
 			session['name']=user.username
+			#for logout:
+			#del flask.session['uid']
 			return redirect(url_for('home'))
 
 		return render_template('login.html',form=loginform)
