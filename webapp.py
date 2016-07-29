@@ -109,10 +109,10 @@ def login():
 
 
 
- 
-	
+
+
 	#return query.first() != None
-	
+
 
 	if request.method=='GET':
 
@@ -152,7 +152,7 @@ def profile(name):
 
 	else:
 		return render_template('profile.html', name = None)
-		
+
 class CommentForm(Form):
 	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
 
