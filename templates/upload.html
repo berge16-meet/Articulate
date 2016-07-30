@@ -1,11 +1,13 @@
-{%extends base.html%}
+{%extends 'base.html' %}
 {%block title%}
-Please upload photo :)))))))))))))))))))):)))))):)))))))):)))))):))))):))))))))))):)))):))))))))):)))
+Please upload photo
 {%endblock%}
 {%block content%}
+
 <form method="POST" enctype=multipart/form-data>
 <input type=file name=file>
 <input type=text-box name=description>
 <input type=submit>
 </form>
+
 {%endblock%}
