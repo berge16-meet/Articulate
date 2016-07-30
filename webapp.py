@@ -109,7 +109,7 @@ def login():
     email=request.form['email']
     password=request.form['password']
 
-    user_query = DBsession.query(User).filter(User.email.in_([email]), User.password.in_([hash_password(password)]))
+    user_query = DBsession.query(User).filter_by(User.email.in_([email]), User.password.in_([hash_password(password)]))
 
     user = user_query.first()
 
@@ -119,7 +119,7 @@ def login():
       session['name'] = user.username
       #for logout:
       #del flask.session['uid']
-      return redirect(url_for('home'))
+      return redirect(url_for('profile', name = user.username))
 
     return render_template('login.html',form=loginform)
 
@@ -216,7 +216,8 @@ def valid_file(filename):
 #should be ONLY upload link
 @app.route('/upload', methods = ['GET', 'POST'])
 def upload():
-  if request.method == 'POST':
+
+  if request.method == 'POST' and session['id'] != None:
     #checks if file was uploaded
     if 'file' not in request.files:
       return redirect(url_for('upload'))
@@ -230,13 +231,18 @@ def upload():
     if file and valid_file(file.filename):
 
       filename = secure_filename(file.filename)
-
       path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
-      file.write(path)
+      write_file = open(path,'w')
 
+
+      write_file.write(path)
+
+
+      #finds user
+      user = DBsession.query(User).filter_by(id = session['id']).first()
       #creates link to file in the database
-      gallery = Gallery(user_id = session['id'], file_path = path, description = request.form['description'])
-      return redirect(url_for('user/' + 'TO_CHANGE'), filename=filename)
+      gallery = Gallery(user_id = user.id, file_path = path, description = request.form['description'])
+      return redirect(url_for('profile', name = user.username), filename=filename)
 
   else:
     return render_template('upload.html')
