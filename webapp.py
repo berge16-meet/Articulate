@@ -153,7 +153,6 @@ def profile(name):
 		return render_template('404.html')
 
 	else:
-<<<<<<< HEAD
 		return render_template('profile.html', name = None)
 
 class CommentForm(Form):
@@ -168,12 +167,11 @@ def home(name):
 	#for now- every photo in the database
 	photos = DBsession.query(Gallery).all()
 	return render_template('home.html', name = name)
-=======
-		posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
-		return render_template('profile.html', name = name, posts = posts)
+
+	posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
+	return render_template('profile.html', name = name, posts = posts)
 
 
->>>>>>> b2a83068cf8f51b5e6919de34c691f7fb8fd91ca
 
 class CommentForm(Form):
 	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
