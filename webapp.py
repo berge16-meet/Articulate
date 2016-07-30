@@ -98,29 +98,28 @@ class Loginform(Form):
 @app.route('/login',methods=['GET','POST'])
 def login():
 
-  loginform=Loginform()
+  loginform=Loginform(request.form)
 
-  if request.method=='GET':
+  if request.method == 'GET':
 
-    return render_template('login.html', form=loginform)
+  	return render_template('login.html', form=loginform)
 
   else:
 
     email=request.form['email']
     password=request.form['password']
 
-    user_query = DBsession.query(User).filter_by(User.email.in_([email]), User.password.in_([hash_password(password)]))
+    user_query = DBsession.query(User).filter(User.email.in_([email]), User.password.in_([hash_password(password)]))
 
     user = user_query.first()
 
     if user != None:
 
-      session['id'] = user.id
-      session['name'] = user.username
-      #for logout:
-      #del flask.session['uid']
-      return redirect(url_for('profile', name = user.username))
-
+    	session['id'] = user.id
+    	session['name'] = user.username
+    	#for logout:
+    	#del flask.session['uid']
+    	return redirect(url_for('profile', name = user.username))
     return render_template('login.html',form=loginform)
 
 
