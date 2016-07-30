@@ -18,10 +18,24 @@
     {% block title %}{% endblock %}
 
     {% block navbar %}
+<<<<<<< HEAD
       <nav class="navbar navbar-dark bg-inverse">
         <a class="navbar-brand" href="{{url_for('home')}}"><img src="{{ url_for('static', filename= 'navlogo.png')}}"style="width:70px;height:40px;"</a>
 
         <a class="navbar-brand" href="/home/{{session.get(name)}}"><img src="{{ url_for('static', filename= 'navlogo.png')}}"style="width:70px;height:40px;"</a>
+=======
+      <nav class="navbar navbar-inverse">
+        <a class="navbar-brand" href="home.html"><img src="{{ url_for('static', filename= 'navlogo.png')}}"style="width:70px;height:40px;"</a>
+
+      <nav class="navbar navbar-light bg-faded">
+
+        <a class ="navbar-brand" href="{{url_for('entry')}}"><img src='{{url_for("static",filename="navlogo.png")}}' height="24"><span class="sr-only">(current)</span></a>
+
+        <a class="navbar-brand" href="{{url_for('home')}}"><img src="{{ url_for('static', filename= 'navlogo.png')}}"style="width:70px;height:40px;"</a>
+
+        <a class="navbar-brand" href="/home/{{session.get(name)}}"><img src="{{ url_for('static', filename= 'navlogo.png')}}"style="width:70px;height:40px;"</a>
+
+>>>>>>> 8ead74e7567e91e03a90e9c8cf6c36235b3fa34b
         <ul class="nav navbar-nav">
           <li class="nav-item active">
           </li>
