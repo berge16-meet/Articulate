@@ -170,6 +170,10 @@ def home(name):
 		posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
 		return render_template('profile.html', name = name, posts = posts)
 
+	posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
+	return render_template('profile.html', name = name, posts = posts)
+
+
 
 
 class CommentForm(Form):
@@ -229,10 +233,6 @@ def uploads():
 
     return render_template('profile.html', posts=posts)
 '''
-
-def allowed_file(filename):
-	return '.' in filename
-	filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 @app.route('/profile/uploads/<name>', methods=['GET', 'POST'])
 def upload():
