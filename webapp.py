@@ -234,14 +234,14 @@ def upload():
       write_file = open(path,'w')
 
 
-      write_file.write(path)
+      write_file.write()
 
 
       #finds user
       user = DBsession.query(User).filter_by(id = session['id']).first()
       #creates link to file in the database
       gallery = Gallery(user_id = user.id, file_path = path, description = request.form['description'])
-      return redirect(url_for('profile', name = user.username), filename=filename)
+      return redirect(url_for('profile', name = user.username))
 
   else:
     return render_template('upload.html')
