@@ -235,6 +235,9 @@ def upload():
       user = DBsession.query(User).filter_by(id = session['id']).first()
       #creates link to file in the database
       gallery = Gallery(user_id = user.id, file_path = path, description = request.form['description'])
+
+      DBsession.add(gallery)
+      DBsession.commit()
       return redirect(url_for('profile', name = user.username))
 
   else:
