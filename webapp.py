@@ -114,7 +114,7 @@ def login():
     if user != None:
 
     	session['id'] = user.id
-    	session['name'] = user.username
+    	session['username'] = user.username
     	#for logout:
     	#del flask.session['uid']
     	return redirect(url_for('profile', name = user.username))
@@ -132,7 +132,8 @@ def login():
 
 @app.route('/home')
 def home():
-  return render_template('home.html')
+	logged_in_username = session.get('username')
+	return render_template('home.html', username = logged_in_username)
 
 @app.route('/user/<name>')
 def profile(name):
