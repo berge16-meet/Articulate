@@ -141,12 +141,21 @@ def profile(name):
 
   user = DBsession.query(User).filter_by(username = name).first()
 
+<<<<<<< HEAD
+	#for now- every photo in the database
+	photos = DBsession.query(Gallery).all()
+	return render_template('home.html', name = name)
+		posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
+		return render_template('profile.html', name = name, posts = posts)
+=======
   if user == None:
     return render_template('404.html')
+>>>>>>> 8ead74e7567e91e03a90e9c8cf6c36235b3fa34b
 
   else:
     posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
     return render_template('profile.html', name = name, posts = posts)
+
 
 
 
@@ -208,6 +217,8 @@ def uploads():
 
     return render_template('profile.html', posts=posts)
 '''
+
+
 
 def valid_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
