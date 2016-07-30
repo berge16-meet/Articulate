@@ -136,16 +136,12 @@ def home():
 
 @app.route('/user/<name>')
 def profile(name):
-
-  user = DBsession.query(User).filter_by(username = name).first()
-
-
-  if user == None:
-    return render_template('404.html')
-
-  else:
-    posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
-    return render_template('profile.html', name = name, posts = posts)
+	user = DBsession.query(User).filter_by(username = name).first()
+	if user == None:
+		return render_template('404.html')
+	else:
+		posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
+		return render_template('profile.html', name = name, posts = posts)
 
 
 
