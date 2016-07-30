@@ -231,12 +231,13 @@ def upload():
 
       filename = secure_filename(file.filename)
       path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
-      write_file = open(path,'w')
+      # write_file = open(path,'wb')
 
 
-      write_file.write()
+      # write_file.write(file)
+      # write_file.close()
 
-
+      file.save(path)
       #finds user
       user = DBsession.query(User).filter_by(id = session['id']).first()
       #creates link to file in the database
