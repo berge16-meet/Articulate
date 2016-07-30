@@ -166,11 +166,11 @@ def home_topic(topic, name):
 	photos = DBsession.query(Gallery).filter_by(topic = topic)
 	return render_template('home.html', name = name)
 
-@app.route('/canvas/user/<name>')
+@app.route('/canvas')
 def canvas():
 	return render_template('canvas.html', name=name)
 
-@app.route ('/chat/user/<name>')
+@app.route ('/chat')
 def chat():
 	return render_template('chat.html')
 
@@ -227,7 +227,7 @@ def uploads():
     return render_template('profile.html', posts=posts)
 '''
 
-@app.route('/home/uploads/<name>')
+@app.route('/uploads')
 def upload():
 	if request.method == 'POST':
 		if 'file' not in request.files:
