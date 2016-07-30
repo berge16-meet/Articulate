@@ -7,8 +7,6 @@ from flask_bootstrap import Bootstrap
 from werkzeug.utils import secure_filename
 import hashlib
 import os
-#from sqlalchemy_imageattach.context import store_context
-import uuid
 
 
 from database import Base,User,Gallery
@@ -141,7 +139,6 @@ def profile(name):
 	user = DBsession.query(User).filter_by(username = name).first()
 	if user == None:
 		return render_template('404.html')
-
 	else:
 		posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
 		return render_template('profile.html', name = name, posts = posts)
@@ -247,11 +244,6 @@ def upload():
 
       filename = secure_filename(file.filename)
       path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
-      # write_file = open(path,'wb')
-
-
-      # write_file.write(file)
-      # write_file.close()
 
       file.save(path)
       #finds user
