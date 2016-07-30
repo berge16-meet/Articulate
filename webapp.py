@@ -138,15 +138,14 @@ def home():
 
 @app.route('/user/<name>')
 def profile(name):
+	user = DBsession.query(User).filter_by(username = name).first()
+	if user == None:
+		return render_template('404.html')
 
-  user = DBsession.query(User).filter_by(username = name).first()
+	else:
+		posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
+		return render_template('profile.html', name = name, posts = posts)
 
-  if user == None:
-    return render_template('404.html')
-
-  else:
-    posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
-    return render_template('profile.html', name = name, posts = posts)
 
 
 
@@ -220,7 +219,10 @@ def uploads():
 '''
 
 
+<<<<<<< HEAD
 @app.route('/uploads')
+=======
+>>>>>>> cc9698413c08bd328b0712fda271ca47fb515725
 
 def valid_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
@@ -245,17 +247,18 @@ def upload():
 
       filename = secure_filename(file.filename)
       path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
-      write_file = open(path,'w')
+      # write_file = open(path,'wb')
 
 
-      write_file.write(path)
+      # write_file.write(file)
+      # write_file.close()
 
-
+      file.save(path)
       #finds user
       user = DBsession.query(User).filter_by(id = session['id']).first()
       #creates link to file in the database
       gallery = Gallery(user_id = user.id, file_path = path, description = request.form['description'])
-      return redirect(url_for('profile', name = user.username), filename=filename)
+      return redirect(url_for('profile', name = user.username))
 
   else:
     return render_template('upload.html')
