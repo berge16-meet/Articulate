@@ -14,9 +14,8 @@ import uuid
 from database import Base,User,Gallery
 from sqlalchemy import create_engine
 
-from werkzeug import SharedDataMiddleware
-app.add_url_rule('/uploads/<filename>', 'uploaded_file', build_only=True)
-app.wsgi_app = SharedDataMiddleware(app.wsgi_app, {'/uploads':  app.config['UPLOAD_FOLDER']})
+
+app = Flask(__name__)
 
 from database import Base,User
 from sqlalchemy import create_engine
@@ -25,10 +24,7 @@ Base.metadata.create_all(engine)
 DBSessionMaker=sessionmaker(bind=engine)
 DBsession=DBSessionMaker()
 
-UPLOAD_FOLDER = '/Articulate/static/uploads'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
-app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'UPLOAD_FOLDER'
+app.config['SECRET_KEY'] = 'guess who'
 #app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
@@ -100,17 +96,6 @@ def login():
 
 	loginform=Loginform()
 
-
-	#def validate(email,password):
-
-	#return query.first() != None
-
-
-
-
-
-	#return query.first() != None
-
 	if request.method=='GET':
 
 		return render_template('login.html', form=loginform)
@@ -153,23 +138,8 @@ def profile(name):
 		return render_template('404.html')
 
 	else:
-		return render_template('profile.html', name = None)
-
-class CommentForm(Form):
-	comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
-
-
-@app.route('/profile/<name>')
-def home(name):
-	#creates an array of photos on the wall organized chronologically (by time)
-	#photos = DBsession.query(Gallery).filter_by()
-
-	#for now- every photo in the database
-	photos = DBsession.query(Gallery).all()
-	return render_template('home.html', name = name)
-
-	posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
-	return render_template('profile.html', name = name, posts = posts)
+		posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
+		return render_template('profile.html', name = name, posts = posts)
 
 
 
@@ -231,8 +201,46 @@ def uploads():
     return render_template('profile.html', posts=posts)
 '''
 
-def allowed_file(filename):
-	return '.' in filename
+@app.route('/home/uploads/<name>')
+def upload():
+	if request.method == 'POST':
+		if 'file' not in request.files:
+			flash('No file uploaded')
+			return redirect(url_for('upload'))
+
+
+
+		file=request.files['file']
+
+		if file.filename=='':
+			flash('No selected file')
+			return redirect(url_for('upload'))
+
+
+		if file(file.filename):
+
+			path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
+			file.save(path)
+			gallery = Gallery(user_id=session.query(User).filter_by(username=name).first().id,photo=path,description=request.form['description'])
+			return redirect(url_for('user/' + 'TO_CHANGE'),filename=filename)
+
+			file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+			file=Gallery
+		return redirect(url_for('user/' + 'TO_CHANGE'),filename=filename)
+
+
+	return render_template('upload.html')
+
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+  return render_template('404.html'), 404
+
+
+if __name__ == '__main__':
+	app.run(debug=True)
+n '.' in filename
 	filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 @app.route('/profile/uploads/<name>', methods=['GET', 'POST'])
