@@ -18,21 +18,17 @@
     {% block title %}{% endblock %}
 
     {% block navbar %}
-<<<<<<< HEAD
       <nav class="navbar navbar-inverse">
         <a class="navbar-brand" href="home.html"><img src="{{ url_for('static', filename= 'navlogo.png')}}"style="width:70px;height:40px;"</a>
-=======
+
       <nav class="navbar navbar-light bg-faded">
-<<<<<<< HEAD
+
         <a class ="navbar-brand" href="{{url_for('entry')}}"><img src='{{url_for("static",filename="navlogo.png")}}' height="24"><span class="sr-only">(current)</span></a>
-=======
-<<<<<<< HEAD
+
         <a class="navbar-brand" href="{{url_for('home')}}"><img src="{{ url_for('static', filename= 'navlogo.png')}}"style="width:70px;height:40px;"</a>
->>>>>>> 03640e2460c0564c9e59eb4fe3633577af847260
-=======
+
         <a class="navbar-brand" href="/home/{{session.get(name)}}"><img src="{{ url_for('static', filename= 'navlogo.png')}}"style="width:70px;height:40px;"</a>
->>>>>>> 7f3dd78a9fd1037d020a53175ff323ee29bfd5ed
->>>>>>> 5bd331d06ee0b91920c41128119a80bbde4387c6
+
         <ul class="nav navbar-nav">
           <li class="nav-item active">
           </li>
