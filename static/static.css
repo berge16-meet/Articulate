@@ -1,14 +1,17 @@
 
 @font-face{
 	font-family: art;
-    src: url(art.ttf);
-
+    src: url(RythmusRegular.ttf);
 }
+
+h2{
+	font-family: art;
+}
+
 body{
 	background-image: url(8.jpeg);
-	font-family: art;
 	-webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
