@@ -113,12 +113,16 @@ def login():
 
     if user != None:
 
-        session['id'] = user.id
-        session['username'] = user.username
-        #for logout:
-        #del flask.session['uid']
-        return redirect(url_for('profile', name = user.username))
-        return render_template('login.html',form=loginform)
+      session['id'] = user.id
+      session['username'] = user.username
+      #for logout:
+      #del flask.session['uid']
+      return redirect(url_for('profile', name = user.username))
+    #if the user does not have an account
+    else:
+      return render_template('login.html',form=loginform)
+
+
 
 
 
@@ -197,7 +201,7 @@ def upload():
 @app.route('/logout')
 def logout():
 	session.clear()
-	return redirect('entry')
+	return redirect('/')
 
 @app.errorhandler(404)
 def page_not_found(e):
