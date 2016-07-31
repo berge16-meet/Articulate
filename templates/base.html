@@ -15,33 +15,33 @@
 
 
   <body id = "base_body">
-    {% block title %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
 
-{% block navbar %}
-<nav class="navbar navbar-dark bg-inverse">
-  <a class="navbar-brand" href="{{url_for('home')}}"><img src="{{ url_for('static', filename= 'navlogo.png')}}"style="width:70px;height:40px;"</a>
-    <ul class="nav navbar-nav">
-      <li class="nav-item active"></li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url_for('about')}}">About Us</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url_for('contact')}}">Contact</a>
-      </li>
-    </ul>
-  <form class="form-inline pull-xs-right">
-    <ul class="nav navbar-nav">
-      <li class="nav-item active"></li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url_for('profile', name = username)}} ">Profile</a>
-      </li>
-      <li class="nav-item">
-        <input class="form-control" type="text" placeholder="Search">
-        <button class="btn btn-danger-outline" type="submit">Search</button>
-      </li>
-  </form>
-</nav>
-  {% endblock %}
+    {% block navbar %}
+    <nav class="navbar navbar-dark bg-inverse">
+      <a class="navbar-brand m-a-0 p-a-0" href="{{url_for('home')}}"><img src="{{ url_for('static', filename= 'navlogo.png')}}" style="width:70px;height:40px;"/></a>
+      <ul class="nav navbar-nav">
+        <li class="nav-item active"></li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('about')}}">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('contact')}}">Contact</a>
+        </li>
+      </ul>
+      <form class="form-inline pull-xs-right">
+        <ul class="nav navbar-nav">
+          <li class="nav-item active"></li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('profile', name = name)}} ">Profile</a>
+          </li>
+          <li class="nav-item">
+            <input class="form-control" type="text" placeholder="Search">
+            <button class="btn btn-danger-outline" type="submit">Search</button>
+          </li>
+      </form>
+    </nav>
+    {% endblock %}
 
 
 

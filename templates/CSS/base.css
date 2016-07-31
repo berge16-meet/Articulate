@@ -1,0 +1,8 @@
+@font-face{
+	font-family: art;
+    src: url(art.ttf);
+
+}
+body{
+	font-family: art;
+}
