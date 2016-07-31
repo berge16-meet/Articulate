@@ -174,33 +174,33 @@ def upload():
   upload_form = UploadForm()
   if request.method == 'POST' and session.get('id') != None:
     #checks if file was uploaded
-		if 'file' not in request.files:
-			return redirect(url_for('upload'))
-
-		file = request.files['file']
+    if 'file' not in request.files:
+      return redirect(url_for('upload'))
+    
+    file = request.files['file']
 		#if user submits an empty file, return a the same upload
-		if file.filename == '':
-			return redirect(url_for('upload', form = upload_form))
+    if file.filename == '':
+      return redirect(url_for('upload', form = upload_form))
 
-		if file and valid_file(file.filename):
-			filename = secure_filename(file.filename)
-			path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
-			file.save(path)
+    if file and valid_file(file.filename):
+      filename = secure_filename(file.filename)
+      path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
+      file.save(path)
 			#finds user
-			user = DBsession.query(User).filter_by(id = session['id']).first()
+      user = DBsession.query(User).filter_by(id = session['id']).first()
 			#creates link to file in the database
-			gallery = Gallery(user_id = user.id, file_name = "uploads/" + filename, description = request.form['description'])
-			DBsession.add(gallery)
-			DBsession.commit()
-			return redirect(url_for('profile', name = user.username))
+      gallery = Gallery(user_id = user.id, file_name = "uploads/" + filename, description = request.form['description'])
+      DBsession.add(gallery)
+      DBsession.commit()
+      return redirect(url_for('profile', name = user.username))
 
 	#if the user is not logged in send him to the log in page
-	elif session.get('id') != None:
-		return render_template('upload.html', form = upload_form)
+  elif session.get('id') != None:
+    return render_template('upload.html', form = upload_form)
 
 	#get request
-	else:
-		return redirect('login')
+  else:
+    return redirect('login')
 
 @app.route('/canvas')
 def canvas():
