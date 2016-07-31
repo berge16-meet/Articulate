@@ -21,10 +21,13 @@
     		<div class="col-md-7 col-xs-12">
     			<div class="one" role="group" aria-label="Basic example">
       			<button type="button" class="btn btn-danger-outline">Create a new ARTmosphere</button>
-      			<button onclick="window.location.href='/home/upload/<name>'" type="button" class="btn btn-danger-outline">Upload a new ARTmosphere</button>
+      			<a href="{{url_for('upload') }}">
+              <button type="button" class="btn btn-danger-outline">Upload a new ARTmosphere
+              </button>
+            </a>
     			</div>
     		</div>
-    			<div class="col-md-5 col-xs-12">
+    			<!-- <div class="col-md-5 col-xs-12">
             <div class="btn-group pull-xs-right">
               <button  type="button" class="btn btn-danger-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add new friends
                 <span class="caret"></span>
@@ -34,7 +37,7 @@
       		  	  <li><a href="#">Recomended users</a></li>
       				</ul>
             </div>
-      	</div>
+      	</div> -->
       </div>
       <div class="hidden-md-up">
         <div class="col-md-7 col-xs-12">
