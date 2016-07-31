@@ -146,14 +146,12 @@ def profile(name):
 
 
 
-class CommentForm(Form):
-  comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
-
-
 
 @app.route ('/about')
 def about():
   return render_template('about.html')
+
+
 
 
 @app.route ('/contact')
