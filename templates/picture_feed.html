@@ -47,7 +47,16 @@
                   </div>
                 </div>
               </div>
-              <a href="#" class="btn btn-danger-outline" style="box-shadow: 0 0 18px lightcoral">Like</a>
+
+              <script type="text/javascript">
+              var clicks = 0;
+              function likeFun()
+              {
+                click += 1;
+                document.getElementById("clicks").innerHTML = clicks;
+              };
+              </script>
+              <button type="button" onClick="likeFun()" class="btn btn-danger-outline">Like</a></button><br>
               <font>{{post.likes}} users like this</font>
           </div>
         </div>
