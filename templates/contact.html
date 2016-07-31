@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 <input type="text" name="inputBox" placeholder="enter your text here">
-
+{% block title %}
+	Contact 
+{% endblock %}
 {% block navbar %}
 <nav class="navbar navbar-dark bg-inverse">
     <a class ="navbar-brand" href="{{url_for('entry')}}"><img src='{{url_for("static",filename="navlogo.png")}}' alt="Articulate logo" height="24"><span class="sr-only">(current)</span></a>
@@ -14,19 +16,18 @@
       	<a class="nav-link" href="#">Contact</a>
       </li>
     </ul>
-    <form class="form-inline pull-xs-right">
-      <input class="form-control" type="text" placeholder="Search">
-      <button class="btn btn-danger-outline" type="submit">Search</button>
-    </form>
   </nav>
 {% endblock %}
 
 {% block content %}
+<div class="container p-y-2">
+<center><h1>contact</h1>
 <form action="demo_form.asp">
 <input type="text" name="fname" placeholder="First name"><br>
 <input type="text" name="lname" placeholder="Last name"><br>
 <input type="submit" value="Submit">
-</form>
+</form></center>
+</div>
 {% endblock %}
 
  
