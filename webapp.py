@@ -141,7 +141,7 @@ def profile(name):
 		return render_template('404.html')
 	else:
 		posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
-		return render_template('profile.html', name = name, posts = posts)
+		return render_template('profile.html', name = user.firstname, posts = posts)
 
 
 
@@ -186,7 +186,7 @@ def upload():
 			#finds user
 			user = DBsession.query(User).filter_by(id = session['id']).first()
 			#creates link to file in the database
-			gallery = Gallery(user_id = user.id, file_name = filename, description = request.form['description'])
+			gallery = Gallery(user_id = user.id, file_name = "uploads/" + filename, description = request.form['description'])
 			DBsession.add(gallery)
 			DBsession.commit()
 			return redirect(url_for('profile', name = user.username))
