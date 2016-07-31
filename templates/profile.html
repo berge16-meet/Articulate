@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block before_pictures %}
-
+<div class="container p-y-2">
 <div class="first">
 	<center>
 			<img src="{{ url_for('static', filename='roni.jpg')}}" width="110px" height="130px" class="m-t-1 img">
@@ -14,44 +14,18 @@
 	</center>
 </div>
 
-<div class="btns">
-  <div class="container-fluid">
-  	<div class="row p-y-1">
-      <div class="hidden-sm-down">
-    			<div class="one" role="group" aria-label="Basic example">
-            <div class="col-md-6 col-xs-12">
 
-        			<button type="button" class="btn btn-danger-outline">Create a new ARTmosphere</button>
-            </div>
-            <div class="col-md-6 col-xs-12">
-
-        			<a href="{{url_for('upload') }}">
-                <button type="button" class="btn btn-danger-outline">Upload a new ARTmosphere
-                </button>
-              </a>
-            </div>
-    			</div>
-    		</div>
-      </div>
-      <div class="hidden-md-up">
-        <div class="col-md-7 col-xs-12">
-          <div class="one" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-danger-outline btn-block">Create a new ARTmosphere</button>
-            <button type="button" class="btn btn-danger-outline btn-block">Upload a new ARTmosphere</button>
-          </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-4 col-md-offset-4">
+          <a class="btn btn-danger m-b-1 btn-block" ref="{{url_for('canvas') }}" role="button">Create a new ARTmosphere</a>
         </div>
-          <div class="col-md-5 col-xs-12">
-            <div class="btn-group pull-xs-right">
-              <button type="button" class="btn btn-danger-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add new friends
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
-                <li><a href="#">Search for friends</a></li>
-                <li><a href="#">Recomended users</a></li>
-              </ul>
-            </div>
+        <div class="col-xs-12 col-md-4 col-md-offset-4">
+          <a class="btn btn-danger btn-block" href="{{url_for('upload') }}" role="button">Upload a new Photo</a>
+        </div>
+    </div>
   </div>
-</div>
+          
 
 
 {% endblock %}
