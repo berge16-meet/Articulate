@@ -146,7 +146,7 @@ def profile(name):
 		return render_template('404.html')
 	else:
 		posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
-		return render_template('profile.html', name = user.firstname, posts = posts)
+		return render_template('profile.html', posts = posts,user=user)
 
 
 
@@ -169,7 +169,7 @@ def upload():
 
 	print(session.get('id'))
 
-	if request.method == 'POST' and session['id'] != None:
+	if request.method == 'POST' and session.get('id') != None:
 		#checks if file was uploaded
 		if 'file' not in request.files:
 			return redirect(url_for('upload'))
@@ -192,11 +192,12 @@ def upload():
 			return redirect(url_for('profile', name = user.username))
 
 	#if the user is not logged in send him to the log in page
-	elif session['id'] == None:
-		redirect('login')
-
-	else:
+	elif session.get('id') != None:
 		return render_template('upload.html')
+
+	#get request
+	else:
+		return redirect('login')
 
 
 @app.route('/logout')
