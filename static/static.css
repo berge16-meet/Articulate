@@ -5,21 +5,15 @@
     src: url(RythmusRegular.ttf);
 }
 
-h2{
+h2
+{
 	font-family: art;
+	font-size: 30px;
 }
 
-<<<<<<< HEAD
+
 body
 {
 	background-color: #F3E5AB;
 	font-family: art;
-=======
-body{
-	background-image: url(8.jpeg);
->>>>>>> 917fa181f94109f5bc8262da1e4fe5ed5cbc287f
-	-webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
 }
