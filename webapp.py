@@ -176,7 +176,7 @@ def upload():
     #checks if file was uploaded
     if 'file' not in request.files:
       return redirect(url_for('upload'))
-    
+
     file = request.files['file']
 		#if user submits an empty file, return a the same upload
     if file.filename == '':
@@ -189,7 +189,7 @@ def upload():
 			#finds user
       user = DBsession.query(User).filter_by(id = session['id']).first()
 			#creates link to file in the database
-      gallery = Gallery(user_id = user.id, file_name = "uploads/" + filename, description = request.form['description'])
+      gallery = Gallery(user_id = user.id, file_name = "uploads/" + filename, description = request.form['description'], likes = 0)
       DBsession.add(gallery)
       DBsession.commit()
       return redirect(url_for('profile', name = user.username))
