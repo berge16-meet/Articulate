@@ -136,7 +136,8 @@ def login():
 
 @app.route('/home')
 def home():
-	return render_template('home.html')
+    posts = DBsession.query(Gallery).all()
+    return render_template('home.html', posts = posts)
 
 @app.route('/profile/<name>')
 def profile(name):
@@ -145,7 +146,7 @@ def profile(name):
 		return render_template('404.html')
 	else:
 		posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
-		return render_template('profile.html', name = user.firstname, posts = posts)
+		return render_template('profile.html', posts = posts,user=user)
 
 
 
@@ -155,14 +156,9 @@ def profile(name):
 def about():
   return render_template('about.html')
 
-
-
-
 @app.route ('/contact')
 def contact():
   return render_template('contact.html')
-
-
 
 def valid_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
@@ -173,7 +169,7 @@ def upload():
 
 	print(session.get('id'))
 
-	if request.method == 'POST' and session['id'] != None:
+	if request.method == 'POST' and session.get('id') != None:
 		#checks if file was uploaded
 		if 'file' not in request.files:
 			return redirect(url_for('upload'))
@@ -196,11 +192,12 @@ def upload():
 			return redirect(url_for('profile', name = user.username))
 
 	#if the user is not logged in send him to the log in page
-	elif session['id'] == None:
-		redirect('login')
-
-	else:
+	elif session.get('id') != None:
 		return render_template('upload.html')
+
+	#get request
+	else:
+		return redirect('login')
 
 @app.route('/canvas')
 def canvas():
@@ -209,7 +206,7 @@ def canvas():
 @app.route('/logout')
 def logout():
 	session.clear()
-	return redirect('entry')
+	return redirect('/')
 
 @app.errorhandler(404)
 def page_not_found(e):

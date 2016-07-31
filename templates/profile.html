@@ -5,61 +5,20 @@
 {% endblock %}
 
 {% block before_pictures %}
-
+<div class="container p-y-2">
 <div class="first">
 	<center>
-			<img src="{{ url_for('static', filename='roni.jpg')}}" width="110px" height="130px">
-			<h1>{{name}}'s profile!</h1><br>
-			<p>The description/bio goes here</p>
+			<img src="{{ url_for('static', filename='roni.jpg')}}" width="110px" height="130px" class="m-t-1 img">
+			<h1>{{user.firstname}}'s profile!</h1><br>
+			<p>{{user.bio}}</p>
 	</center>
 </div>
 
-<div class="btns">
-  <div class="container-fluid">
-  	<div class="row p-y-1">
-      <div class="hidden-sm-down">
-    		<div class="col-md-7 col-xs-12">
-    			<div class="one" role="group" aria-label="Basic example">
-      			<button type="button" class="btn btn-danger-outline">Create a new ARTmosphere</button>
-      			<a href="{{url_for('upload') }}">
-              <button type="button" class="btn btn-danger-outline">Upload a new ARTmosphere
-              </button>
-            </a>
-    			</div>
-    		</div>
-    			<!-- <div class="col-md-5 col-xs-12">
-            <div class="btn-group pull-xs-right">
-              <button  type="button" class="btn btn-danger-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add new friends
-                <span class="caret"></span>
-              </button>
-      				<ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
-      		  		<li><a href="#">Search for friends</a></li>
-      		  	  <li><a href="#">Recomended users</a></li>
-      				</ul>
-            </div>
-      	</div> -->
-      </div>
-      <div class="hidden-md-up">
-        <div class="col-md-7 col-xs-12">
-          <div class="one" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-danger-outline btn-block">Create a new ARTmosphere</button>
-            <button type="button" class="btn btn-danger-outline btn-block">Upload a new ARTmosphere</button>
-          </div>
-        </div>
-          <div class="col-md-5 col-xs-12">
-            <div class="btn-group pull-xs-right">
-              <button type="button" class="btn btn-danger-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add new friends
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
-                <li><a href="#">Search for friends</a></li>
-                <li><a href="#">Recomended users</a></li>
-              </ul>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
+      
+            <center><button type="button" class="btn btn-danger">Create a new ARTmosphere</button></center><br>
+            <center><button type="button" class="btn btn-danger">Upload a new ARTmosphere</button></center><br>
+          
+
 
 {% endblock %}
