@@ -145,7 +145,7 @@ def profile(name):
 		return render_template('404.html')
 	else:
 		posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
-		return render_template('profile.html', name = user.firstname, posts = posts)
+		return render_template('profile.html', posts = posts,user=user)
 
 
 
