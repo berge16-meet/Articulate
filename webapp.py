@@ -189,7 +189,7 @@ def upload():
 			#finds user
       user = DBsession.query(User).filter_by(id = session['id']).first()
 			#creates link to file in the database
-      gallery = Gallery(user_id = user.id, file_name = "uploads/" + filename, description = request.form['description'])
+      gallery = Gallery(user_id = user.id, file_name = "uploads/" + filename, description = request.form['description'], likes = 0)
       DBsession.add(gallery)
       DBsession.commit()
       return redirect(url_for('profile', name = user.username))
