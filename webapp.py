@@ -113,12 +113,12 @@ def login():
 
     if user != None:
 
-    	session['id'] = user.id
-    	session['username'] = user.username
-    	#for logout:
-    	#del flask.session['uid']
-    	return redirect(url_for('profile', name = user.username))
-    return render_template('login.html',form=loginform)
+        session['id'] = user.id
+        session['username'] = user.username
+        #for logout:
+        #del flask.session['uid']
+        return redirect(url_for('profile', name = user.username))
+        return render_template('login.html',form=loginform)
 
 
 
@@ -132,10 +132,9 @@ def login():
 
 @app.route('/home')
 def home():
-	logged_in_username = session.get('username')
-	return render_template('home.html', username = logged_in_username)
+	return render_template('home.html')
 
-@app.route('/user/<name>')
+@app.route('/profile/<name>')
 def profile(name):
 	user = DBsession.query(User).filter_by(username = name).first()
 	if user == None:
