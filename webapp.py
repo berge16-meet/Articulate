@@ -206,7 +206,7 @@ def upload():
 @app.route('/logout')
 def logout():
 	session.clear()
-	return redirect('entry')
+	return redirect('/')
 
 @app.errorhandler(404)
 def page_not_found(e):
