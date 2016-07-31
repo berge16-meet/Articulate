@@ -1,3 +1,14 @@
-body {
-    background-image: url("paper.gif");
+
+@font-face{
+	font-family: art;
+    src: url(art.ttf);
+
+}
+body{
+	background-image: url(10.jpg);
+	font-family: art;
+	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
