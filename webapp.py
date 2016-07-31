@@ -136,7 +136,8 @@ def login():
 
 @app.route('/home')
 def home():
-	return render_template('home.html')
+    posts = DBsession.query(Gallery).all()
+    return render_template('home.html', posts = posts)
 
 @app.route('/profile/<name>')
 def profile(name):
