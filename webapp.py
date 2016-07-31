@@ -114,7 +114,7 @@ def login():
     if user != None:
 
     	session['id'] = user.id
-    	session['name'] = user.username
+    	session['username'] = user.username
     	#for logout:
     	#del flask.session['uid']
     	return redirect(url_for('profile', name = user.username))
@@ -132,7 +132,8 @@ def login():
 
 @app.route('/home')
 def home():
-  return render_template('home.html')
+	logged_in_username = session.get('username')
+	return render_template('home.html', username = logged_in_username)
 
 @app.route('/user/<name>')
 def profile(name):
@@ -235,6 +236,9 @@ def upload():
       user = DBsession.query(User).filter_by(id = session['id']).first()
       #creates link to file in the database
       gallery = Gallery(user_id = user.id, file_path = path, description = request.form['description'])
+
+      DBsession.add(gallery)
+      DBsession.commit()
       return redirect(url_for('profile', name = user.username))
 
   else:
