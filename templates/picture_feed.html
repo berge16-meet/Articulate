@@ -9,7 +9,7 @@
       {% for post in posts %}
       <div class="col-md-4 col-xs-12">
         <div class="card">
-          <img class="card-img-top img-fluid" height="470px" src="{{ url_for('static', filename='uploads/{{post.file_name}}') }}" alt="Card image cap">
+          <img class="card-img-top img-fluid" height="470px" src="{{ url_for('static', filename=post.file_name) }}" alt="Card image cap">
           <div class="card-block">
             <center>
               <h5 class="card-title">{{name}}</h5>
