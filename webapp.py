@@ -151,14 +151,9 @@ def profile(name):
 def about():
   return render_template('about.html')
 
-
-
-
 @app.route ('/contact')
 def contact():
   return render_template('contact.html')
-
-
 
 def valid_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
