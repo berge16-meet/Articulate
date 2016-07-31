@@ -163,21 +163,24 @@ def contact():
 def valid_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
+class UploadForm(Form):
+  description = TextAreaField("Describe your picture, remember to keep it focused")
+  submit = SubmitField("Submit")
+
 #should be ONLY upload link
 @app.route('/upload', methods = ['GET', 'POST'])
 def upload():
 
-	print(session.get('id'))
-
-	if request.method == 'POST' and session.get('id') != None:
-		#checks if file was uploaded
+  upload_form = UploadForm()
+  if request.method == 'POST' and session.get('id') != None:
+    #checks if file was uploaded
 		if 'file' not in request.files:
 			return redirect(url_for('upload'))
 
 		file = request.files['file']
 		#if user submits an empty file, return a the same upload
 		if file.filename == '':
-			return redirect(url_for('upload'))
+			return redirect(url_for('upload', form = upload_form))
 
 		if file and valid_file(file.filename):
 			filename = secure_filename(file.filename)
@@ -193,7 +196,7 @@ def upload():
 
 	#if the user is not logged in send him to the log in page
 	elif session.get('id') != None:
-		return render_template('upload.html')
+		return render_template('upload.html', form = upload_form)
 
 	#get request
 	else:

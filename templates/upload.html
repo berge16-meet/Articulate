@@ -5,9 +5,14 @@ Please upload photo
 {%block content%}
 
 <form method="POST" enctype=multipart/form-data>
-<input type=file name=file>
-<input type=text-box name=description>
-<input type=submit>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-4 col-md-offset-4"
+				<input type=file name=file>
+				{{wtf.quick_form(form)}}
+			</div>
+		</div>
+
 </form>
 
 {%endblock%}
