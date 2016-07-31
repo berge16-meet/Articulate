@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 
-<title>Entry Page</title>
- <head>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='static.css') }}">
-</head>
+{% block title %}Entry Page{% endblock %}
 
 {% block navbar %}
 <nav class="navbar navbar-dark bg-inverse">
