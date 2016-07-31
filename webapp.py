@@ -176,7 +176,7 @@ def upload():
     #checks if file was uploaded
     if 'file' not in request.files:
       return redirect(url_for('upload'))
-    
+
     file = request.files['file']
 		#if user submits an empty file, return a the same upload
     if file.filename == '':
