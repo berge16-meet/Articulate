@@ -7,8 +7,6 @@ from flask_bootstrap import Bootstrap
 from werkzeug.utils import secure_filename
 import hashlib
 import os
-#from sqlalchemy_imageattach.context import store_context
-import uuid
 
 
 from database import Base,User,Gallery
@@ -98,11 +96,11 @@ class Loginform(Form):
 @app.route('/login',methods=['GET','POST'])
 def login():
 
-  loginform=Loginform()
+  loginform=Loginform(request.form)
 
-  if request.method=='GET':
+  if request.method == 'GET':
 
-    return render_template('login.html', form=loginform)
+  	return render_template('login.html', form=loginform)
 
   else:
 
@@ -115,12 +113,11 @@ def login():
 
     if user != None:
 
-      session['id'] = user.id
-      session['name'] = user.username
-      #for logout:
-      #del flask.session['uid']
-      return redirect(url_for('home'))
-
+    	session['id'] = user.id
+    	session['username'] = user.username
+    	#for logout:
+    	#del flask.session['uid']
+    	return redirect(url_for('profile', name = user.username))
     return render_template('login.html',form=loginform)
 
 
@@ -135,19 +132,18 @@ def login():
 
 @app.route('/home')
 def home():
-  return render_template('home.html')
+	logged_in_username = session.get('username')
+	return render_template('home.html', username = logged_in_username)
 
 @app.route('/user/<name>')
 def profile(name):
+	user = DBsession.query(User).filter_by(username = name).first()
+	if user == None:
+		return render_template('404.html')
+	else:
+		posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
+		return render_template('profile.html', name = name, posts = posts)
 
-  user = DBsession.query(User).filter_by(username = name).first()
-
-  if user == None:
-    return render_template('404.html')
-
-  else:
-    posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
-    return render_template('profile.html', name = name, posts = posts)
 
 
 
@@ -210,13 +206,16 @@ def uploads():
     return render_template('profile.html', posts=posts)
 '''
 
+
+
 def valid_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 #should be ONLY upload link
 @app.route('/upload', methods = ['GET', 'POST'])
 def upload():
-  if request.method == 'POST':
+
+  if request.method == 'POST' and session['id'] != None:
     #checks if file was uploaded
     if 'file' not in request.files:
       return redirect(url_for('upload'))
@@ -230,13 +229,17 @@ def upload():
     if file and valid_file(file.filename):
 
       filename = secure_filename(file.filename)
-
       path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
-      file.write(path)
 
+      file.save(path)
+      #finds user
+      user = DBsession.query(User).filter_by(id = session['id']).first()
       #creates link to file in the database
-      gallery = Gallery(user_id = session['id'], file_path = path, description = request.form['description'])
-      return redirect(url_for('user/' + 'TO_CHANGE'), filename=filename)
+      gallery = Gallery(user_id = user.id, file_path = path, description = request.form['description'])
+
+      DBsession.add(gallery)
+      DBsession.commit()
+      return redirect(url_for('profile', name = user.username))
 
   else:
     return render_template('upload.html')
