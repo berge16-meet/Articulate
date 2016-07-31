@@ -160,51 +160,6 @@ def about():
 def contact():
   return render_template('contact.html')
 
-'''
-@app.route('/profile')
-def uploads():
-    posts = [
-        {
-            'picture': "static/images.jpeg",
-            'user': "Hila Tal",
-            'titile': "me n staff",
-            'num_of_likes': "15"
-        },
-        {
-            'picture': "static/hillarycari.jpg",
-            'user': "Marvin",
-            'title': "something meaningful",
-            'num_of_likes': "20"
-        },
-        {
-            'picture': "static/bibi.jpg",
-            'user': "Neta Ravid",
-            'title': "titletitletitle",
-            'num_of_likes': "4"
-        },
-        {
-            'picture': "static/bibi.jpg",
-            'user': "Berge hagopian",
-            'title': "berge has a weird last name",
-            'num_of_likes': "10"
-        },
-        {
-            'picture': "static/bibi.jpg",
-            'user': "Hila Tal",
-            'title': "the 5th post",
-            'num_of_likes': "11"
-        },
-        {
-            'picture': "static/papir_iroszer.jpg",
-            'user': "Hila Tal",
-            'title': "the previouse background image",
-            'num_of_likes': "17"
-        }
-    ]
-
-    return render_template('profile.html', posts=posts)
-'''
-
 
 
 def valid_file(filename):
@@ -214,36 +169,42 @@ def valid_file(filename):
 @app.route('/upload', methods = ['GET', 'POST'])
 def upload():
 
-  if request.method == 'POST' and session['id'] != None:
-    #checks if file was uploaded
-    if 'file' not in request.files:
-      return redirect(url_for('upload'))
+	print(session.get('id'))
 
-    file = request.files['file']
-    #if user submits an empty file, return a the same upload
-    if file.filename == '':
-      return redirect(url_for('upload'))
+	if request.method == 'POST' and session['id'] != None:
+		#checks if file was uploaded
+		if 'file' not in request.files:
+			return redirect(url_for('upload'))
+
+		file = request.files['file']
+		#if user submits an empty file, return a the same upload
+		if file.filename == '':
+			return redirect(url_for('upload'))
+
+		if file and valid_file(file.filename):
+			filename = secure_filename(file.filename)
+			path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
+			file.save(path)
+			#finds user
+			user = DBsession.query(User).filter_by(id = session['id']).first()
+			#creates link to file in the database
+			gallery = Gallery(user_id = user.id, file_name = filename, description = request.form['description'])
+			DBsession.add(gallery)
+			DBsession.commit()
+			return redirect(url_for('profile', name = user.username))
+
+	#if the user is not logged in send him to the log in page
+	elif session['id'] == None:
+		redirect('login')
+
+	else:
+		return render_template('upload.html')
 
 
-    if file and valid_file(file.filename):
-
-      filename = secure_filename(file.filename)
-      path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
-
-      file.save(path)
-      #finds user
-      user = DBsession.query(User).filter_by(id = session['id']).first()
-      #creates link to file in the database
-      gallery = Gallery(user_id = user.id, file_path = path, description = request.form['description'])
-
-      DBsession.add(gallery)
-      DBsession.commit()
-      return redirect(url_for('profile', name = user.username))
-
-  else:
-    return render_template('upload.html')
-
-
+@app.route('/logout')
+def logout():
+	session.clear()
+	return redirect('entry')
 
 @app.errorhandler(404)
 def page_not_found(e):
