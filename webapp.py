@@ -139,6 +139,7 @@ def home():
     posts = DBsession.query(Gallery).all()
     return render_template('home.html', posts = posts)
 
+
 @app.route('/profile')
 def profile():
   name = session['username']
@@ -153,6 +154,13 @@ def profile():
 @app.route ('/chat')
 def chat():
 	return render_template('chat.html')
+
+@app.route('/home/religion') 
+def religion():
+  return render_template('religion.html')
+
+
+
 
 
 
