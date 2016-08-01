@@ -38,7 +38,7 @@ class Gallery(Base):
   __tablename__ = 'gallery'
   id = Column(Integer, primary_key = True)
   user_id = Column(Integer, ForeignKey('user.id'))
-  file_path = Column(String(255))
+  file_name = Column(String(255))
   description = Column(String(140))
   likes = Column(Integer)
   #time = Column(Time)

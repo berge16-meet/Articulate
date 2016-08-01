@@ -1,3 +1,19 @@
-body {
-    background-image: url("paper.gif");
+
+@font-face
+{
+	font-family: art;
+    src: url(RythmusRegular.ttf);
+}
+
+h2
+{
+	font-family: art;
+	font-size: 30px;
+}
+
+
+body
+{
+	background-color: #F3E5AB;
+	font-family: art;
 }

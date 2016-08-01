@@ -113,12 +113,16 @@ def login():
 
     if user != None:
 
-    	session['id'] = user.id
-    	session['name'] = user.username
-    	#for logout:
-    	#del flask.session['uid']
-    	return redirect(url_for('profile', name = user.username))
-    return render_template('login.html',form=loginform)
+      session['id'] = user.id
+      session['username'] = user.username
+      #for logout:
+      #del flask.session['uid']
+      return redirect(url_for('profile', name = user.username))
+    #if the user does not have an account
+    else:
+      return render_template('login.html',form=loginform)
+
+
 
 
 
@@ -132,22 +136,19 @@ def login():
 
 @app.route('/home')
 def home():
-  return render_template('home.html')
+    posts = DBsession.query(Gallery).all()
+    return render_template('home.html', posts = posts)
 
-@app.route('/user/<name>')
+@app.route('/profile/<name>')
 def profile(name):
 	user = DBsession.query(User).filter_by(username = name).first()
 	if user == None:
 		return render_template('404.html')
 	else:
 		posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
-		return render_template('profile.html', name = name, posts = posts)
+		return render_template('profile.html', posts = posts,user=user)
 
 
-
-
-class CommentForm(Form):
-  comment=TextAreaField('Comment:', [validators.Length(min = 20, max = 4000), validators.Required()])
 
 
 @app.route('/canvas')
@@ -165,10 +166,10 @@ def chat():
 def about():
   return render_template('about.html')
 
-
 @app.route ('/contact')
 def contact():
   return render_template('contact.html')
+
 
 '''
 @app.route('/profile')
@@ -221,41 +222,59 @@ def uploads():
 
 
 
+
+
 def valid_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+class UploadForm(Form):
+  description = TextAreaField("Describe your picture, remember to keep it focused")
+  submit = SubmitField("Submit")
 
 #should be ONLY upload link
 @app.route('/upload', methods = ['GET', 'POST'])
 
 def upload():
 
-  if request.method == 'POST' and session['id'] != None:
+  upload_form = UploadForm()
+  if request.method == 'POST' and session.get('id') != None:
     #checks if file was uploaded
     if 'file' not in request.files:
       return redirect(url_for('upload'))
 
     file = request.files['file']
-    #if user submits an empty file, return a the same upload
+		#if user submits an empty file, return a the same upload
     if file.filename == '':
-      return redirect(url_for('upload'))
-
+      return redirect(url_for('upload', form = upload_form))
 
     if file and valid_file(file.filename):
-
       filename = secure_filename(file.filename)
       path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
-
       file.save(path)
-      #finds user
+			#finds user
       user = DBsession.query(User).filter_by(id = session['id']).first()
-      #creates link to file in the database
-      gallery = Gallery(user_id = user.id, file_path = path, description = request.form['description'])
+			#creates link to file in the database
+      gallery = Gallery(user_id = user.id, file_name = "uploads/" + filename, description = request.form['description'], likes = 0)
+      DBsession.add(gallery)
+      DBsession.commit()
       return redirect(url_for('profile', name = user.username))
 
+	#if the user is not logged in send him to the log in page
+  elif session.get('id') != None:
+    return render_template('upload.html', form = upload_form)
+
+	#get request
   else:
-    return render_template('upload.html')
+    return redirect('login')
 
+@app.route('/canvas')
+def canvas():
+  return render_template('canvas.html')
 
+@app.route('/logout')
+def logout():
+	session.clear()
+	return redirect('/')
 
 @app.errorhandler(404)
 def page_not_found(e):
