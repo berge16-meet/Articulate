@@ -216,10 +216,10 @@ def uploads():
 '''
 
 
-<<<<<<< HEAD
+
 @app.route('/uploads')
-=======
->>>>>>> cc9698413c08bd328b0712fda271ca47fb515725
+
+
 
 def valid_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
