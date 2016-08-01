@@ -1,46 +1,85 @@
-{% extends "picture_feed.html" %}
+{% extends "base.html" %}
 
-{% block before_pictures %}
+{% block content %}
 
 <div class="container-fluid">
 	<div class="first p-y-1 ltr">
 				<div class="row">
 					<div class="col-md-1 col-sm-2 m-x-2">
-						<a href="#"><img src="{{ url_for('static', filename= 'icon12.png')}}" class="img-circle" alt="a topic" width="120" height="120"></a>
+						<a href="#"><img src="{{ url_for('static', filename= 'icon12.png')}}" class="img-circle" alt="a topic" width="80" height="80"></a>
+						<br><b><p>Recent Events</p></b>
 					</div>
 					<div class="col-md-1 col-sm-2 m-x-2">
-						<a href="#"><img src="{{ url_for('static', filename= 'icon2.png')}}" class="img-circle" alt="a topic" width="120" height="120"></a>
+						<a href="#"><img src="{{ url_for('static', filename= 'icon2.png')}}" class="img-circle" alt="a topic" width="80" height="80"></a>
+						<br><b><p>Protests</p></b>
 					</div>
 					<div class="col-md-1 col-sm-2 m-x-2">
-						<a href="#"><img src="{{ url_for('static', filename= 'icon3.png')}}" class="img-circle" alt="a topic" width="120" height="120"></a>
+						<a href="#"><img src="{{ url_for('static', filename= 'icon3.png')}}" class="img-circle" alt="a topic" width="80" height="80"></a>
+						<br><b><p>Communication</p></b>
 					</div>
 					<div class="col-md-1 col-sm-2 m-x-2">
-						<a href="#"><img src="{{ url_for('static', filename= 'icon4.png')}}" class="img-circle" alt="a topic" width="120" height="120"></a>
+						<a href="#"><img src="{{ url_for('static', filename= 'icon4.png')}}" class="img-circle" alt="a topic" width="80" height="80"></a>
+						<br><b><p>Votes</p></b>
 					</div>
 					<div class="col-md-1 col-sm-2 m-x-2">
-						<a href="{{url_for('religion')}}"><img src="{{ url_for('static', filename= 'icon9.png')}}" class="img-circle" alt="a topic" width="120" height="120"></a>
+						<a href="{{url_for('religion')}}"><img src="{{ url_for('static', filename= 'icon9.png')}}" class="img-circle" alt="a topic" width="80" height="80"></a>
+						<br><b><p>Religion</p></b>
 					</div>
 					<div class="col-md-1 col-sm-2 m-x-2">
-						<a href="#"><img src="{{ url_for('static', filename= 'icon10.png')}}" class="img-circle" alt="a topic" width="120" height="120"></a>
+						<a href="#"><img src="{{ url_for('static', filename= 'icon10.png')}}" class="img-circle" alt="a topic" width="80" height="80"></a>
+						<br><b><p>Borders</p></b>
 					</div>
 					<div class="col-md-1 col-sm-2 m-x-2">
-						<a href="#"><img src="{{ url_for('static', filename= 'icon11.png')}}" class="img-circle" alt="a topic" width="120" height="120"></a>
+						<a href="#"><img src="{{ url_for('static', filename= 'icon11.png')}}" class="img-circle" alt="a topic" width="80" height="80"></a>
+						<br><b><p>Governments</p></b>
 					</div>
 					<div class="col-md-1 col-sm-2 m-x-2">
-						<a href="#"><img src="{{ url_for('static', filename= 'icon6.png')}}" class="img-circle" alt="a topic" width="120" height="120"></a>
+						<a href="#"><img src="{{ url_for('static', filename= 'icon6.png')}}" class="img-circle" alt="a topic" width="80" height="80"></a>
+						<br><b><p>Education</p></b>
 					</div>
 				</div>
 			</div>
 		</div><hr>
 
+<div class="container">
+{% for post in posts %}
+		<div class="row">
+      <div class="col-xs-8 col-xs-offset-2">
+        <div class="card">
+          <img class="card-img-top img-fluid" src="{{ url_for('static', filename=post.file_name) }}" alt="Card image cap" style="width:100%">
+          <div class="card-block">
 
-{% endblock %}
+            <center>
+              <h5 class="card-title">{{name}}.</h5>
+              <p class="card-text">{{post.description}}</p></center><br>
+              <!-- Trigger the modal with a button -->
+              <button type="button" class="btn btn-danger-outline" data-toggle="modal" data-target="#myModal" style="background-color: white; box-shadow: 0 0 18px lightcoral">View comments</button>
 
-{% block after_photos %}
+
+
+              <script type="text/javascript">
+              var clicks = 0;
+              function likeFun()
+              {
+                click += 1;
+                document.getElementById("clicks").innerHTML = clicks;
+              };
+              </script>
+              <button type="button" onClick="likeFun()" class="btn btn-danger-outline">Like</a></button><br>
+              <font>{{post.likes}} users like this</font>
+
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+</div>
+
+
 
       <div class="text-xs-center">
         <h1>We have no more photos to show you! :(</h1>
       </div>
 
       <hr>
+
 {% endblock %}

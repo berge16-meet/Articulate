@@ -8,93 +8,80 @@
 {% endblock %}
 
 {% block content %}
-
-<div class="text">
-<h5> ARTiculate is a social platform where people can upload and paint pictures regarding recent political events.
+<div class="container text-xs-center">
+  <h1 style="color: #a50000; font-size: 400%" class='m-t-3'><b>About Us</b></h1>
+  <h5> ARTiculate is a social platform where people can upload and paint pictures regarding recent political events.
 The idea is to create a healthy discussion on the political subjects as posted in pictures. Thus we aim to create
 an objective platform in which various perspectives will be heard and presented. The choice of art was not random,
 it was chosen as a source of attraction to our website, as well as a universal element of communication, with no boundaries of nationality, language or anything else.</h5>
-</div>
+  <div class="row m-t-2 m-b-3">
+    <div class="col-md-6 col-xs-12">
+      <h1 style="color:#a50000;"><b>Our Vision</b></h1>
+      <h5> We envision a world where all voices are heard in order to build a society that is self-aware, exposed, and understands all perspectives.</h5>
+    </div>
+    <div class="col-md-6 col-xs-12">
+      <h1 style="color:#a50000;"><b>Our Mission</b></h1>
+      <h5> Our mission is to create a circle of communication, established on the common ground of art, fulfilling tolerance and understanding towards all of its members. </h5>
+    </div>
+  </div>
 
-<div class="vision p-x-2 p-y-2"><h1 style="color:#a50000;"><b>Our Vision</b></h1><br>
-<h5> We envision a world where all voices are heard in order to build a society that is self-aware, exposed, and understands all perspectives.</h5>
-</div>
+  <div>
+    <h1 style="color: #a50000;"><b>The Team</b></h1>
+  </div>
 
-<div class= "mission p-x-2 p-y-2">
-<h1 style="color:#a50000;"><b>Our Mission</ARTb></h1><br>
-<h5> Our mission is to create a circle of communication, established on the common ground of art, fulfilling tolerance and understanding towards all of its members. </h5>
-</div>
+  <div class="row">
+    <div class="col-md-4 col-xs-6">
+      <img src="{{ url_for('static', filename= 'berge.jpg')}}" class="img-circle" alt="Cinque Terre" height="300rem">
+      <h5> Berge Hagopian </h5>
+      <h5> Palestinion from Jerusalem </h5>
+      <h5> Co-founder </h5>
+    </div>
 
-<div class="team">
-<h1 style="color: #a50000;"><b>The Team</b></h1>
-</div>
+    <div class="col-md-4 col-xs-6">
+      <img src="{{ url_for('static', filename= 'nofar.jpg')}}" class="img-circle" alt="Cinque Terre" height="300rem"
+       height="300rem">
+      <h5> Nofar Dvir </h5>
+      <h5> Israeli from Jerusalem </h5>
+      <h5> Co-founder </h5>
+    </div>
 
-<div class="about_us">
-  <h1 style="color: #a50000; font-size: 400%"><b>About Us</b></h1>
-</div>
+    <div class="col-md-4 col-xs-6">
+      <img src="{{ url_for('static', filename= 'roni.jpg')}}" class="img-circle" alt="Cinque Terre" height="300rem">
+      <h5> Roni Varshavsky </h5>
+      <h5> Israeli from Jerusalem </h5>
+      <h5> Co-founder </h5>
+    </div>
 
-<div class="berge">
-  <img src="{{ url_for('static', filename= 'berge.jpg')}}" class="img-circle" alt="Cinque Terre" width="250" height="250">
-  <center>
-  <h5 align="right"> Berge Hagopian </h5>
-  <h5 align="right"> Palestinion from Jerusalem </h5>
-  <h5 align="right"> Cofounder </h5>
-  </center>
-</div>
+    <div class="col-md-4 col-xs-6">
+      <img src="{{ url_for('static', filename= 'neta.jpg')}}" class="img-circle" alt="Cinque Terre" height="300rem">
+      <h5> Neta Ravid </h5>
+      <h5> Israeli from Jerusalem </h5>
+      <h5> Co-founder </h5>
+    </div>
 
-<div class="nofar">
-  <img src="{{ url_for('static', filename= 'nofar.jpg')}}" class="img-circle" alt="Cinque Terre" width="250"
-   height="250">
-  <center>
-  <h5 align="right"> Nofar Dvir </h5>
-  <h5 align="right"> Israeli from Jerusalem </h5>
-  <h5 align="right"> Cofounder </h5>
-  </center>
-</div>
+    <div class="col-md-4 col-xs-6">
+      <img src="{{ url_for('static', filename= 'ori.jpg')}}" class="img-circle " alt="Cinque Terre" height="300rem">
+      <h5> Ori Ben-Amram </h5>
+      <h5> Israeli from Jerusalem </h5>
+      <h5> Co-founder </h5>
+    </div>
 
-<div class="roni">
-  <img src="{{ url_for('static', filename= 'roni.jpg')}}" class="img-circle" alt="Cinque Terre" width="250" height="250">
-  <center>
-  <h5 align="right"> Roni Varshavsky </h5>
-  <h5 align="right"> Israeli from Jerusalem </h5>
-  <h5 align="right"> Cofounder </h5>
-  </center>
-</div>
+    <div class="col-md-4 col-xs-6">
+      <img src="{{ url_for('static', filename= 'hila.jpg')}}" class="img-circle" alt="Cinque Terre" height="300rem">
+      <h5> Hila Tal </h5>
+      <h5> Israeli from Jezreel Valley</h5>
+      <h5> Co-founder </h5>
+    </div>
 
-<div class="neta">
-  <img src="{{ url_for('static', filename= 'neta.jpg')}}" class="img-circle" alt="Cinque Terre" width="250" height="250">
-  <h5 align="right"> Neta Ravid </h5>
-  <h5 align="right"> Israeli from Jerusalem </h5>
-  <h5 align="right"> Cofounder </h5>
-</div>
-
-<div class="ori">
-  <img src="{{ url_for('static', filename= 'ori.jpg')}}" class="img-circle" alt="Cinque Terre" width="250" height="250">
-  <h5 align="right"> Ori Ben-Amram </h5>
-  <h5 align="right"> Israeli from Jerusalem </h5>
-  <h5 align="right"> Cofounder </h5>
-</div>
-
-<div class="hila">
-  <img src="{{ url_for('static', filename= 'hila.jpg')}}" class="img-circle" alt="Cinque Terre" width="250" height="250">
-  <h5 align="right"> Hila Tal </h5>
-  <h5 align="right"> Israeli from Jerusalem</h5>
-  <h5 align="right"> Cofounder </h5>
-</div>
-
-
-<div class="nethanel">
-  <img src="{{ url_for('static', filename= 'nethanel.jpg')}}" class="img-circle" alt="Cinque Terre" width="250" height="250">
-  <h5 align="right"> Nathaniel Navarro</h5>
-  <h5 align="right"> Israeli from Mevaseret Tzion </h5>
-  <h5 align="right"> Cofounder </h5>
+    <div class="col-md-4 col-md-offset-4 col-xs-6">
+      <img src="{{ url_for('static', filename= 'nethanel.jpg')}}" class="img-circle" alt="Cinque Terre" height="200rem">
+      <h5> Nathaniel Navarro</h5>
+      <h5> Israeli from Mevaseret Tzion </h5>
+      <h5> Co-founder </h5>
+    </div>
+  </div>
 </div>
 {% endblock %}
 
 
 
-
-
-
-
-far2

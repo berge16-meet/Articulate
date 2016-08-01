@@ -1,13 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from wtforms import *
 from flask_wtf import Form
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 from flask_bootstrap import Bootstrap
 from werkzeug.utils import secure_filename
 import hashlib
 import os
-
+import base64
 
 from database import Base,User,Gallery
 from sqlalchemy import create_engine
@@ -22,7 +22,9 @@ Base.metadata.create_all(engine)
 DBSessionMaker=sessionmaker(bind=engine)
 DBsession=DBSessionMaker()
 
-UPLOAD_FOLDER = '/home/student/Articulate/static/uploads'
+
+current_directory = os.getcwd()
+UPLOAD_FOLDER = os.path.join(current_directory, 'static/uploads')
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
 
 #app setup, do not touch
@@ -78,7 +80,7 @@ def signup():
     user=User(firstname=firstname, lastname=lastname,email=email, password=password, username= username,gender=gender, nationality=nationality,date=dob,bio=biography)
     DBsession.add(user)
     DBsession.commit()
-    return redirect(url_for('profile', name = username))
+    return redirect(url_for('login'))
 
   else:
     return render_template('signup.html', form = signup_form)
@@ -140,6 +142,7 @@ def home():
     return render_template('home.html', posts = posts)
 
 
+
 @app.route('/profile')
 def profile():
   name = session['username']
@@ -155,16 +158,9 @@ def profile():
 def chat():
 	return render_template('chat.html')
 
-@app.route('/home/religion') 
+@app.route('/home/religion')
 def religion():
   return render_template('religion.html')
-
-
-
-
-
-
-
 
 @app.route ('/about')
 def about():
@@ -235,6 +231,14 @@ class UploadForm(Form):
   description = TextAreaField("Describe your picture, remember to keep it focused")
   submit = SubmitField("Submit")
 
+def saveimagetoDB(filename, user):
+  #creates link to file in the database
+  print("yay success")
+  gallery = Gallery(user_id = user.id, file_name = "uploads/" + filename) #description = request.form['description'])
+  print(gallery.file_name)
+  DBsession.add(gallery)
+  DBsession.commit()
+
 #should be ONLY upload link
 @app.route('/upload', methods = ['GET', 'POST'])
 
@@ -255,12 +259,9 @@ def upload():
       filename = secure_filename(file.filename)
       path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
       file.save(path)
-			#finds user
       user = DBsession.query(User).filter_by(id = session['id']).first()
-			#creates link to file in the database
-      gallery = Gallery(user_id = user.id, file_name = "uploads/" + filename, description = request.form['description'], likes = 0)
-      DBsession.add(gallery)
-      DBsession.commit()
+
+      saveimagetoDB(filename,user)
       return redirect(url_for('profile', name = user.username))
 
 	#if the user is not logged in send him to the log in page
@@ -271,9 +272,29 @@ def upload():
   else:
     return redirect('login')
 
-@app.route('/canvas')
+@app.route('/canvas', methods = ['GET', 'POST'])
 def canvas():
-  return render_template('canvas.html')
+  if request.method == 'POST':
+    imgData = request.data
+    user = DBsession.query(User).filter_by(id = session['id']).first()
+    if user != None:
+      username = user.username
+      num = user.photos.count()
+      filename = username+"_"+str(num+1)+".png"
+      # TODO: change upload folder to be shared  
+      path = os.path.join('static/uploads/',filename)
+      print(path)
+      with open(path, "wb") as fh:
+        fh.write(base64.decodestring(imgData))
+        fh.close()
+        saveimagetoDB(filename, user)
+      return "success"
+    else:
+      #error message
+      return render_template('login.html')
+  else:
+    return render_template('canvas.html')
+
 
 @app.route('/logout')
 def logout():
