@@ -80,7 +80,7 @@ def signup():
     user=User(firstname=firstname, lastname=lastname,email=email, password=password, username= username,gender=gender, nationality=nationality,date=dob,bio=biography)
     DBsession.add(user)
     DBsession.commit()
-    return redirect(url_for('profile', name = username))
+    return redirect(url_for('login'))
 
   else:
     return render_template('signup.html', form = signup_form)
