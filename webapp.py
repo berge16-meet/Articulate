@@ -139,6 +139,10 @@ def home():
     posts = DBsession.query(Gallery).all()
     return render_template('home.html', posts = posts)
 
+@app.route('/home/religion') 
+def religion():
+  return render_template('religion.html')
+
 @app.route('/profile/<name>')
 def profile(name):
 	user = DBsession.query(User).filter_by(username = name).first()
@@ -147,6 +151,7 @@ def profile(name):
 	else:
 		posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
 		return render_template('profile.html', posts = posts,user=user)
+
 
 
 
