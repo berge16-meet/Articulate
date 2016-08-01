@@ -1,13 +1,6 @@
 
-@font-face
-{
-	font-family: art;
-    src: url(mama2.ttf);
-}
-
 h2
 {
-	font-family: art;
 	font-size: 30px;
 }
 
@@ -16,4 +9,5 @@ body
 {
 	background-image: url("articuphoto.png");
 	font-family: art;
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
