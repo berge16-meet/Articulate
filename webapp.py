@@ -150,11 +150,6 @@ def profile(name):
 
 
 
-
-@app.route('/canvas')
-def canvas():
-	return render_template('canvas.html', name=name)
-
 @app.route ('/chat')
 def chat():
 	return render_template('chat.html')
