@@ -162,13 +162,6 @@ def chat():
 def religion():
   return render_template('religion.html')
 
-
-
-
-
-
-
-
 @app.route ('/about')
 def about():
   return render_template('about.html')
