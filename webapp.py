@@ -152,6 +152,8 @@ def profile():
     return render_template('404.html')
   else:
     posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
+    for post in posts:
+        print("User:" + post.author.username)
     return render_template('profile.html', posts = posts,user=user)
 
 
@@ -256,6 +258,8 @@ def upload():
       gallery = Gallery(user_id = user.id, file_name = "uploads/" + filename, description = request.form['description'], likes = 0)
       DBsession.add(gallery)
       DBsession.commit()
+
+
       return redirect(url_for('profile', name = user.username))
 
 	#if the user is not logged in send him to the log in page
