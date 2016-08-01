@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from wtforms import *
 from flask_wtf import Form
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 from flask_bootstrap import Bootstrap
 from werkzeug.utils import secure_filename
@@ -23,8 +23,8 @@ DBSessionMaker=sessionmaker(bind=engine)
 DBsession=DBSessionMaker()
 
 
-dir = os.path.dirname(__file__)
-UPLOAD_FOLDER = os.path.join(dir, '/static/uploads')
+current_directory = os.getcwd()
+UPLOAD_FOLDER = os.path.join(current_directory, 'static/uploads')
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
 
 #app setup, do not touch
