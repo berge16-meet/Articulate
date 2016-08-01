@@ -5,9 +5,8 @@
 {% block before_pictures %} {% endblock %}
 
 <div class="container-fluid">
-    <div class="row p-y-1">
+    <div class="card-columns">
       {% for post in posts %}
-      <div class="col-md-4 col-xs-12">
         <div class="card">
           <img class="card-img-top img-fluid" src="{{ url_for('static', filename=post.file_name) }}" alt="Card image cap">
           <div class="card-block">
@@ -31,7 +30,6 @@
               <font>{{post.likes}} users like this</font>
           </div>
         </div>
-      </div>
       {% endfor %}
 
 
@@ -66,7 +64,7 @@
                 </div>
               </div>
 
-      
+
     </div>
 
     {% block after_photos %} {% endblock %}
