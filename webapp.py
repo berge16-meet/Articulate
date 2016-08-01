@@ -241,7 +241,8 @@ class UploadForm(Form):
 def saveimagetoDB(filename, user):
   #creates link to file in the database
   print("yay success")
-  gallery = Gallery(user_id = user.id, file_name = "uploads/" + filename, description = request.form['description'])
+  gallery = Gallery(user_id = user.id, file_name = "uploads/" + filename) #description = request.form['description'])
+  print(gallery.file_name)
   DBsession.add(gallery)
   DBsession.commit()
 
@@ -285,9 +286,10 @@ def canvas():
     user = DBsession.query(User).filter_by(id = session['id']).first()
     if user != None:
       username = user.username
-      num = len(user.photos)
+      num = user.photos.count()
       filename = username+"_"+str(num+1)+".png"
-      path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
+      # TODO: change upload folder to be shared  
+      path = os.path.join('static/uploads/',filename)
       print(path)
       with open(path, "wb") as fh:
         fh.write(base64.decodestring(imgData))
