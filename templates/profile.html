@@ -1,21 +1,22 @@
-{% extends "picture_feed.html" %}
+{% extends "base.html" %}
 
 {% block css %}
       <link rel="stylesheet" type="text/css" href="/static/profile.css">
 {% endblock %}
 
-{% block before_pictures %}
+{% block content %}
+
 <div class="container p-y-2">
 <div class="first">
 	<center>
-			<img src="{{ url_for('static', filename='roni.jpg')}}" width="110px" height="130px" class="m-t-1 img">
-			<h1>{{user.firstname}}'s profile!</h1><br>
-			<p>{{user.bio}}</p>
+			<img src="{{ url_for('static', filename='berge.jpg')}}" width="120px" height="160px" class="m-t-1 img">
+			<h1>{{user.firstname}}'s profile</h1><br>
+			<p><font style="font-size: 18px;">{{user.bio}}</font></p>
 	</center>
 </div>
 
 
-    <div class="container">
+    <div class="container p-t-1">
       <div class="row">
         <div class="col-xs-12 col-md-4 col-md-offset-4">
           <a class="btn btn-danger m-b-1 btn-block" href="{{url_for('canvas') }}" role="button">Create a new ARTmosphere</a>
@@ -26,14 +27,62 @@
     </div>
   </div>
 
+  <div class="container-fluid">
+      <div class="card-columns">
+        {% for post in posts %}
+          <div class="card">
+            <img class="card-img-top img-fluid" src="{{ url_for('static', filename=post.file_name) }}" alt="Card image cap">
+            <div class="card-block">
+              <center>
+                <h5 class="card-title">{{post.author.username}}</h5>
+                <p class="card-text">{{post.description}}</p></center><br>
+                <!-- Trigger the modal with a button -->
+                <button type="button" class="btn btn-danger-outline" data-toggle="modal" data-target="#myModal" style="background-color: white; box-shadow: 0 0 18px lightcoral">View comments</button>
+                <a href="{{url_for('increment_profile', id = post.id)}}" class="btn btn-danger-outline">Like</a><br>
+                <font>{{post.likes}} users like this</font>
+                <!-- <a href="{{url_for('increment_home', id = post.id)}}"> <button type="button" class="btn btn-danger-outline">Like</button></a><br>
+                <font>{{post.likes}} users like this</font> -->
+            </div>
+          </div>
+        {% endfor %}
+
+                <!-- Modal -->
+                <div id="myModal" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+
+                    <!-- Modal content-->
+
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                      </div>
+                            <div class="modal-body">
 
 
-{% endblock %}
+                              <!-- begin htmlcommentbox.com -->
+                              <div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">HTML Comment Box</a> is loading comments...</div>
+                               <link rel="stylesheet" type="text/css" href="http://www.htmlcommentbox.com/static/skins/default/skin.css" />
+                               <script type="text/javascript" language="javascript" id="hcb"> /*<!--*/ if(!window.hcb_user){hcb_user={  };} (function(){s=document.createElement("script");s.setAttribute("type","text/javascript");s.setAttribute("src", "http://www.htmlcommentbox.com/jread?page="+escape((window.hcb_user && hcb_user.PAGE)||(""+window.location)).replace("+","%2B")+"&opts=470&num=10");if (typeof s!="undefined") document.getElementsByTagName("head")[0].appendChild(s);})();</script>
+                              <!-- end htmlcommentbox.com -->
 
-{% block after_photos %}
+
+
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+      </div>
+      </div>
 
       <div class="text-xs-center">
         <h6>The user has no more photos!</h6>
+        <h6>The user has no more photos</h6>
       </div>
 
 
