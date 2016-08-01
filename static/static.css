@@ -2,7 +2,7 @@
 @font-face
 {
 	font-family: art;
-    src: url(RythmusRegular.ttf);
+    src: url(mama2.ttf);
 }
 
 h2
@@ -14,6 +14,6 @@ h2
 
 body
 {
-	background-image: url("articuphoto.png");
+	background-color: #F3E5AB;
 	font-family: art;
 }
