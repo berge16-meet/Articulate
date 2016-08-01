@@ -7,7 +7,8 @@ from flask_bootstrap import Bootstrap
 from werkzeug.utils import secure_filename
 import hashlib
 import os
-import base64
+from sqlalchemy import update
+
 
 from database import Base,User,Gallery
 from sqlalchemy import create_engine
@@ -162,13 +163,6 @@ def chat():
 def religion():
   return render_template('religion.html')
 
-
-
-
-
-
-
-
 @app.route ('/about')
 def about():
   return render_template('about.html')
@@ -229,22 +223,12 @@ def uploads():
 
 
 
-
-
 def valid_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 class UploadForm(Form):
   description = TextAreaField("Describe your picture, remember to keep it focused")
   submit = SubmitField("Submit")
-
-def saveimagetoDB(filename, user):
-  #creates link to file in the database
-  print("yay success")
-  gallery = Gallery(user_id = user.id, file_name = "uploads/" + filename) #description = request.form['description'])
-  print(gallery.file_name)
-  DBsession.add(gallery)
-  DBsession.commit()
 
 #should be ONLY upload link
 @app.route('/upload', methods = ['GET', 'POST'])
@@ -266,9 +250,12 @@ def upload():
       filename = secure_filename(file.filename)
       path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
       file.save(path)
+			#finds user
       user = DBsession.query(User).filter_by(id = session['id']).first()
-
-      saveimagetoDB(filename,user)
+			#creates link to file in the database
+      gallery = Gallery(user_id = user.id, file_name = "uploads/" + filename, description = request.form['description'], likes = 0)
+      DBsession.add(gallery)
+      DBsession.commit()
       return redirect(url_for('profile', name = user.username))
 
 	#if the user is not logged in send him to the log in page
@@ -279,29 +266,9 @@ def upload():
   else:
     return redirect('login')
 
-@app.route('/canvas', methods = ['GET', 'POST'])
+@app.route('/canvas')
 def canvas():
-  if request.method == 'POST':
-    imgData = request.data
-    user = DBsession.query(User).filter_by(id = session['id']).first()
-    if user != None:
-      username = user.username
-      num = user.photos.count()
-      filename = username+"_"+str(num+1)+".png"
-      # TODO: change upload folder to be shared  
-      path = os.path.join('static/uploads/',filename)
-      print(path)
-      with open(path, "wb") as fh:
-        fh.write(base64.decodestring(imgData))
-        fh.close()
-        saveimagetoDB(filename, user)
-      return "success"
-    else:
-      #error message
-      return render_template('login.html')
-  else:
-    return render_template('canvas.html')
-
+  return render_template('canvas.html')
 
 @app.route('/logout')
 def logout():
@@ -312,6 +279,19 @@ def logout():
 def page_not_found(e):
   return render_template('404.html'), 404
 
+@app.route('/picture_feed_home_like/<int:id>')
+def increment_home(id):
+    x = DBsession.query(Gallery).filter_by(id = id).first()
+    x.likes = x.likes + 1
+    DBsession.commit()
+    return redirect(url_for('home'))
+
+@app.route('/picture_feed_profile_like/<int:id>')
+def increment_profile(id):
+    x = DBsession.query(Gallery).filter_by(id = id).first()
+    x.likes = x.likes + 1
+    DBsession.commit()
+    return redirect(url_for('profile'))
 
 if __name__ == '__main__':
   app.run(host = ("0.0.0.0"), debug=True)
