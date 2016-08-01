@@ -13,9 +13,9 @@
           <div class="card-block">
             <center>
               <h5 class="card-title">{{name}}</h5>
-              <p class="card-text">{{post.description}}</p></center><br>
+              <p class="card-text">{{post.descrition}}</p></center><br>
               <!-- Trigger the modal with a button -->
-              <button type="button" class="btn btn-danger-outline" data-toggle="modal" data-target="#myModal" style="background-color: white;">View comments</button>
+              <button type="button" class="btn btn-danger-outline" data-toggle="modal" data-target="#myModal" style="background-color: white; box-shadow: 0 0 18px lightcoral">View comments</button>
 
               <!-- Modal -->
               <div id="myModal" class="modal fade" role="dialog">
@@ -47,11 +47,24 @@
                   </div>
                 </div>
               </div>
-              <a href="#" class="btn btn-danger-outline">Like</a><br>
+
+              <script type="text/javascript">
+              var clicks = 0;
+              function likeFun()
+              {
+                click += 1;
+                document.getElementById("clicks").innerHTML = clicks;
+              };
+              </script>
+              <button type="button" onClick="likeFun()" class="btn btn-danger-outline">Like</a></button><br>
               <font>{{post.likes}} users like this</font>
           </div>
         </div>
       </div>
       {% endfor %}
+
     </div>
+
+    {% block after_photos %} {% endblock %}
+
   </div>
