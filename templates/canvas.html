@@ -1338,30 +1338,38 @@ body {
 
             this.saveCanvasButton = document.getElementById('save-canvas');
 			this.onSaveCanvasButtonClicked = function(e) {
-				var canvas = document.getElementById("canvas");
-                var context = canvas.getContext("2d");
-                  //window.location = canvas.toDataURL("image/png");
-                var img= canvas.toDataURL("image/png");
-                //window.location = img;
-                img = img.replace(/^data:image\/(png|jpg);base64,/,"");
-                //window.location = img;
-                //alert(img);
-                console.log(img);
+				var description = prompt("Please add a description:");    
+    			if (description != null) {
+      				//add description to database
+      				if (confirm("ARTiculate is a social platform dedicated to creating positive and healthy discussions. Are you sure that your masterpiece fits our guidelines?") == true) {
+       					//add image to database
+       					var canvas = document.getElementById("canvas");
+                		var context = canvas.getContext("2d");
+                  		//window.location = canvas.toDataURL("image/png");
+                		var img= canvas.toDataURL("image/png");
+                		//window.location = img;
+                		img = img.replace(/^data:image\/(png|jpg);base64,/,"");
+                		//window.location = img;
+                		//alert(img);
+                		console.log(img);
 
-                $.ajax({
-                	type: 'POST',
-                    url: '/canvas',
-                    data: img,
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    success: function(msg){
-                    	log("success")
-                        alert("Save Complete");
-                    }
+                		$.ajax({
+                			type: 'POST',
+		                    url: '/canvas',
+        		            data: img,
+                		    contentType: 'application/json; charset=utf-8',
+		                    dataType: 'json',
+        		            success: function(msg){
+                		    	log("success")
+                        		alert("Save Complete");
+                   			}
 
-                });
-
-
+                		});
+    				} 
+    				else {
+        				//return to canvas without saving
+    				}
+      			}	
 			}
 			this.saveCanvasButton.addEventListener("click",
 					this.onSaveCanvasButtonClicked.bind(this));
