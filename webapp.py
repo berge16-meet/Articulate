@@ -22,7 +22,9 @@ Base.metadata.create_all(engine)
 DBSessionMaker=sessionmaker(bind=engine)
 DBsession=DBSessionMaker()
 
-UPLOAD_FOLDER = '/home/student/Articulate/static/uploads'
+
+dir = os.path.dirname(__file__)
+UPLOAD_FOLDER = os.path.join(dir, '/static/uploads')
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
 
 #app setup, do not touch
@@ -139,7 +141,7 @@ def home():
     posts = DBsession.query(Gallery).all()
     return render_template('home.html', posts = posts)
 
-@app.route('/home/religion') 
+@app.route('/home/religion')
 def religion():
   return render_template('religion.html')
 
