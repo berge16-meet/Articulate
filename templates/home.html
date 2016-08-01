@@ -1,6 +1,6 @@
-{% extends "picture_feed.html" %}
+{% extends "base.html" %}
 
-{% block before_pictures %}
+{% block content %}
 
 <div class="container-fluid">
 	<div class="first p-y-1 ltr">
@@ -33,14 +33,45 @@
 			</div>
 		</div><hr>
 
+<div class="container">
+{% for post in posts %}
+		<div class="row">
+      <div class="col-xs-8 col-xs-offset-2">
+        <div class="card">
+          <img class="card-img-top img-responsive" src="{{ url_for('static', filename=post.file_name) }}" alt="Card image cap">
+          <div class="card-block">
 
-{% endblock %}
+            <center>
+              <h5 class="card-title">{{name}}.</h5>
+              <p class="card-text">{{post.descrition}}</p></center><br>
+              <!-- Trigger the modal with a button -->
+              <button type="button" class="btn btn-danger-outline" data-toggle="modal" data-target="#myModal" style="background-color: white; box-shadow: 0 0 18px lightcoral">View comments</button>
 
-{% block after_photos %}
+
+
+              <script type="text/javascript">
+              var clicks = 0;
+              function likeFun()
+              {
+                click += 1;
+                document.getElementById("clicks").innerHTML = clicks;
+              };
+              </script>
+              <button type="button" onClick="likeFun()" class="btn btn-danger-outline">Like</a></button><br>
+              <font>{{post.likes}} users like this</font>
+
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+</div>
+
+
 
       <div class="text-xs-center">
         <h1>We have no more photos to show you! :(</h1>
       </div>
 
       <hr>
+
 {% endblock %}
