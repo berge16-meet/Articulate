@@ -7,6 +7,22 @@
   <link rel="stylesheet" type="text/css" href="/static/about.css">
 {% endblock %}
 
+
+{% block navbar %}
+<nav class="navbar navbar-dark bg-inverse">
+    <a class ="navbar-brand" href="{{url_for('entry')}}"><img src='{{url_for("static",filename="navlogo.png")}}' height="24"><span class="sr-only">(current)</span></a>
+
+    <ul class="nav navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('about')}}">About Us</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('contact')}}">Contact</a>
+      </li>
+    </ul>
+  </nav>
+{% endblock %}
+
 {% block content %}
 <div class="container text-xs-center">
   <h1 style="color: #a50000; font-size: 400%" class='m-t-3'><b>About Us</b></h1>
