@@ -177,6 +177,10 @@ def activeabout():
 def contact():
   return render_template('contact.html')
 
+@app.route ('/activecontact')
+def activecontact():
+  return render_template('activecontact.html')
+
 
 '''
 @app.route('/profile')

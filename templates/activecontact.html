@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Contact
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-dark bg-inverse">
+      <a class="navbar-brand m-a-0 p-a-0" href="{{url_for('home')}}"><img src="{{ url_for('static', filename= 'navlogo.png')}}" alt="newsfeed" style="width:70px;height:40px;"/></a>
+      <ul class="nav navbar-nav">
+        <li class="nav-item active"></li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('activeabout')}}">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('activecontact')}}">Contact</a>
+        </li>
+        
+          {% if session.username %}
+        <li class="nav-item">   <a class="nav-link" href="{{url_for('profile')}} ">Profile</a></li>
+        <li class="nav-item">   <a class="nav-link" href="{{url_for('logout')}} ">Logout</a></li>
+
+          {% endif %}
+        
+      </ul>
+      <form class="form-inline pull-xs-right">
+        <ul class="nav navbar-nav">
+          <li class="nav-item active"></li>
+          <li class="nav-item">
+            <input class="form-control" type="text" placeholder="Search">
+            <button class="btn btn-danger-outline" type="submit">Search</button>
+          </li>
+      </form>
+    </nav>
+    {% endblock %}
+
+<input type="text" name="inputBox" placeholder="enter your text here">
+
+{% block content %}
+<div class="container p-y-2">
+<center><h1>contact</h1>
+<form action="demo_form.asp">
+<input type="text" name="name" placeholder="Full name"><br><br>
+<input type="text" name="email" placeholder="Email"><br><br><br>
+<input type="text" name="message" placeholder="Write your message here"><br>
+<input type="submit" value="Submit">
+</form></center>
+</div>
+{% endblock %}
