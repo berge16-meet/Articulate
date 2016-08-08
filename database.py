@@ -4,7 +4,7 @@ from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
-
+metadata = MetaData()
 Base = declarative_base()
 
 class User(Base):
@@ -33,6 +33,11 @@ class Topic(Base):
 '''
 
   #posts = relationship("Gallery", secondary = topic_gallery_association_table, backref="topics")
+
+
+
+Base.metadata.create_all(engine)
+
 
 class Gallery(Base):
   __tablename__ = 'gallery'
