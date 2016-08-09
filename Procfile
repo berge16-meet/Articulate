@@ -1,1 +1,1 @@
-web: unicorn -w 4 -b “0.0.0.0:$PORT” deploy:app
+web: gunicorn -w 4 -b “0.0.0.0:$PORT” app:app

@@ -36,8 +36,6 @@ class Topic(Base):
 
 
 
-Base.metadata.create_all(engine)
-
 
 class Gallery(Base):
   __tablename__ = 'gallery'
