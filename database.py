@@ -4,8 +4,7 @@ from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker, scoped_session
 
-# DATABASE_URL = os.environ['DATABASE_URL']
-DATABASE_URL = "postgres://sfttdgfkgxswqe:lX67UQxj2nyPi5apVksys2p_vd@ec2-54-235-183-28.compute-1.amazonaws.com:5432/d31peeucjgtaqe"
+DATABASE_URL = os.environ['DATABASE_URL']
 
 Base = declarative_base()
 engine = create_engine(DATABASE_URL, convert_unicode=True)
