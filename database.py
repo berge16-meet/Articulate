@@ -2,10 +2,20 @@ import os
 import sys
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, sessionmaker, scoped_session
 
-metadata = MetaData()
+# DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = "postgres://sfttdgfkgxswqe:lX67UQxj2nyPi5apVksys2p_vd@ec2-54-235-183-28.compute-1.amazonaws.com:5432/d31peeucjgtaqe"
+
 Base = declarative_base()
+engine = create_engine(DATABASE_URL, convert_unicode=True)
+
+Base.metadata.bind = engine
+
+DBSession = scoped_session(sessionmaker(autocommit=False,
+                                         autoflush=False,
+                                         bind=engine))
+Base.query = DBSession.query_property()
 
 class User(Base):
   __tablename__ = 'user'
@@ -76,3 +86,4 @@ class Comment(Base):
 #   for sub_comment in comment.sub_comments:
 #     output += foo(sub_comment)
 #   return output
+Base.metadata.create_all(engine)
