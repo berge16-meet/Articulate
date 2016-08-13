@@ -2,27 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from wtforms import *
 from flask_wtf import Form
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import sessionmaker
 from flask_bootstrap import Bootstrap
 from werkzeug.utils import secure_filename
 import hashlib
 import os
-from sqlalchemy import update
 
-
-from database import Base,User,Gallery
-from sqlalchemy import create_engine
-
-
-
-
-from database import Base,User
-from sqlalchemy import create_engine
-engine=create_engine('sqlite:///Webpage.db')
-Base.metadata.create_all(engine)
-DBSessionMaker=sessionmaker(bind=engine)
-DBsession=DBSessionMaker()
-
+from database import Base, User, Gallery, DBSession
 
 current_directory = os.getcwd()
 UPLOAD_FOLDER = os.path.join(current_directory, 'static/uploads')
@@ -79,8 +64,8 @@ def signup():
 
 
     user=User(firstname=firstname, lastname=lastname,email=email, password=password, username= username,gender=gender, nationality=nationality,date=dob,bio=biography)
-    DBsession.add(user)
-    DBsession.commit()
+    DBSession.add(user)
+    DBSession.commit()
     return redirect(url_for('login'))
 
   else:
@@ -110,7 +95,7 @@ def login():
     email=request.form['email']
     password=request.form['password']
 
-    user_query = DBsession.query(User).filter(User.email.in_([email]), User.password.in_([hash_password(password)]))
+    user_query = DBSession.query(User).filter(User.email.in_([email]), User.password.in_([hash_password(password)]))
 
     user = user_query.first()
 
@@ -131,15 +116,15 @@ def login():
 
 
 '''
-  loger=DBsession.query(User).filter_by(email=email)
-  if DBsession.query(User).filter_by(email=loger.email)!=None:
-    if loger.password==DBsession.query(User).filter_by(email=loger.email).password:
-      return redirect (url_for('home',name=DBsession.query(User).filter_by(email=loger.email).firstname))
+  loger=DBSession.query(User).filter_by(email=email)
+  if DBSession.query(User).filter_by(email=loger.email)!=None:
+    if loger.password==DBSession.query(User).filter_by(email=loger.email).password:
+      return redirect (url_for('home',name=DBSession.query(User).filter_by(email=loger.email).firstname))
 '''
 
 @app.route('/home')
 def home():
-    posts = DBsession.query(Gallery).all()
+    posts = DBSession.query(Gallery).all()
     return render_template('home.html', posts = posts)
 
 
@@ -147,11 +132,11 @@ def home():
 @app.route('/profile')
 def profile():
   name = session['username']
-  user = DBsession.query(User).filter_by(username = name).first()
+  user = DBSession.query(User).filter_by(username = name).first()
   if user == None:
     return render_template('404.html')
   else:
-    posts = DBsession.query(Gallery).filter_by(user_id = user.id).all()
+    posts = DBSession.query(Gallery).filter_by(user_id = user.id).all()
     for post in posts:
         print("User:" + post.author.username)
     return render_template('profile.html', posts = posts,user=user)
@@ -261,11 +246,11 @@ def upload():
       path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
       file.save(path)
 			#finds user
-      user = DBsession.query(User).filter_by(id = session['id']).first()
+      user = DBSession.query(User).filter_by(id = session['id']).first()
 			#creates link to file in the database
       gallery = Gallery(user_id = user.id, file_name = "uploads/" + filename, description = request.form['description'], likes = 0)
-      DBsession.add(gallery)
-      DBsession.commit()
+      DBSession.add(gallery)
+      DBSession.commit()
 
 
       return redirect(url_for('profile', name = user.username))
@@ -293,16 +278,16 @@ def page_not_found(e):
 
 @app.route('/picture_feed_home_like/<int:id>')
 def increment_home(id):
-    x = DBsession.query(Gallery).filter_by(id = id).first()
+    x = DBSession.query(Gallery).filter_by(id = id).first()
     x.likes = x.likes + 1
-    DBsession.commit()
+    DBSession.commit()
     return redirect(url_for('home'))
 
 @app.route('/picture_feed_profile_like/<int:id>')
 def increment_profile(id):
-    x = DBsession.query(Gallery).filter_by(id = id).first()
+    x = DBSession.query(Gallery).filter_by(id = id).first()
     x.likes = x.likes + 1
-    DBsession.commit()
+    DBSession.commit()
     return redirect(url_for('profile'))
 
 if __name__ == '__main__':
