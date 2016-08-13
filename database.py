@@ -2,7 +2,10 @@ import os
 import sys
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, sessionmaker, scoped_session
+
+
+DATABASE_URL = os.environ['DATABASE_URL']
 
 metadata = MetaData()
 Base = declarative_base()

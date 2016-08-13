@@ -37,6 +37,8 @@ db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
 
 
+
+
 @app.route('/')
 def entry():
   return render_template('entry.html')
