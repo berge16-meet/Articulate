@@ -2,10 +2,19 @@ import os
 import sys
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, sessionmaker, scoped_session
 
+DATABASE_URL = os.environ['DATABASE_URL']
 
 Base = declarative_base()
+engine = create_engine(DATABASE_URL, convert_unicode=True)
+
+Base.metadata.bind = engine
+
+DBSession = scoped_session(sessionmaker(autocommit=False,
+                                         autoflush=False,
+                                         bind=engine))
+Base.query = DBSession.query_property()
 
 class User(Base):
   __tablename__ = 'user'
@@ -33,6 +42,9 @@ class Topic(Base):
 '''
 
   #posts = relationship("Gallery", secondary = topic_gallery_association_table, backref="topics")
+
+
+
 
 class Gallery(Base):
   __tablename__ = 'gallery'
@@ -73,3 +85,4 @@ class Comment(Base):
 #   for sub_comment in comment.sub_comments:
 #     output += foo(sub_comment)
 #   return output
+Base.metadata.create_all(engine)
