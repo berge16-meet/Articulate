@@ -23,7 +23,6 @@ bootstrap = Bootstrap(app)
 
 
 
-
 @app.route('/')
 def entry():
   return render_template('entry.html')
@@ -41,7 +40,7 @@ class SignUpForm(Form):
   biography = TextAreaField("Tell us about yourself")
   profile_pic = FileField("You can upload a profile picture.")
 
-  submit = SubmitField("Submit:")
+  submit = SubmitField("Submit")
 
 def hash_password(password):
   return hashlib.md5(password.encode()).hexdigest()
