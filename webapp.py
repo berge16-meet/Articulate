@@ -112,11 +112,6 @@ def login():
     else:
       return render_template('login.html',form=loginform)
 
-
-
-
-
-
 '''
   loger=DBSession.query(User).filter_by(email=email)
   if DBSession.query(User).filter_by(email=loger.email)!=None:
@@ -128,8 +123,6 @@ def login():
 def home():
     posts = DBSession.query(Gallery).all()
     return render_template('home.html', posts = posts)
-
-
 
 @app.route('/profile')
 def profile():
